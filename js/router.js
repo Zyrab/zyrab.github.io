@@ -33,9 +33,9 @@ const initRouter = async () => {
   let path = window.location.pathname;
   let hashPath = window.location.hash
 
-  hashPath && history.pushState(null, null, hashPath);
+  hashPath && history.pushState(null, null, getContentAfterChar(path, "#"));
 
-  let activePath =hashPath ? getContentAfterChar(hashPath, "v"):path;
+  let activePath = hashPath ? getContentAfterChar(path, "v"):path;
   setActiveNav(activePath);
   await renderPage(activePath);
 };
