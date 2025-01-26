@@ -1,6 +1,6 @@
 import { Header } from "./components/Header.js";
 import { Footer } from "./components/Footer.js";
-import { router, handleRouting } from "./router.js";
+import { router, initializeRouter } from "./router.js";
 
 const initializeApp = () => {
   const app = document.getElementById("app");
@@ -8,7 +8,7 @@ const initializeApp = () => {
   app.appendChild(router());
   app.appendChild(Footer());
 
-  handleRouting();
+  initializeRouter();
 };
 
 initializeApp();
