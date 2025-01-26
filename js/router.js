@@ -23,15 +23,16 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path) => {
-  let githubPath = "/Zyrab.dev" + path;
-  history.pushState(null, null, githubPath);
+  history.pushState(null, null, path);
+  setActiveNav(path);
   await renderPage(path);
 };
 
 const initRouter = async () => {
-  const path = window.location.pathname;
-  setActiveNav("/");
-  await renderPage("/");
+  let path = window.location.pathname;
+  let newPath = getContentAfterChar(path, "#");
+  setActiveNav(path);
+  await renderPage(newPath);
 };
 
 const setActiveNav = (route) => {
@@ -74,3 +75,16 @@ const renderPage = async (path) => {
     main.appendChild(errorMessage);
   }
 };
+
+function getContentAfterChar(inputString, char) {
+  // Find the index of the specified character
+  const index = inputString.indexOf(char);
+
+  // If the character is not found, return an empty string or null
+  if (index === -1) {
+    return inputString;
+  }
+
+  // Return the substring after the specified character
+  return inputString.substring(index + 1);
+}
