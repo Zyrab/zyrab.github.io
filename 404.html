@@ -9,9 +9,9 @@
 <script>
     // Redirect all 404s to the SPA's index.html
     const path = window.location.pathname;
-    const redirectTo = /Zyrab.dev;
+    const redirectTo = `/Zyrab.dev`;
     if (path !== '/Zyrab.dev') {
-      window.location.replace(redirectTo);
+      window.location.replace(redirectTo+ '#' + path);
     }
   </script>
 
