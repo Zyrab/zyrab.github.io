@@ -32,9 +32,11 @@ export const navigateTo = async (path) => {
 const initRouter = async () => {
   let path = window.location.pathname;
   let newPath = getContentAfterChar(path, "#");
+  history.pushState(null, null, newPath);
+
   let activePath = getContentAfterChar(path, "v");
-  setActiveNav(path);
-  await activePath(newPath);
+  setActiveNav(activePath);
+  await renderPage(newPath);
 };
 
 const setActiveNav = (route) => {
