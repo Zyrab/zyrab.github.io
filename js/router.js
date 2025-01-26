@@ -25,7 +25,7 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path, props) => {
-  const basePath = "";
+  const basePath = "/Zyrab.dev";
 
   let link = checkForDinamicRoute(basePath + path);
   let newPath = link.parent + link.child;
@@ -43,7 +43,7 @@ const initRouter = async () => {
   console.log("fullPath: ", fullPath);
 
   // Extract the hash-based route if it exists
-  const basePath = ""; // e.g., the base path for your SPA
+  const basePath = "/Zyrab.dev"; // e.g., the base path for your SPA
   const hashPath = fullPath.substring(basePath.length).split("#")[1]; // Get content after #
   console.log("hashPath: ", hashPath);
 
