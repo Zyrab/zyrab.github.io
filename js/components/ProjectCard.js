@@ -35,29 +35,7 @@ export const ProjectCard = (project) => {
             atr: [{ name: "class", value: "project-card-description" }],
             text: project.description,
           }),
-          // Button({ rout: project.title }),
-          com({
-            el: "button",
-            atr: [
-              {
-                name: "class",
-                value: "btn-default",
-              },
-              { name: "type", value: "button" },
-            ],
-            text: "View Project",
-            listeners: [
-              {
-                event: "click",
-                callback: (e) => {
-                  e.preventDefault();
-                  let route = "/projects:/" + project.title;
-
-                  navigateTo(route);
-                },
-              },
-            ],
-          }),
+          Button({ rout: project.title }),
         ],
       }),
     ],

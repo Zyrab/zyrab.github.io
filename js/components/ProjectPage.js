@@ -12,6 +12,7 @@ export const ProjectPage = (props) => {
         text: "Back",
         listeners: [{ event: "click", callback: goBack }],
       }),
+      com({ el: "h1", text: "hello there" }),
     ],
   });
 };
