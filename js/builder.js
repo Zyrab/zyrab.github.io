@@ -1,47 +1,52 @@
-export const builder = (component) => {
-  component.map(
-    (element) => (document.getElementById("app").innerHTML += element)
-  );
-};
-
-{
-  /* <div class="home">
-  <div class="home-circle"></div>
-  <div class="home-hero">
-    <h1>Plan, Design, Build</h1>
-    <h2>I bring your Ideas to Life, with no boundaries</h2>
-  </div>
-</div>; */
-}
-
-function parseAndCategorize(input) {
-  const result = {
-    speaking: [], // For "_"
-    thinking: [], // For "-"
-    replying: [], // For "="
-  };
-
-  // Split the input by commas
-  const parts = input.split(",");
-
-  // Loop through each part and categorize based on the first character
-  for (const part of parts) {
-    const trimmedPart = part.trim(); // Remove extra spaces
-
-    if (trimmedPart.startsWith("_")) {
-      result.speaking.push(trimmedPart.slice(1).trim()); // Remove the symbol and add to speaking
-    } else if (trimmedPart.startsWith("-")) {
-      result.thinking.push(trimmedPart.slice(1).trim()); // Remove the symbol and add to thinking
-    } else if (trimmedPart.startsWith("=")) {
-      result.replying.push(trimmedPart.slice(1).trim()); // Remove the symbol and add to replying
-    }
+export const com = ({
+  el = "div",
+  atr = [],
+  ns = null, // Add `ns` prop for namespace
+  listeners = [],
+  style = {},
+  text = "",
+  value = "",
+  children = [],
+}) => {
+  // Create the element with or without namespace
+  let element;
+  try {
+    element = ns
+      ? document.createElementNS(ns, el) // Use namespace if provided
+      : document.createElement(el); // Fallback to normal element
+  } catch (error) {
+    console.error(`Error creating element: ${el}`, error);
+    return null;
   }
 
-  return result;
-}
+  // Set attributes
+  atr.forEach(({ name, value }) => {
+    if (name && value !== undefined) element.setAttribute(name, value);
+  });
+  // Set text content
+  if (text) element.textContent = text;
+  if (value) element.value = value;
 
-// Example usage:
-const input =
-  "_hi, _how are you, -he said to himself, =i am fine, =and how are u";
-const categorizedText = parseAndCategorize(input);
-console.log(categorizedText);
+  // Add styles
+  Object.assign(element.style, style);
+
+  // Append children
+  children.forEach((child) => {
+    if (child instanceof Node) {
+      element.appendChild(child); // Append any valid DOM node (HTMLElement, SVGElement, Text, etc.)
+    } else if (typeof child === "string" || typeof child === "number") {
+      element.appendChild(document.createTextNode(child)); // Convert strings or numbers into text nodes
+    } else {
+      console.warn("Skipping invalid child:", child); // Warn if the child is not a valid node
+    }
+  });
+
+  // Add event listeners
+  listeners.forEach(({ event, callback }) => {
+    if (event && typeof callback === "function") {
+      element.addEventListener(event, callback);
+    }
+  });
+
+  return element;
+};
