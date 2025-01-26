@@ -1,11 +1,13 @@
 import { Home } from "./components/Home.js";
 import { Projects } from "./components/Projects.js";
+import { ProjectPage } from "./components/ProjectPage.js";
 import { Contact } from "./components/Contact.js";
 import { Error } from "./components/Error.js";
 
 const routes = {
   "/": Home,
   "/projects": Projects,
+  "/projects:": ProjectPage,
   "/contact": Contact,
   "*": Error,
 };
@@ -22,21 +24,41 @@ export const initializeRouter = () => {
   );
 };
 
-export const navigateTo = async (path) => {
-  let githubPath = "/Zyrab.dev" + path;
-  history.pushState(null, null, githubPath);
-  setActiveNav(path);
-  await renderPage(path);
+export const navigateTo = async (path, props) => {
+  const basePath = "/Zyrab.dev";
+
+  let link = checkForDinamicRoute(basePath + path);
+  setActiveNav(link.parent);
+  await renderPage(link.toRender, props);
 };
 
-const initRouter = async () => {
-  let path = window.location.pathname;
-  let newPath = getContentAfterChar(path, "#");
-  history.pushState(null, null, newPath);
+export const goBack = () => history.back();
 
-  let activePath = getContentAfterChar(path, "v");
-  setActiveNav(activePath);
-  await renderPage(newPath);
+const initRouter = async () => {
+  const fullPath = window.location.pathname + window.location.hash;
+
+  // Extract the base path (e.g., /mySite.dev/)
+  const basePath = "/Zyrab.dev";
+
+  // If the path starts with the base path, extract the hash-based route
+  if (fullPath.startsWith(basePath)) {
+    const hashPath = fullPath.substring(basePath.length).split("#")[1]; // Get content after #
+
+    // Default to "/" if no hashPath is provided
+    const activePath = hashPath ? hashPath : "/";
+    let link = checkForDinamicRoute(activePath);
+
+    // Push the cleaned hashPath into the history
+
+    // Set the active navigation and render the page
+    setActiveNav(link.parent);
+    await renderPage(link.toRender, link.child);
+  } else {
+    // If the base path is incorrect, redirect to the base path
+    history.replaceState(null, null, basePath);
+    setActiveNav("/");
+    await renderPage("/");
+  }
 };
 
 const setActiveNav = (route) => {
@@ -50,11 +72,11 @@ const setActiveNav = (route) => {
   });
 };
 
-const renderPage = async (path) => {
+const renderPage = async (path, props) => {
   const main = document.getElementById("main");
   try {
     const Component = routes[path] || routes["*"];
-    const content = await Component();
+    const content = await Component(props);
     // Ensure the main container is cleared before rendering new content
     main.replaceChildren();
 
@@ -80,15 +102,14 @@ const renderPage = async (path) => {
   }
 };
 
-function getContentAfterChar(inputString, char) {
-  // Find the index of the specified character
-  const index = inputString.indexOf(char);
-
-  // If the character is not found, return an empty string or null
-  if (index === -1) {
-    return inputString;
-  }
-
-  // Return the substring after the specified character
-  return inputString.substring(index + 1);
-}
+const checkForDinamicRoute = (path) => {
+  let index = path.indexOf(":");
+  let isDinamic = index !== -1;
+  let route = {
+    parent: isDinamic ? path.substring(0, index) : path,
+    child: isDinamic ? path.substring(index + 1) : "",
+    toRender: isDinamic ? path.substring(0, index + 1) : path,
+  };
+  history.pushState(null, null, route.parent + route.child);
+  return route;
+};
