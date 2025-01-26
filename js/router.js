@@ -43,14 +43,14 @@ const initRouter = async () => {
     const activePath = hashPath ? hashPath : "/";
 
     // Push the cleaned hashPath into the history
-    history.pushState(null, null, `${basePath}/${activePath}`);
+    history.pushState(null, null, activePath);
 
     // Set the active navigation and render the page
     setActiveNav(activePath);
     await renderPage(activePath);
   } else {
     // If the base path is incorrect, redirect to the base path
-    history.replaceState(null, null, basePath + "/");
+    history.replaceState(null, null, basePath);
     setActiveNav("/");
     await renderPage("/");
   }
