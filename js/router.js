@@ -25,9 +25,13 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path, props) => {
-  const basePath = "/Zyrab.dev";
+  const basePath = "";
 
   let link = checkForDinamicRoute(basePath + path);
+  let newPath = link.parent + link.child;
+  if (window.location.pathname + window.location.hash !== newPath) {
+    history.pushState(null, null, newPath);
+  }
   setActiveNav(link.parent);
   await renderPage(link.toRender, props);
 };
@@ -36,29 +40,30 @@ export const goBack = () => history.back();
 
 const initRouter = async () => {
   const fullPath = window.location.pathname + window.location.hash;
+  console.log("fullPath: ", fullPath);
 
-  // Extract the base path (e.g., /mySite.dev/)
-  const basePath = "/Zyrab.dev";
+  // Extract the hash-based route if it exists
+  const basePath = ""; // e.g., the base path for your SPA
+  const hashPath = fullPath.substring(basePath.length).split("#")[1]; // Get content after #
+  console.log("hashPath: ", hashPath);
 
-  // If the path starts with the base path, extract the hash-based route
-  if (fullPath.startsWith(basePath)) {
-    const hashPath = fullPath.substring(basePath.length).split("#")[1]; // Get content after #
+  // Determine the active path (use "/" if no hash or path is provided)
+  const activePath = hashPath || fullPath || "/";
+  console.log("activePath: ", activePath);
 
-    // Default to "/" if no hashPath is provided
-    const activePath = hashPath ? hashPath : "/";
-    let link = checkForDinamicRoute(activePath);
+  // Parse dynamic route
+  let link = checkForDinamicRoute(activePath);
+  console.log("link: ", link);
 
-    // Push the cleaned hashPath into the history
-
-    // Set the active navigation and render the page
-    setActiveNav(link.parent);
-    await renderPage(link.toRender, link.child);
-  } else {
-    // If the base path is incorrect, redirect to the base path
-    history.replaceState(null, null, basePath);
-    setActiveNav("/");
-    await renderPage("/");
+  // Only push a new state if the current path is different
+  const newPath = link.parent + link.child;
+  if (window.location.pathname + window.location.hash !== newPath) {
+    history.pushState(null, null, newPath);
   }
+
+  // Update navigation and render the page
+  setActiveNav(link.parent);
+  await renderPage(link.toRender, link.child);
 };
 
 const setActiveNav = (route) => {
@@ -105,11 +110,9 @@ const renderPage = async (path, props) => {
 const checkForDinamicRoute = (path) => {
   let index = path.indexOf(":");
   let isDinamic = index !== -1;
-  let route = {
+  return {
     parent: isDinamic ? path.substring(0, index) : path,
     child: isDinamic ? path.substring(index + 1) : "",
     toRender: isDinamic ? path.substring(0, index + 1) : path,
   };
-  history.pushState(null, null, route.parent + route.child);
-  return route;
 };
