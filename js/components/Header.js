@@ -1,29 +1,42 @@
+import { com } from "../builder.js";
 export const Header = () => {
-  const header = document.createElement("header");
-  const nav = document.createElement("nav");
-
-  // Loop through navData to create links
-  navData.forEach(({ route, iconKey }) => {
-    const link = document.createElement("a");
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    link.classList.add("nav-link");
-    link.setAttribute("data-route", route);
-
-    svg.classList.add("nav-icon");
-    svg.setAttribute("viewBox", "0 0 17 17");
-
-    path.setAttribute("stroke", "#fff");
-    path.setAttribute("d", svgPaths[iconKey]);
-
-    svg.appendChild(path);
-    link.appendChild(svg);
-
-    nav.appendChild(link);
+  return com({
+    el: "header",
+    children: [
+      com({
+        el: "nav",
+        children: navData.map(({ route, iconKey }) =>
+          com({
+            el: "a",
+            atr: [
+              { name: "data-route", value: route },
+              { name: "class", value: "nav-link" },
+            ],
+            children: [
+              com({
+                el: "svg",
+                ns: "http://www.w3.org/2000/svg",
+                atr: [
+                  { name: "class", value: "nav-icon" },
+                  { name: "viewBox", value: "0 0 17 17" },
+                ],
+                children: [
+                  com({
+                    el: "path",
+                    ns: "http://www.w3.org/2000/svg",
+                    atr: [
+                      { name: "stroke", value: "#fff" },
+                      { name: "d", value: svgPaths[iconKey] },
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          })
+        ),
+      }),
+    ],
   });
-
-  header.appendChild(nav);
-  return header;
 };
 
 const svgPaths = {

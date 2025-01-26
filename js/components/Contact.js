@@ -1,3 +1,4 @@
+import { com } from "../builder.js";
 export const Contact = () => {
   return com({
     el: "section",
@@ -9,37 +10,43 @@ export const Contact = () => {
         children: [
           com({
             el: "h2",
-            dot: [
-              { name: "textContent", value: "Get in Touch" },
-              { name: "id", value: "title" },
+            atr: [{ name: "id", value: "title" }],
+            text: "Get in Touch",
+          }),
+          com({
+            el: "input",
+            atr: [
+              { name: "type", value: "text" },
+              { name: "placeholder", value: "Your Name" },
             ],
           }),
           com({
             el: "input",
-            atr: [{ name: "type", value: "text" }],
-            dot: [{ name: "placeholder", value: "Your Name" }],
-          }),
-          com({
-            el: "input",
-            atr: [{ name: "type", value: "email" }],
-            dot: [{ name: "placeholder", value: "Email" }],
+            atr: [
+              { name: "type", value: "email" },
+              { name: "placeholder", value: "Email" },
+            ],
           }),
           com({
             el: "textarea",
-            atr: [{ name: "rows", value: "5" }],
-            dot: [{ name: "placeholder", value: "Message" }],
+            atr: [
+              { name: "rows", value: "5" },
+              { name: "placeholder", value: "Message" },
+            ],
           }),
           com({
             el: "button",
             atr: [{ name: "class", value: "btn-default" }],
-            listener: {
-              event: "click",
-              callback: (e) => {
-                e.preventDefault();
-                counter("title");
+            text: "Send",
+            listeners: [
+              {
+                event: "click",
+                callback: (e) => {
+                  e.preventDefault();
+                  counter("title");
+                },
               },
-            },
-            dot: [{ name: "textContent", value: "Send" }],
+            ],
           }),
         ],
       }),
@@ -64,20 +71,6 @@ const counter = (id) => {
   console.log(isNumber); // true if the value is a valid number, false otherwise
   if (!isNumber) count.textContent = 0;
   count && (count.textContent = Number(count.textContent) + 1);
-};
-const com = ({
-  el = "div",
-  atr = [{ name: null, value: null }],
-  children = [],
-  listener = { event: null, callback: null },
-  dot = [{ name: null, value: null }],
-}) => {
-  const element = document.createElement(el);
-  atr && atr.forEach(({ name, value }) => element.setAttribute(name, value));
-  dot && dot.forEach(({ name, value }) => (element[name] = value));
-  children && children.forEach((child) => element.appendChild(child));
-  listener && element.addEventListener(listener.event, listener.callback);
-  return element;
 };
 
 // <div class="contact">

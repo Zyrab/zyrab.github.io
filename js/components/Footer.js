@@ -1,15 +1,22 @@
+import { com } from "../builder.js";
 export const Footer = () => {
-  const footer = document.createElement("footer");
-  const copy = document.createElement("p");
-  const link = document.createElement("a");
+  let link = "https://github.com/Zyrab";
+  let linkText = "icons by Zyrab";
 
-  link.href = "https://github.com/Zyrab";
-  link.target = "_blank";
-  link.textContent = "icons by Zyrab";
+  let copyright = "© 2023 Zyrab";
 
-  copy.textContent = "© 2023 Zyrab";
-
-  footer.appendChild(copy);
-  footer.appendChild(link);
-  return footer;
+  return com({
+    el: "footer",
+    children: [
+      com({ el: "p", text: copyright }),
+      com({
+        el: "a",
+        atr: [
+          { name: "href", value: link },
+          { name: "target", value: "_blank" },
+        ],
+        text: linkText,
+      }),
+    ],
+  });
 };

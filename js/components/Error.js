@@ -1,7 +1,18 @@
+import { com } from "../builder.js";
 export const Error = () => {
-  return `
-    <div class="error-page"> 
-      <h1>404</h1>
-      <p>Page Not Found</p>
-    </div>`;
+  return com({
+    el: "section",
+    style: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+    },
+    children: [
+      com({
+        el: "h1",
+        text: "404 Not Found",
+      }),
+    ],
+  });
 };

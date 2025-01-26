@@ -54,6 +54,14 @@ export const handleRouting = () => {
     history.pushState(null, null, path);
     await renderPage(path);
   };
+  const initRouter = async () => {
+    const path = window.location.pathname;
+    setActiveNav(path);
+    await renderPage(path);
+  };
+  ["DOMContentLoaded", "popstate"].forEach((event) =>
+    window.addEventListener(event, initRouter)
+  );
   const setActiveNav = (route) => {
     document.querySelectorAll(".nav-link").forEach((link) => {
       const svg = link.children[0];
@@ -62,12 +70,6 @@ export const handleRouting = () => {
         link.getAttribute("data-route") === route
       );
     });
-  };
-
-  const initRouter = async () => {
-    const path = window.location.pathname;
-    setActiveNav(path);
-    await renderPage(path);
   };
 
   document.addEventListener("click", (e) => {
@@ -79,8 +81,4 @@ export const handleRouting = () => {
       navigateTo(path);
     }
   });
-
-  ["DOMContentLoaded", "popstate"].forEach((event) =>
-    window.addEventListener(event, initRouter)
-  );
 };
