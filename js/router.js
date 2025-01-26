@@ -23,7 +23,8 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path) => {
-  history.pushState(null, null, "/Zyrab.dev"+path);
+  let githubPath = "/Zyrab.dev" + path
+  history.pushState(null, null, githubPath);
   await renderPage(path);
 };
 
