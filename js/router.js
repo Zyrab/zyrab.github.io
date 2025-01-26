@@ -30,14 +30,30 @@ export const navigateTo = async (path) => {
 };
 
 const initRouter = async () => {
-  let path = window.location.pathname;
-  let hashPath = window.location.hash
+  const fullPath = window.location.pathname + window.location.hash;
 
-  hashPath && history.pushState(null, null, getContentAfterChar(path, "#"));
+  // Extract the base path (e.g., /mySite.dev/)
+  const basePath = "/mySite.dev/";
 
-  let activePath = hashPath ? getContentAfterChar(path, "v"):path;
-  setActiveNav(activePath);
-  await renderPage(activePath);
+  // If the path starts with the base path, extract the hash-based route
+  if (fullPath.startsWith(basePath)) {
+    const hashPath = fullPath.substring(basePath.length).split("#")[1]; // Get content after #
+    
+    // Default to "/" if no hashPath is provided
+    const activePath = hashPath ? hashPath : "/";
+
+    // Push the cleaned hashPath into the history
+    history.pushState(null, null, `${basePath}#/${activePath}`);
+
+    // Set the active navigation and render the page
+    setActiveNav(activePath);
+    await renderPage(activePath);
+  } else {
+    // If the base path is incorrect, redirect to the base path
+    history.replaceState(null, null, basePath + "#/");
+    setActiveNav("/");
+    await renderPage("/");
+  }
 };
 
 const setActiveNav = (route) => {
