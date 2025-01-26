@@ -31,10 +31,11 @@ export const navigateTo = async (path) => {
 
 const initRouter = async () => {
   let path = window.location.pathname;
-  let newPath = getContentAfterChar(path, "#");
-  history.pushState(null, null, newPath);
+  let hashPath = window.location.hash
 
-  let activePath = getContentAfterChar(path, "v");
+  hashPath && history.pushState(null, null, hashPath);
+
+  let activePath =hashPath ? getContentAfterChar(hashPath, "v"):path;
   setActiveNav(activePath);
   await renderPage(activePath);
 };
