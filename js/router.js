@@ -27,10 +27,10 @@ export const initializeRouter = () => {
 export const navigateTo = async (path, props) => {
   const basePath = "/Zyrab.dev";
 
-  let link = checkForDinamicRoute(basePath + path);
+  let link = checkForDinamicRoute(path);
   let newPath = link.parent + link.child;
-  if (window.location.pathname + window.location.hash !== newPath) {
-    history.pushState(null, null, newPath);
+  if (window.location.pathname + window.location.hash !== basePath + newPath) {
+    history.pushState(null, null, basePath + newPath);
   }
   setActiveNav(link.parent);
   await renderPage(link.toRender, props);
@@ -48,8 +48,10 @@ const initRouter = async () => {
   console.log("hashPath: ", hashPath);
 
   // Determine the active path (use "/" if no hash or path is provided)
-  const activePath = hashPath || fullPath || "/";
-  console.log("activePath: ", activePath);
+  const activePath =
+    hashPath.substring(basePath.length) ||
+    fullPath.substring(basePath.length) ||
+    "/";
 
   // Parse dynamic route
   let link = checkForDinamicRoute(activePath);
