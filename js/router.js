@@ -49,8 +49,8 @@ const initRouter = async () => {
 
   // Determine the active path (use "/" if no hash or path is provided)
   const activePath =
-    hashPath.substring(basePath.length) ||
-    fullPath.substring(basePath.length) ||
+    (hashPath && hashPath.substring(basePath.length)) ||
+    (fullPath && fullPath.substring(basePath.length)) ||
     "/";
 
   // Parse dynamic route
