@@ -4,9 +4,9 @@ import { Contact } from "./components/Contact.js";
 import { Error } from "./components/Error.js";
 
 const routes = {
-  "/Zyrab.dev/": Home,
-  "/Zyrab.dev/projects": Projects,
-  "/Zyrab.dev/contact": Contact,
+  "/": Home,
+  "/projects": Projects,
+  "/contact": Contact,
   "*": Error,
 };
 
@@ -23,14 +23,14 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path) => {
-  history.pushState(null, null, path);
+  history.pushState(null, null, "/Zyrab.dev"+path);
   await renderPage(path);
 };
 
 const initRouter = async () => {
   const path = window.location.pathname;
-  setActiveNav(path);
-  await renderPage(path);
+  setActiveNav('/');
+  await renderPage('/');
 };
 
 const setActiveNav = (route) => {
