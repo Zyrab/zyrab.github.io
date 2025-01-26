@@ -36,7 +36,7 @@ const initRouter = async () => {
 
   let activePath = getContentAfterChar(path, "v");
   setActiveNav(activePath);
-  await renderPage(newPath);
+  await renderPage(activePath);
 };
 
 const setActiveNav = (route) => {
