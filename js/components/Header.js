@@ -1,10 +1,25 @@
 import { com } from "../builder.js";
+import { navigateTo } from "../router.js";
 export const Header = () => {
+  const handaleNavigation = (e) => {
+    let navLink = e.target.closest(".nav-link");
+    if (navLink) {
+      let route = navLink.getAttribute("data-route");
+      navigateTo(route);
+    }
+  };
+
   return com({
     el: "header",
     children: [
       com({
         el: "nav",
+        listeners: [
+          {
+            event: "click",
+            callback: (e) => handaleNavigation(e),
+          },
+        ],
         children: navData.map(({ route, iconKey }) =>
           com({
             el: "a",
@@ -12,6 +27,7 @@ export const Header = () => {
               { name: "data-route", value: route },
               { name: "class", value: "nav-link" },
             ],
+
             children: [
               com({
                 el: "svg",
