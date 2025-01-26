@@ -11,7 +11,8 @@
     const path = window.location.pathname;
     const redirectTo = `/Zyrab.dev`;
     if (path !== '/Zyrab.dev') {
-      window.location.replace(path);
+      window.location.replace(redirectTo);
+      history.pushState(null, null, path);
     }
   </script>
   
