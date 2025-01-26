@@ -4,9 +4,9 @@ import { Contact } from "./components/Contact.js";
 import { Error } from "./components/Error.js";
 
 const routes = {
-  "Zyrab.dev/": Home,
-  "Zyrab.dev/projects": Projects,
-  "Zyrab.dev/contact": Contact,
+  "/Zyrab.dev/": Home,
+  "/Zyrab.dev/projects": Projects,
+  "/Zyrab.dev/contact": Contact,
   "*": Error,
 };
 
