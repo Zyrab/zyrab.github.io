@@ -59,8 +59,8 @@ const initRouter = async () => {
 
   // Only push a new state if the current path is different
   const newPath = link.parent + link.child;
-  if (window.location.pathname + window.location.hash !== newPath) {
-    history.pushState(null, null, newPath);
+  if (window.location.pathname + window.location.hash !== basePath + newPath) {
+    history.pushState(null, null, basePath + newPath);
   }
 
   // Update navigation and render the page
