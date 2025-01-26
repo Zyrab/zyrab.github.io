@@ -4,9 +4,9 @@ import { Contact } from "./components/Contact.js";
 import { Error } from "./components/Error.js";
 
 const routes = {
-  "zyrab.dev/": Home,
-  "zyrab.dev/projects": Projects,
-  "zyrab.dev/contact": Contact,
+  "/": Home,
+  "/projects": Projects,
+  "/contact": Contact,
   "*": Error,
 };
 
@@ -23,7 +23,7 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path) => {
-  history.pushState(null, null, path);
+  history.pushState(null, null, "/Zyrab.dev" + path);
   await renderPage(path);
 };
 
@@ -49,7 +49,6 @@ const renderPage = async (path) => {
   try {
     const Component = routes[path] || routes["*"];
     const content = await Component();
-
     // Ensure the main container is cleared before rendering new content
     main.replaceChildren();
 
