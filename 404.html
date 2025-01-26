@@ -6,15 +6,27 @@
   <title>Document</title>
 </head>
 <body>
-  <script>
-    // Redirect all 404s to the SPA's index.html
+<script>
+    // Capture the current path
     const path = window.location.pathname;
-    const redirectTo = `/Zyrab.dev`;
-    if (path !== '/Zyrab.dev') {
-      window.location.replace(redirectTo);
-      window.history.pushState(null, null, path);
+    
+    // Check if we're already on the correct page
+    if (path !== '/Zyrab.dev' && !path.startsWith('/Zyrab.dev/')) {
+        // Load the SPA by replacing the content
+        fetch('/Zyrab.dev/index.html') // Fetch the index.html content
+            .then(response => response.text())
+            .then(html => {
+                document.open();
+                document.write(html);
+                document.close();
+                
+                // Push the correct path back to the history
+                window.history.pushState(null, null, path);
+            })
+            .catch(err => console.error('Error loading SPA index:', err));
     }
-  </script>
+</script>
+
   
 </body>
 </html>
