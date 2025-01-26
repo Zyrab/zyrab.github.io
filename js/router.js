@@ -23,14 +23,15 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path) => {
-  history.pushState(null, null, "/Zyrab.dev" + path);
+  let githubPath = "/Zyrab.dev" + path;
+  history.pushState(null, null, githubPath);
   await renderPage(path);
 };
 
 const initRouter = async () => {
   const path = window.location.pathname;
-  setActiveNav(path);
-  await renderPage(path);
+  setActiveNav("/");
+  await renderPage("/");
 };
 
 const setActiveNav = (route) => {
