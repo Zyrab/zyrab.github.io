@@ -41,6 +41,8 @@ export const navigateTo = async (path) => {
   const { segments, pureUrl } = parseUrl(path);
   const { routeData, params } = matchNestedRoute(segments);
   pushStateGuard(pureUrl);
+  log("segment", segments[0]);
+
   setActiveNav(segments[0]);
   await renderPage(routeData, params);
 };
@@ -50,6 +52,7 @@ const initRouter = async () => {
   const { segments, pureUrl } = parseUrl(url);
   const { routeData, params } = matchNestedRoute(segments);
   pushStateGuard(pureUrl);
+  log("segment", segments);
   setActiveNav(segments[0]);
   await renderPage(routeData, params);
 };
@@ -109,11 +112,8 @@ const renderPage = async (routeData, params) => {
 const parseUrl = (url) => {
   // Remove the hash from the URL explicitly for githab pages to serve index.html
   const pureUrl = url.includes("#") ? url.split("#")[1] : url;
-  //removes '/' if it is last character and Split the URL into segments keepinig '/' for nested routes
-  const segments = pureUrl
-    .replace(/\/$/, "")
-    .split(/(?=\/)/g)
-    .filter(Boolean);
+  // Split the URL into segments keepinig '/' for nested routes
+  const segments = pureUrl.split(/(?=\/)/g).filter(Boolean);
   return {
     segments,
     pureUrl,
