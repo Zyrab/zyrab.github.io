@@ -1,31 +1,182 @@
 @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
 
-*,html, .body, #app{
+:root {
+  --white: hsl(0, 0%, 100%);
+  --bege: hsl(0, 0%, 80%);
+  --black: hsl(0, 0%, 0%);
+  --greysh: hsl(0, 0%, 20%);
+  --bg: hsl(0, 0%, 0%);
+  --f-f: 'Cutive Mono', monospace;
+  --transition: all 0.3s ease;
+}
+
+/* Hide scrollbar but keep scrolling */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Global Reset */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Cutive Mono";
+}
+
+/* Base Styling */
+body {
+  overflow: auto;
+    -ms-overflow-style: none;
+  scrollbar-width: none;
+  font-family: var(--f-f);
+  color: var(--white);
+  background-color: var(--bg);
+  line-height: 1.5;
   font-weight: 500;
-  color: #D9D9D9;
 }
-main{
-  background-color: #272727;
-  min-height: 100vh;
+.route-enter {
+  transform: scale(0);
 }
+
+.route-enter-active {
+  animation: fadeInScale 0.3s forwards;
+}
+
+.route-exit {
+  transform: scale(1);
+}
+
+.route-exit-active {
+  animation: fadeOutScale 0.2s forwards;
+}
+
+@keyframes fadeInScale {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutScale {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(5);
+  }
+}
+
+#space {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color:var(--bg);
+  z-index: -1;
+}
+/* utility classes */
+
+/* form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap:0.75rem;
+  padding: 1rem 1.75rem;
+  background-color: var(--greysh);
+}
+.form input, .form textarea{
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--white);
+  background-color: var(--greysh);
+  color: var(--white);
+  font-family: var(--f-f);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.form input::placeholder,
+.form textarea::placeholder {
+  color: var(--bege);
+}
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding: 16px 28px;
+}
+
+
+
+.form input:focus,
+.form textarea:focus {
+  outline: none ;
+  border-color: var(--black);
+
+}
+/* typography */
+.t-center {
+  text-align: center;
+}
+.h-lg {
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;  
+}
+.h-md {
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;  
+}
+.h-sm {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;  
+}
+.t-lg {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.018em;  
+}
+.t-md {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;  
+}
+.t-sm {
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.022em;  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 header{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #272727;
 }
 footer{
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: #272727;
-  color: #ffffff;
-  padding: 16px;
+  padding: 1rem;
 }
 
 nav{
@@ -51,7 +202,6 @@ nav{
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background-color: #272727;
   gap:50px;
   height: 100vh;
   
@@ -70,14 +220,8 @@ nav{
   height: 25vh;
   color: #FFFFFF;
 }
-.home-hero h1{
-  font-size: 3rem;
-}
-.home-hero h2{
-  font-size: 1.5rem;
-}
+
 .projects{
-  background-color: #272727;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,40 +270,7 @@ nav{
   color: #D9D9D9;
 }
 
-.contact{
-  background-color: #272727;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 50px;
-  padding: 16px 28px;
-  min-height:90vh ;
-}
 
-.contact form{
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px 28px;
-  color: #D9D9D9;
-  background-color: #333333;
-}
-
-.contact form input, .contact form textarea{
-  color: #D9D9D9;
-  background-color: #333333;
-  border: 1px solid #ffffff;
-  padding: 8px 16px;
-}
-
-.contact form input::placeholder, .contact form textarea::placeholder{
-  color: #D9D9D9;
-}
-
-.contact form input::focus, .contact form textarea::focus{
-  border: 2px solid #FFFFFF;
-}
 
 .btn-default{
   all: unset;  
@@ -182,4 +293,18 @@ nav{
   padding: 16px 28px;
   color: #D9D9D9;
   background-color: #333333;
+}
+
+
+/* Responsive Grid */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

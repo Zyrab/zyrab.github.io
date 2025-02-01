@@ -6,11 +6,17 @@ export const Contact = () => {
     children: [
       com({
         el: "form",
-        atr: [{ name: "id", value: "contact-form" }],
+        atr: [
+          { name: "id", value: "contact-form" },
+          { name: "class", value: "form" },
+        ],
         children: [
           com({
             el: "h2",
-            atr: [{ name: "id", value: "title" }],
+            atr: [
+              { name: "id", value: "title" },
+              { name: "class", value: "h-lg t-center" },
+            ],
             text: "Get in Touch",
           }),
           com({
@@ -18,13 +24,17 @@ export const Contact = () => {
             atr: [
               { name: "type", value: "text" },
               { name: "placeholder", value: "Your Name" },
+              { name: "name", value: "name" },
+              { name: "id", value: "name" },
             ],
           }),
           com({
             el: "input",
             atr: [
-              { name: "type", value: "email" },
+              { name: "type", value: "text" },
               { name: "placeholder", value: "Email" },
+              { name: "name", value: "email" },
+              { name: "id", value: "email" },
             ],
           }),
           com({
@@ -32,6 +42,8 @@ export const Contact = () => {
             atr: [
               { name: "rows", value: "5" },
               { name: "placeholder", value: "Message" },
+              { name: "name", value: "message" },
+              { name: "id", value: "message" },
             ],
           }),
           com({
@@ -42,7 +54,6 @@ export const Contact = () => {
               {
                 event: "click",
                 callback: (e) => {
-                  e.preventDefault();
                   counter("title");
                 },
               },
