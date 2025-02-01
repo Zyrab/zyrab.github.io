@@ -1,5 +1,4 @@
 import { com } from "../builder.js";
-import { navigateTo } from "../router.js";
 import { Button } from "./Button.js";
 export const ProjectCard = (project) => {
   return com({

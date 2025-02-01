@@ -16,7 +16,7 @@ export const Projects = async () => {
         callback: (e) => {
           e.preventDefault();
           let route =
-            "/projects:/" +
+            "/projects/" +
             e.target.closest("button").getAttribute("data-route");
           navigateTo(route);
         },
