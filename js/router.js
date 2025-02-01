@@ -5,11 +5,24 @@ import { Contact } from "./components/Contact.js";
 import { Error } from "./components/Error.js";
 
 const routes = {
-  "/": Home,
-  "/projects": Projects,
-  "/projects:": ProjectPage,
-  "/contact": Contact,
-  "*": Error,
+  "/": { component: Home, meta: { title: "Home", description: "Home" } },
+  "/projects": {
+    children: {
+      "/:id": {
+        component: ProjectPage,
+        meta: { title: "Projects", description: "Project" },
+      },
+      "/": {
+        component: Projects,
+        meta: { title: "Projects", description: "Projects" },
+      },
+    },
+  },
+  "/contact": {
+    component: Contact,
+    meta: { title: "Contact", description: "Contact" },
+  },
+  "*": { component: Error, meta: { title: "Error", description: "Error" } },
 };
 
 export const router = () => {
@@ -24,50 +37,30 @@ export const initializeRouter = () => {
   );
 };
 
-export const navigateTo = async (path, props) => {
-  const basePath = "";
+export const navigateTo = async (path) => {
+  const { segments, pureUrl } = parseUrl(path);
+  const { routeData, params } = matchNestedRoute(segments);
+  pushStateGuard(pureUrl);
+  setActiveNav(segments[0]);
+  await renderPage(routeData, params);
+};
 
-  let link = checkForDinamicRoute(path);
-  let newPath = link.parent + link.child;
-  if (window.location.pathname + window.location.hash !== basePath + newPath) {
-    history.pushState(null, null, basePath + newPath);
-  }
-  setActiveNav(link.parent);
-  await renderPage(link.toRender, props);
+const initRouter = async () => {
+  const url = window.location.pathname + window.location.hash;
+  const { segments, pureUrl } = parseUrl(url);
+  const { routeData, params } = matchNestedRoute(segments);
+  pushStateGuard(pureUrl);
+  setActiveNav(segments[0]);
+  await renderPage(routeData, params);
 };
 
 export const goBack = () => history.back();
 
-const initRouter = async () => {
-  const fullPath = window.location.pathname + window.location.hash;
-  console.log("fullPath: ", fullPath);
-
-  // Extract the hash-based route if it exists
-  const basePath = ""; // e.g., the base path for your SPA
-  const hashPath = fullPath.substring(basePath.length).split("#")[1]; // Get content after #
-  console.log("hashPath: ", hashPath);
-
-  // Determine the active path (use "/" if no hash or path is provided)
-  const activePath =
-    (hashPath && hashPath.substring(basePath.length)) ||
-    (fullPath && fullPath.substring(basePath.length)) ||
-    "/";
-
-  // Parse dynamic route
-  let link = checkForDinamicRoute(activePath);
-  console.log("link: ", link);
-
-  // Only push a new state if the current path is different
-  const newPath = link.parent + link.child;
-  if (window.location.pathname + window.location.hash !== basePath + newPath) {
-    history.pushState(null, null, basePath + newPath);
+const pushStateGuard = (url) => {
+  if (window.location.pathname + window.location.hash !== url) {
+    history.pushState(null, null, url);
   }
-
-  // Update navigation and render the page
-  setActiveNav(link.parent);
-  await renderPage(link.toRender, link.child);
 };
-
 const setActiveNav = (route) => {
   document.querySelectorAll(".nav-link").forEach((link) => {
     const svg = link.children[0];
@@ -79,17 +72,21 @@ const setActiveNav = (route) => {
   });
 };
 
-const renderPage = async (path, props) => {
+const renderPage = async (routeData, params) => {
+  const { component, meta } = routeData;
   const main = document.getElementById("main");
   try {
-    const Component = routes[path] || routes["*"];
-    const content = await Component(props);
+    const content = await component(params);
     // Ensure the main container is cleared before rendering new content
     main.replaceChildren();
 
     if (content instanceof HTMLElement) {
       // If the component returns a DOM element, append it directly
       main.appendChild(content);
+      document.title = meta.title;
+      document
+        .querySelector("meta[name='description']")
+        .setAttribute("content", meta.description);
     } else if (typeof content === "string") {
       // If the component returns a string, create a text node to prevent XSS
       const wrapper = document.createElement("div");
@@ -109,12 +106,49 @@ const renderPage = async (path, props) => {
   }
 };
 
-const checkForDinamicRoute = (path) => {
-  let index = path.indexOf(":");
-  let isDinamic = index !== -1;
+const parseUrl = (url) => {
+  // Remove the hash from the URL explicitly for githab pages to serve index.html
+  const pureUrl = url.includes("#") ? url.split("#")[1] : url;
+  //removes '/' if it is last character and Split the URL into segments keepinig '/' for nested routes
+  const segments = pureUrl
+    .replace(/\/$/, "")
+    .split(/(?=\/)/g)
+    .filter(Boolean);
   return {
-    parent: isDinamic ? path.substring(0, index) : path,
-    child: isDinamic ? path.substring(index + 1) : "",
-    toRender: isDinamic ? path.substring(0, index + 1) : path,
+    segments,
+    pureUrl,
   };
 };
+
+const matchNestedRoute = (segments) => {
+  // If there are no segments, return the default route
+  if (!segments.length)
+    return { routeData: routes["/"] || routes["*"], params: {} };
+  let current = routes;
+  let params = {};
+  // Iterate through the segments
+  for (const segment of segments) {
+    if (current[segment]) {
+      // exact match found go deeper
+      current = current[segment].children || current[segment];
+    } else {
+      // look for dynamic route
+      const key = Object.keys(current).find((key) => key.includes(":"));
+      if (!key) return { routeData: routes["*"], params: {} };
+      // extract param value
+      const parmName = key.split(":")[1];
+      params = { ...params, [parmName]: segment };
+      current = current[key];
+      if (current.children) {
+        current = current.children;
+      }
+    }
+  }
+  // we send for rendering default child if component doesnt exists
+  let defaultChild = current.component ? current : current["/"] || routes["*"];
+
+  // Return the matched component and parameters
+  return { params, routeData: defaultChild };
+};
+
+const log = (t, l) => console.log(t + ":", l);
