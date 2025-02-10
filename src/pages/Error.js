@@ -1,4 +1,4 @@
-import { com } from "../builder.js";
+import { com } from "../services/builder.js";
 export const Error = () => {
   return com({
     el: "section",

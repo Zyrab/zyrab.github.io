@@ -1,5 +1,5 @@
-import { com } from "../builder.js";
-import { navigateTo } from "../router.js";
+import { com } from "../../services/builder.js";
+import { navigateTo } from "../../services/router.js";
 export const Header = () => {
   const handaleNavigation = (e) => {
     let navLink = e.target.closest(".nav-link");

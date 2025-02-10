@@ -1,4 +1,4 @@
-import { com } from "../builder.js";
+import { com } from "../../services/builder.js";
 export const Footer = () => {
   let link = "https://github.com/Zyrab";
   let linkText = "icons by Zyrab";

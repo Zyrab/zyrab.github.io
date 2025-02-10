@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "title": "Numbero",
+    "description": "Game/App with simple logic and vast game related content made using React-Native, Expo and Firebase.",
+    "date": "03.2024 - 11.2024",
+    "tech": ["figma", "react-native", "expo", "firebase", "github"],
+    "buttonText": "Play Store",
+    "icon": "google-play"
+  },
+  {
+    "id": 2,
+    "title": "Ani Bani",
+    "description": "Educational app for Georgian children, it teaches Georgian alphabet, similar to Duo ABC. Built in RN.",
+    "date": "11.2024 - current",
+    "tech": ["figma", "react-native", "expo", "firebase", "github"],
+    "buttonText": "Play Store",
+    "icon": "google-play"
+  },
+  {
+    "id": 3,
+    "title": "Recepio",
+    "description": "Description of project 3",
+    "date": "03.2024 - 07.2024",
+    "tech": ["figma", "react-native", "expo", "firebase", "github"],
+    "buttonText": "Play Store",
+    "icon": "google-play"
+  },
+  {
+    "id": 4,
+    "title": "KEI Holding",
+    "description": "Real estate Website. i build its front-end using Vue.js and tailwind.css.",
+    "date": "03.2024 - 07.2024",
+    "tech": ["figma", "vue-js", "tailwindcss", "github"],
+    "buttonText": "Web",
+    "icon": "web"
+  },
+  {
+    "id": 5,
+    "title": "high way",
+    "description": "Real estate Website. i build its front-end using Vue.js and tailwind.css.",
+    "date": "03.2024 - 07.2024",
+    "tech": ["unity"],
+    "buttonText": "Web",
+    "icon": "web"
+  }
+]

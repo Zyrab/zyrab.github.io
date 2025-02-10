@@ -37,7 +37,7 @@ export const createLightSpeedAnimation = (parentElement) => {
     canvas.width = w;
     canvas.height = h;
     context = canvas.getContext("2d");
-    context.fillStyle = "rgb(0,0,0)";
+    context.fillStyle = "rgb(38,38,38)";
     context.strokeStyle = "rgb(255,255,255)";
 
     // Initialize star positions
@@ -123,16 +123,16 @@ export const createLightSpeedAnimation = (parentElement) => {
         starSpeed = starSpeed !== 0 ? 0 : starSpeedPrev;
         break;
       case 13: // Enter key
-        context.fillStyle = `rgba(0,0,0,${opacity})`;
+        context.fillStyle = `rgba(38,38,38,${opacity})`;
         break;
     }
   };
 
   const handleMouseDown = () => {
-    context.fillStyle = `rgba(0,0,0,${opacity})`;
+    // context.fillStyle = `rgba(0,0,0,${opacity})`;
   };
   const handleKeyUp = () => {
-    context.fillStyle = "rgb(0,0,0)";
+    context.fillStyle = "rgb(38,38,38)";
   };
 
   const handleMouseWheel = (evt) => {
@@ -140,7 +140,7 @@ export const createLightSpeedAnimation = (parentElement) => {
     starSpeed += delta >= 0 ? -0.2 : 0.2;
   };
   // Attach event listeners
-  document.addEventListener("mousemove", handleMouseMove);
+  // document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("keypress", handleKeyPress);
   document.addEventListener("keyup", handleKeyUp);
   document.addEventListener("mousewheel", handleMouseWheel, { passive: false });

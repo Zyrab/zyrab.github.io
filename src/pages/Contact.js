@@ -1,8 +1,8 @@
-import { com } from "../builder.js";
+import { com } from "../services/builder.js";
+import { Button } from "../components/common/Button.js";
 export const Contact = () => {
   return com({
     el: "section",
-    atr: [{ name: "class", value: "contact" }],
     children: [
       com({
         el: "form",
@@ -15,7 +15,7 @@ export const Contact = () => {
             el: "h2",
             atr: [
               { name: "id", value: "title" },
-              { name: "class", value: "h-lg t-center" },
+              { name: "class", value: "xxxl center p-1" },
             ],
             text: "Get in Touch",
           }),
@@ -26,6 +26,7 @@ export const Contact = () => {
               { name: "placeholder", value: "Your Name" },
               { name: "name", value: "name" },
               { name: "id", value: "name" },
+              { name: "class", value: "form-input" },
             ],
           }),
           com({
@@ -35,6 +36,7 @@ export const Contact = () => {
               { name: "placeholder", value: "Email" },
               { name: "name", value: "email" },
               { name: "id", value: "email" },
+              { name: "class", value: "form-input" },
             ],
           }),
           com({
@@ -44,21 +46,10 @@ export const Contact = () => {
               { name: "placeholder", value: "Message" },
               { name: "name", value: "message" },
               { name: "id", value: "message" },
+              { name: "class", value: "form-input" },
             ],
           }),
-          com({
-            el: "button",
-            atr: [{ name: "class", value: "btn-default" }],
-            text: "Send",
-            listeners: [
-              {
-                event: "click",
-                callback: (e) => {
-                  counter("title");
-                },
-              },
-            ],
-          }),
+          Button({ text: "Send" }),
         ],
       }),
       com({

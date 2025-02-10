@@ -42,11 +42,10 @@ export const com = ({
   });
 
   // Add event listeners
-  listeners.forEach(({ event, callback }) => {
+  listeners.forEach(({ event, callback, options }) => {
     if (event && typeof callback === "function") {
-      element.addEventListener(event, callback);
+      element.addEventListener(event, callback, options);
     }
   });
-
   return element;
 };

@@ -1,8 +1,9 @@
-import { Home } from "./components/Home.js";
-import { Projects } from "./components/Projects.js";
-import { ProjectPage } from "./components/ProjectPage.js";
-import { Contact } from "./components/Contact.js";
-import { Error } from "./components/Error.js";
+import { Home } from "../pages/Home.js";
+import { Projects } from "../pages/Projects.js";
+import { ProjectPage } from "../components/projects/ProjectPage.js";
+import { Contact } from "../pages/Contact.js";
+import { Legal } from "../pages/Legal.js";
+import { Error } from "../pages/Error.js";
 
 const routes = {
   "/": { component: Home, meta: { title: "Home", description: "Home" } },
@@ -22,6 +23,25 @@ const routes = {
     component: Contact,
     meta: { title: "Contact", description: "Contact" },
   },
+  "/legal": {
+    children: {
+      "/:legal": {
+        children: {
+          "/:app": {
+            component: Legal,
+            meta: {
+              title: "Privacy Policy",
+              description: "Privacy Policy",
+            },
+          },
+        },
+      },
+      "/": {
+        component: Legal,
+      },
+    },
+  },
+
   "*": { component: Error, meta: { title: "Error", description: "Error" } },
 };
 
@@ -41,8 +61,6 @@ export const navigateTo = async (path) => {
   const { segments, pureUrl } = parseUrl(path);
   const { routeData, params } = matchNestedRoute(segments);
   pushStateGuard(pureUrl);
-  log("segment", segments[0]);
-
   setActiveNav(segments[0]);
   await renderPage(routeData, params);
 };
@@ -52,7 +70,6 @@ const initRouter = async () => {
   const { segments, pureUrl } = parseUrl(url);
   const { routeData, params } = matchNestedRoute(segments);
   pushStateGuard(pureUrl);
-  log("segment", segments);
   setActiveNav(segments[0]);
   await renderPage(routeData, params);
 };
@@ -137,7 +154,7 @@ const matchNestedRoute = (segments) => {
       if (!key) return { routeData: routes["*"], params: {} };
       // extract param value
       const parmName = key.split(":")[1];
-      params = { ...params, [parmName]: segment };
+      params = { ...params, [parmName]: segment.split("/")[1] };
       current = current[key];
       if (current.children) {
         current = current.children;

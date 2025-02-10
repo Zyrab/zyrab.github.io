@@ -1,5 +1,5 @@
-import { com } from "../builder.js";
-import { goBack } from "../router.js";
+import { com } from "../../services/builder.js";
+import { goBack } from "../../services/router.js";
 
 export const ProjectPage = (props) => {
   return com({
