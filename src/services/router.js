@@ -41,8 +41,13 @@ const routes = {
       },
     },
   },
-
-  "*": { component: Error, meta: { title: "Error", description: "Error" } },
+  "*": {
+    component: Error,
+    meta: {
+      title: "Error",
+      description: "Page you are looking for does not exist",
+    },
+  },
 };
 
 export const router = () => {
@@ -60,7 +65,8 @@ export const initializeRouter = () => {
 export const navigateTo = async (path) => {
   const { segments, pureUrl } = parseUrl(path);
   const { routeData, params } = matchNestedRoute(segments);
-  pushStateGuard(pureUrl);
+  const changed = pushStateGuard(pureUrl);
+  if (!changed) return;
   setActiveNav(segments[0]);
   await renderPage(routeData, params);
 };
@@ -77,9 +83,12 @@ const initRouter = async () => {
 export const goBack = () => history.back();
 
 const pushStateGuard = (url) => {
+  // to prevent unnecessary pushState
   if (window.location.pathname + window.location.hash !== url) {
     history.pushState(null, null, url);
+    return true;
   }
+  return false;
 };
 const setActiveNav = (route) => {
   document.querySelectorAll(".nav-link").forEach((link) => {
@@ -117,12 +126,11 @@ const renderPage = async (routeData, params) => {
     }
   } catch (error) {
     console.error("Rendering error:", error);
-
     // Render a fallback error message safely
+    const errorPage = Error({ error: error.message });
     main.replaceChildren();
-    const errorMessage = document.createElement("p");
-    errorMessage.textContent = "Something went wrong. Please try again later.";
-    main.appendChild(errorMessage);
+
+    main.appendChild(errorPage);
   }
 };
 
