@@ -1,15 +1,14 @@
-import { com } from "../../services/builder.js";
+import { A, IMG } from "../../services/DOMConstructor.js";
 
-export const Icons8 = ({ icon }) => {
-  return com({
-    el: "img",
-    style: { width: "20px", height: "20px" },
-    atr: [
-      {
-        name: "src",
-        value: "https://img.icons8.com/color/48/" + icon + ".png",
-      },
-      { name: "alt", value: icon },
-    ],
+export const Icons8 = ({ icon, link, size = "20px", custum = "color/48/" }) => {
+  return A({
+    href: link,
+    target: "_blank",
+    clasS: "flex just-c",
+    child: IMG({
+      style: { width: size, height: size },
+      src: "https://img.icons8.com/" + custum + icon + ".png",
+      alt: icon,
+    }),
   });
 };

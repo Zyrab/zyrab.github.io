@@ -2,6 +2,7 @@
   {
     "id": 1,
     "title": "Numbero",
+    "image": "assets/numbero.png",
     "description": "Game/App with simple logic and vast game related content made using React-Native, Expo and Firebase.",
     "date": "03.2024 - 11.2024",
     "tech": ["figma", "react-native", "expo", "firebase", "github"],

@@ -1,18 +1,21 @@
-import { com } from "../services/builder.js";
-export const Error = () => {
-  return com({
+import { Button } from "../components/common/Button.js";
+import { navigateTo } from "../services/router.js";
+import { html, P, DIV, H } from "../services/DOMConstructor.js";
+export const Error = (props) => {
+  const back = Button({ text: "Back", onClick: () => navigateTo("/") });
+
+  const p = P({
+    clasS: "lg",
+    text: "The page you are looking for does not exist or has been moved",
+  });
+
+  const h1 = H("h1", {
+    clasS: "xxxl",
+    text: "404 Not Found",
+  });
+
+  return html({
     el: "section",
-    style: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh",
-    },
-    children: [
-      com({
-        el: "h1",
-        text: "404 Not Found",
-      }),
-    ],
+    children: [DIV([h1, p, back], "flex col align-c gap-2")],
   });
 };

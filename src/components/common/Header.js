@@ -1,4 +1,4 @@
-import { com } from "../../services/builder.js";
+import { A, html, SVG } from "../../services/DOMConstructor.js";
 import { navigateTo } from "../../services/router.js";
 export const Header = () => {
   const handaleNavigation = (e) => {
@@ -9,45 +9,31 @@ export const Header = () => {
     }
   };
 
-  return com({
+  return html({
     el: "header",
     children: [
-      com({
+      html({
         el: "nav",
-        listeners: [
+        events: [
           {
             event: "click",
             callback: (e) => handaleNavigation(e),
           },
         ],
         children: navData.map(({ route, iconKey }) =>
-          com({
-            el: "a",
-            atr: [
-              { name: "data-route", value: route },
-              { name: "class", value: "nav-link" },
-            ],
-
-            children: [
-              com({
-                el: "svg",
-                ns: "http://www.w3.org/2000/svg",
-                atr: [
-                  { name: "class", value: "nav-icon" },
-                  { name: "viewBox", value: "0 0 17 17" },
-                ],
-                children: [
-                  com({
-                    el: "path",
-                    ns: "http://www.w3.org/2000/svg",
-                    atr: [
-                      { name: "stroke", value: "#fff" },
-                      { name: "d", value: svgPaths[iconKey] },
-                    ],
-                  }),
-                ],
-              }),
-            ],
+          A({
+            clasS: "nav-link",
+            data: route,
+            child: SVG("svg", {
+              clasS: "nav-icon",
+              viewBox: "0 0 17 17",
+              children: [
+                SVG("path", {
+                  stroke: "#fff",
+                  d: svgPaths[iconKey],
+                }),
+              ],
+            }),
           })
         ),
       }),

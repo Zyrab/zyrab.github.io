@@ -170,6 +170,24 @@ body {
 .p-2{
   padding: 2rem;
 }
+.pt-05{
+  padding-top: 0.5rem;
+}
+.pt-1{
+  padding-top: 1rem;
+}
+.pt-2{
+  padding-top: 2rem;
+}
+.pb-05{
+  padding-bottom: 0.5rem;
+}
+.pb-1{
+  padding-bottom: 1rem;
+}
+.pb-2{
+  padding-bottom: 2rem;
+}
 /* form */
 .form {
   display: flex;
@@ -258,23 +276,27 @@ header{
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--bg);
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+nav{
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem ;
+  border-bottom: #D9D9D9 solid 1px;
 }
 footer{
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  gap: 1rem;
   padding: 1rem;
+  margin-bottom: 5rem;
 }
 
-nav{
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  gap: 16px;
-  padding: 16px 28px;
-  border-bottom: #D9D9D9 solid 1px;
-}
 section{
   display: flex;
   flex-wrap: wrap;
@@ -287,15 +309,15 @@ section{
 .nav-icon{
   width: 32px;
   height: 32px;
+  fill:var(--bg)
   
 }
 .nav-icon:hover{
-  fill: #FFFFFF;
+  fill: var(--white);
   cursor: pointer;
 }
 .current {
-  fill: #FFFFFF;
-}
+  fill: var(--white);}
 
 
 .home-circle{
@@ -354,17 +376,22 @@ section{
 
 
 /* Responsive Grid */
-@media (min-width: 768px) {
-  nav{
+@media (min-width: 1280px) {
+  header{
     top: 0;
     bottom: auto;
   }
-  section{
-    padding: 6rem 1rem;
+  nav{
+    padding: 1rem;
   }
- 
-}
-
-@media (min-width: 1024px) {
-  
+  section{
+    padding: 6rem 8rem;
+  }
+  footer{
+    margin-bottom: 0;
+  }
+  .legal{
+    padding-left: 16rem;
+    padding-right: 16rem;
+  }
 }

@@ -1,30 +1,24 @@
-import { Planet } from "../components/Planet.js";
-import { com } from "../services/builder.js";
+import { html, H } from "../services/DOMConstructor.js";
 import { Button } from "../components/common/Button.js";
 import { navigateTo } from "../services/router.js";
 export const Home = () => {
-  return com({
+  return html({
     el: "section",
-    atr: [{ name: "class", value: "home" }],
     children: [
-      Planet(),
       Button({
         icon: "arrow",
         text: "Privacy Policy",
         onClick: () => navigateTo("/legal/privacy-policy/numbero"),
       }),
-      com({
-        el: "div",
-        atr: [{ name: "class", value: "home-hero" }],
+      html({
+        clasS: "home-hero",
         children: [
-          com({
-            el: "h2",
-            atr: [{ name: "class", value: "xxxl" }],
+          H("h2", {
+            clasS: "xxxl",
             text: "Plan, Design, Build",
           }),
-          com({
-            el: "h1",
-            atr: [{ name: "class", value: "xxl" }],
+          H("h1", {
+            clasS: "xxl",
             text: "I bring your Ideas to Life, with no boundaries",
           }),
         ],

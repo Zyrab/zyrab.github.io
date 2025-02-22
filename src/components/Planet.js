@@ -1,129 +1,134 @@
-import { com } from "../services/builder.js";
+// Get the WebGL context
+const canvas = document.getElementById("webglCanvas");
+const gl = canvas.getContext("webgl");
 
-export const Planet = () => {
-  const planetWrapper = com({
-    el: "div",
-    atr: [
-      { name: "class", value: "planet" },
-      { name: "id", value: "planet-wrapper" },
-    ],
-    style: { width: "400px", height: "400px", position: "relative" },
-  });
+// Resize canvas to full screen
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
-  const canvas = document.createElement("canvas");
-  canvas.setAttribute("id", "planet");
-  canvas.width = 400;
-  canvas.height = 400;
-  planetWrapper.appendChild(canvas);
+// Basic vertex shader (positions vertices in 3D)
+const vertexShaderSource = `
+    attribute vec3 position;
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+    void main() {
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+`;
 
-  requestAnimationFrame(animate); // Ensure animation starts after the canvas exists
+// Basic fragment shader (sets color)
+const fragmentShaderSource = `
+    precision mediump float;
+    void main() {
+        gl_FragColor = vec4(0.8, 0.8, 1.0, 1.0); // Light blue spaceship
+    }
+`;
 
-  return planetWrapper;
-};
-
-const animate = () => {
-  const canvas = document.getElementById("planet");
-  // const ctx = canvas.getContext("2d");
-
-  // const centerX = canvas.width / 2;
-  // const centerY = canvas.height / 2;
-  // const radius = Math.min(canvas.width, canvas.height) / 2;
-  // const numObjects = 45;
-  // const maxDistance = canvas.width / 2;
-  // // Load images
-  // const imagePaths = [
-  //   "../assets/logo.png",
-  //   "../assets/logo.png",
-  //   "../assets/logo.png",
-  //   "../assets/logo.png",
-  //   "../assets/logo.png",
-  // ];
-  // const images = imagePaths.map((src) => {
-  //   const img = new Image();
-  //   img.src = src;
-  //   return img;
-  // });
-
-  // const objects = Array.from({ length: numObjects }, () => ({
-  //   x: Math.random() * (canvas.width + 2 * maxDistance) - maxDistance,
-  //   y: Math.random() * canvas.height,
-  //   baseSize: Math.random() * 20 + 2,
-  //   speed: 0.5,
-  //   aspectRatio: Math.random() * 0.5 + 0.75, // Some objects are not perfect squares
-  //   rotation: Math.random() * Math.PI * 2, // Random initial rotation
-  //   img: images[Math.floor(Math.random() * images.length)], // Random image
-  // }));
-
-  // function draw() {
-  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  //   // Circular clipping mask
-  //   ctx.save();
-  //   ctx.beginPath();
-  //   ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-  //   ctx.closePath();
-  //   ctx.clip();
-
-  //   // Background
-  //   ctx.fillStyle = "black";
-  //   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  //   // Draw image
-  //   const img = new Image();
-  //   img.src = "../assets/logo.png";
-
-  //   ctx.save();
-  //   ctx.translate(centerX, centerY);
-  //   ctx.drawImage(img, -30, -50, 40 * 2, 60 * 2);
-
-  //   ctx.restore();
-  //   requestAnimationFrame(draw);
-  // }
-
-  // draw();
-  const ctx = canvas.getContext("2d");
-
-  let angle = 0; // Angle for movement
-  let orbitRadius = 50; // Orbit radius (distance from center)
-  let rectWidth = 20; // Object width
-  let rectHeight = 50; // Object height
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    let centerX = canvas.width / 2;
-    let centerY = canvas.height / 2;
-
-    // Calculate object position in orbit
-    let objectX = centerX + Math.cos(angle) * orbitRadius;
-    let objectY = centerY + Math.sin(angle) * orbitRadius;
-
-    // Perspective effect: Simulate Z-depth (closer = bigger, farther = smaller)
-    let perspectiveScale = 0.5 + 0.5 * Math.cos(angle); // Range: 0 to 1
-    let scaledWidth = rectWidth * perspectiveScale;
-    let scaledHeight = rectHeight * perspectiveScale;
-
-    // Angle to face the center
-    let facingAngle = Math.atan2(centerY - objectY, centerX - objectX);
-
-    ctx.save();
-    ctx.translate(objectX, objectY);
-    ctx.rotate(facingAngle); // Rotate to face center
-
-    // Draw the rectangle (always facing center)
-    ctx.fillStyle = "blue";
-    ctx.fillRect(
-      -scaledWidth / 2,
-      -scaledHeight / 2,
-      scaledWidth,
-      scaledHeight
-    );
-
-    ctx.restore();
-
-    angle += 0.05; // Adjust speed
-    requestAnimationFrame(draw);
+// Compile shaders
+function compileShader(gl, source, type) {
+  const shader = gl.createShader(type);
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    console.error("Shader error: ", gl.getShaderInfoLog(shader));
+    return null;
   }
+  return shader;
+}
 
-  draw();
-};
+// Create shader program
+const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
+const fragmentShader = compileShader(
+  gl,
+  fragmentShaderSource,
+  gl.FRAGMENT_SHADER
+);
+const shaderProgram = gl.createProgram();
+gl.attachShader(shaderProgram, vertexShader);
+gl.attachShader(shaderProgram, fragmentShader);
+gl.linkProgram(shaderProgram);
+gl.useProgram(shaderProgram);
+
+// Define a simple spaceship (Replace this with a model loader)
+const spaceshipVertices = new Float32Array([
+  0.0,
+  0.5,
+  0.0, // Top
+  -0.5,
+  -0.5,
+  0.5, // Bottom left
+  0.5,
+  -0.5,
+  0.5, // Bottom right
+
+  0.0,
+  0.5,
+  0.0, // Top
+  0.5,
+  -0.5,
+  0.5, // Bottom right
+  0.5,
+  -0.5,
+  -0.5, // Back right
+
+  0.0,
+  0.5,
+  0.0, // Top
+  0.5,
+  -0.5,
+  -0.5, // Back right
+  -0.5,
+  -0.5,
+  -0.5, // Back left
+
+  0.0,
+  0.5,
+  0.0, // Top
+  -0.5,
+  -0.5,
+  -0.5, // Back left
+  -0.5,
+  -0.5,
+  0.5, // Bottom left
+]);
+
+// Create WebGL buffer
+const vertexBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+gl.bufferData(gl.ARRAY_BUFFER, spaceshipVertices, gl.STATIC_DRAW);
+
+// Link shader attributes
+const positionAttrib = gl.getAttribLocation(shaderProgram, "position");
+gl.enableVertexAttribArray(positionAttrib);
+gl.vertexAttribPointer(positionAttrib, 3, gl.FLOAT, false, 0, 0);
+
+// Set up matrices
+const modelViewMatrix = new Float32Array([
+  1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -2, 0, 0, 0, 1,
+]);
+
+const projectionMatrix = new Float32Array([
+  1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, -1.01, -1, 0, 0, -0.02, 0,
+]);
+
+// Send matrices to the shader
+const modelViewMatrixLoc = gl.getUniformLocation(
+  shaderProgram,
+  "modelViewMatrix"
+);
+const projectionMatrixLoc = gl.getUniformLocation(
+  shaderProgram,
+  "projectionMatrix"
+);
+gl.uniformMatrix4fv(modelViewMatrixLoc, false, modelViewMatrix);
+gl.uniformMatrix4fv(projectionMatrixLoc, false, projectionMatrix);
+
+// Render loop
+function drawScene() {
+  gl.clearColor(0, 0, 0, 1); // Black background
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.drawArrays(gl.TRIANGLES, 0, spaceshipVertices.length / 3);
+  requestAnimationFrame(drawScene);
+}
+drawScene();

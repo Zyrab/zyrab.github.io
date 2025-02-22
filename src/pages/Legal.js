@@ -1,4 +1,4 @@
-import { com } from "../services/builder.js";
+import { html, H, P } from "../services/DOMConstructor.js";
 
 export const Legal = async (props) => {
   const dynamicText = (text, placeholders) => {
@@ -7,45 +7,34 @@ export const Legal = async (props) => {
   const response = await fetch(`../../data/${props.legal}.json`);
   const legals = await response.json();
   const thisApp = legals[props.app];
-  return com({
+  return html({
     el: "section",
     children: [
-      com({
-        atr: [{ name: "class", value: "w-100 p-2 left flex col gap-1" }],
+      html({
+        clasS: "w-100 p-1 left flex col gap-2 legal",
         children: [
-          com({
-            el: "h1",
-            atr: [{ name: "class", value: "xxxl" }],
-            text: legals.title,
-          }),
-          com({
-            el: "hr",
-          }),
-          com({
-            el: "p",
-            atr: [{ name: "class", value: "xxl" }],
+          H("h1", { clasS: "xxl", text: legals.title }),
+          html({ el: "hr" }),
+          P({
+            clasS: "xl",
             text: dynamicText(legals.intro, {
               "app-name": thisApp.name,
               "app-type": thisApp.type,
             }),
           }),
-          com({
-            children: thisApp.text.map((item) => content(item)),
-          }),
-          com({
+          thisApp.text.map((item) => content(item)),
+          html({
             el: "hr",
             style: { border: "none", borderTop: "1px dashed ", width: "100%" },
           }),
-          com({
-            el: "p",
-            atr: [{ name: "class", value: "xl" }],
+          P({
+            clasS: "lg",
             text: dynamicText(legals.contact, {
               "app-name": thisApp.name,
             }),
           }),
-          com({
-            el: "p",
-            atr: [{ name: "class", value: "xxl" }],
+          P({
+            clasS: "xl",
             text: dynamicText(legals.conclusion, {
               "app-name": thisApp.name,
             }),
@@ -56,24 +45,16 @@ export const Legal = async (props) => {
   });
 };
 
-const content = (content) => {
-  return com({
-    atr: [{ name: "class", value: "flex col gap-1" }],
+const content = (con) => {
+  return html({
+    clasS: "flex col gap-1",
     children: [
-      com({
-        el: "h3",
-        atr: [{ name: "class", value: "xxl" }],
-        text: content.title,
-      }),
-      com({
+      H("h3", { clasS: "xl", text: con.title }),
+      html({
         el: "hr",
         style: { border: "none", borderTop: "1px dashed ", width: "100%" },
       }),
-      com({
-        el: "p",
-        atr: [{ name: "class", value: "xl" }],
-        text: content.text,
-      }),
+      P({ clasS: "lg", text: con.text }),
     ],
   });
 };
