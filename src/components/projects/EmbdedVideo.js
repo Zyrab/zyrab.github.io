@@ -5,7 +5,7 @@ export const EmbdedVideo = (src) => {
     el: "iframe",
     style: { width: "100%", height: "100%" },
     attributes: {
-      src: src,
+      src: `https://www.youtube.com/embed/${src}`,
       frameborder: "0",
       allow:
         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
