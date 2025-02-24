@@ -11,12 +11,16 @@ export const onClass = (id, { add, remove, toggle }) => {
   toggle && element.classList.toggle(toggle);
 };
 
-export const onReplace = (event, targetClass, replaceWith, newClass) => {
-  let targetContainer = event.target.closest(targetClass);
+export const onReplace = (e, targetClass, replaceWith, newClass) => {
+  let targetContainer = e.target.closest(targetClass);
+
   if (targetContainer) {
+    const props = targetContainer.dataset.props
+      ? JSON.parse(targetContainer.dataset.props)
+      : {};
     targetContainer.replaceChildren();
     targetContainer.classList.remove(targetClass);
-    replaceWith && targetContainer.classList.add(newClass);
-    targetContainer.append(replaceWith);
+    newClass && targetContainer.classList.add(newClass);
+    targetContainer.append(replaceWith(props.data));
   }
 };
