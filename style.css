@@ -188,6 +188,9 @@ body {
 .pb-2{
   padding-bottom: 2rem;
 }
+.relative{
+  position: relative;
+}
 /* form */
 .form {
   display: flex;
@@ -280,6 +283,7 @@ header{
   width: 100%;
   position: fixed;
   bottom: 0;
+  z-index: 10;
 }
 nav{
   display: flex;
@@ -372,6 +376,12 @@ section{
   padding: 16px 28px;
   color: #D9D9D9;
   background-color: #333333;
+}
+
+.play-button:hover{
+  cursor: pointer;
+  scale: 1.1;
+  transition: all 0.2s ease-in-out;
 }
 
 

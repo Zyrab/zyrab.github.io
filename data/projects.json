@@ -2,7 +2,8 @@
   {
     "id": 1,
     "title": "Numbero",
-    "image": "assets/numbero.png",
+    "image": "numbero-thumb.png",
+    "video": "tAYid23nNqzBKMs4",
     "description": "Game/App with simple logic and vast game related content made using React-Native, Expo and Firebase.",
     "date": "03.2024 - 11.2024",
     "tech": ["figma", "react-native", "expo", "firebase", "github"],
@@ -30,11 +31,12 @@
   {
     "id": 4,
     "title": "KEI Holding",
+    "image": "KEI-thumb.png",
     "description": "Real estate Website. i build its front-end using Vue.js and tailwind.css.",
     "date": "03.2024 - 07.2024",
     "tech": ["figma", "vue-js", "tailwindcss", "github"],
     "buttonText": "Web",
-    "icon": "web"
+    "icon": "domain"
   },
   {
     "id": 5,
@@ -43,6 +45,6 @@
     "date": "03.2024 - 07.2024",
     "tech": ["unity"],
     "buttonText": "Web",
-    "icon": "web"
+    "icon": "domain"
   }
 ]
