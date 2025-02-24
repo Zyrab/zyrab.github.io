@@ -6,7 +6,10 @@ import { Legal } from "../pages/Legal.js";
 import { Error } from "../pages/Error.js";
 
 const routes = {
-  "/": { component: Home, meta: { title: "Home", description: "Home" } },
+  "/": {
+    component: Home,
+    meta: { title: "Home", description: "Home" },
+  },
   "/projects": {
     children: {
       "/:id": {
@@ -50,6 +53,9 @@ const routes = {
   },
 };
 
+const scrollPositions = {};
+let previousUrl = "";
+
 export const router = () => {
   const main = document.createElement("main");
   main.id = "main";
@@ -63,28 +69,32 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path) => {
+  previousUrl = path;
   const { segments, pureUrl } = parseUrl(path);
   const { routeData, params } = matchNestedRoute(segments);
   const changed = pushStateGuard(pureUrl);
   if (!changed) return;
   setActiveNav(segments[0]);
   await renderPage(routeData, params);
+  restoreScrollPosition();
 };
 
 const initRouter = async () => {
+  saveScrollPosition(previousUrl);
   const url = window.location.pathname + window.location.hash;
+  previousUrl = url;
   const { segments, pureUrl } = parseUrl(url);
   const { routeData, params } = matchNestedRoute(segments);
-  pushStateGuard(pureUrl);
   setActiveNav(segments[0]);
   await renderPage(routeData, params);
+  restoreScrollPosition();
 };
 
 export const goBack = () => history.back();
 
 const pushStateGuard = (url) => {
-  // to prevent unnecessary pushState
   if (window.location.pathname + window.location.hash !== url) {
+    saveScrollPosition();
     history.pushState(null, null, url);
     return true;
   }
@@ -106,30 +116,24 @@ const renderPage = async (routeData, params) => {
   const main = document.getElementById("main");
   try {
     const content = await component(params);
-    // Ensure the main container is cleared before rendering new content
     main.replaceChildren();
-
     if (content instanceof HTMLElement) {
-      // If the component returns a DOM element, append it directly
       main.appendChild(content);
       document.title = meta.title;
       document
         .querySelector("meta[name='description']")
         .setAttribute("content", meta.description);
     } else if (typeof content === "string") {
-      // If the component returns a string, create a text node to prevent XSS
       const wrapper = document.createElement("div");
-      wrapper.textContent = content; // Set content as plain text
+      wrapper.textContent = content;
       main.appendChild(wrapper);
     } else {
       throw new Error("Unsupported component output type");
     }
   } catch (error) {
     console.error("Rendering error:", error);
-    // Render a fallback error message safely
     const errorPage = Error({ error: error.message });
     main.replaceChildren();
-
     main.appendChild(errorPage);
   }
 };
@@ -146,12 +150,11 @@ const parseUrl = (url) => {
 };
 
 const matchNestedRoute = (segments) => {
-  // If there are no segments, return the default route
-  if (!segments.length)
-    return { routeData: routes["/"] || routes["*"], params: {} };
+  if (!segments.length) return { routeData: routes["/"] || routes["*"] };
+
   let current = routes;
   let params = {};
-  // Iterate through the segments
+
   for (const segment of segments) {
     if (current[segment]) {
       // exact match found go deeper
@@ -160,7 +163,6 @@ const matchNestedRoute = (segments) => {
       // look for dynamic route
       const key = Object.keys(current).find((key) => key.includes(":"));
       if (!key) return { routeData: routes["*"], params: {} };
-      // extract param value
       const parmName = key.split(":")[1];
       params = { ...params, [parmName]: segment.split("/")[1] };
       current = current[key];
@@ -172,8 +174,20 @@ const matchNestedRoute = (segments) => {
   // we send for rendering default child if component doesnt exists
   let defaultChild = current.component ? current : current["/"] || routes["*"];
 
-  // Return the matched component and parameters
   return { params, routeData: defaultChild };
+};
+const saveScrollPosition = (oldPath) => {
+  let location = oldPath || window.location.pathname;
+  scrollPositions[location] = window.scrollY;
+};
+
+const restoreScrollPosition = () => {
+  const position = scrollPositions[window.location.pathname];
+  if (position) {
+    window.scrollTo(0, position);
+  } else {
+    window.scrollTo(0, 0);
+  }
 };
 
 const log = (t, l) => console.log(t + ":", l);
