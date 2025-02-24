@@ -1,7 +1,8 @@
 import { H, html, INPUT, IMG, TEXTAREA } from "../services/DOMConstructor.js";
 import { Button } from "../components/common/Button.js";
 import { Icons8 } from "../components/common/Icons8.js";
-export const Contact = () => {
+import { Projects } from "./Projects.js";
+export const Contact = async () => {
   return html({
     el: "section",
     children: [
@@ -54,27 +55,31 @@ export const Contact = () => {
                 icon: "github",
                 size: "2rem",
                 link: "https://github.com/Zyrab",
-                custum: "ios-glyphs/30/",
+                custum: "/fluency-systems-regular/ffffff/32/",
               }),
               Icons8({
                 icon: "linkedin",
                 size: "2rem",
                 link: "https://github.com/Zyrab",
+                custum: "/fluency-systems-regular/ffffff/32/",
               }),
               Icons8({
-                icon: "gmail--v1",
+                icon: "gmail",
                 size: "2rem",
                 link: "https://github.com/Zyrab",
+                custum: "/fluency-systems-regular/ffffff/32/",
               }),
               Icons8({
                 icon: "phone",
                 size: "2rem",
                 link: "https://github.com/Zyrab",
+                custum: "/fluency-systems-regular/ffffff/32/",
               }),
             ],
           }),
         ],
       }),
+      await Projects(),
     ],
   });
 };
