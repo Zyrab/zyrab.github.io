@@ -19,6 +19,8 @@ export const html = ({
 };
 
 export const DIV = (children = [], clasS) => html({ clasS, children });
+export const SPAN = ({ children = [], style = {}, clasS }) =>
+  html({ el: "span", style, clasS, children });
 export const P = ({ text, clasS, ID }) =>
   html({ el: "p", clasS, ID, children: [text] });
 export const H = (el, { text, clasS, ID }) =>
@@ -39,62 +41,32 @@ export const SVG = (
     children,
   });
 export const A = ({ href, target, data, style, text, clasS, ID, child }) => {
-  const attributes = {};
-  if (href) attributes.href = href;
-  if (target) attributes.target = target;
-  if (data) attributes["data-route"] = data;
   return html({
     el: "a",
     clasS,
     style,
     ID,
-    attributes, // Only includes href and target if they exist
+    attributes: { href, target, "data-route": data }, // Only includes href and target if they exist
     children: [text || "", child || ""],
   });
 };
 
 export const FORM = ({ action, method, children }) =>
   html({ el: "form", attributes: { action, method }, children });
-export const INPUT = ({
-  type = "text",
-  placeholder = "",
-  name = "",
-  id = "",
-  value = "",
-  clasS,
-}) =>
+export const INPUT = ({ type = "text", placeholder, name, id, value, clasS }) =>
   html({
     el: "input",
     clasS,
     attributes: { type, placeholder, name, id, value },
   });
-export const TEXTAREA = ({
-  placeholder = "",
-  name = "",
-  id = "",
-  value = "",
-  clasS,
-  rows = "",
-  cols = "",
-}) =>
+export const TEXTAREA = ({ placeholder, name, id, value, clasS, rows, cols }) =>
   html({
     el: "textarea",
     clasS,
     attributes: { placeholder, name, id, value, rows, cols },
   });
-export const onStyle = (id, style) => {
-  let element = document.getElementById(id);
-  Object.assign(element.style, style);
-};
 
-export const onClass = (id, { add, remove, toggle }) => {
-  let element = document.getElementById(id);
-  add && setClassList(element, add);
-  remove && setClassList(element, remove, true);
-  toggle && element.classList.toggle(toggle);
-};
-
-const setClassList = (element, classes, remove = false) => {
+export const setClassList = (element, classes, remove = false) => {
   if (!classes) return;
   let action = remove ? "remove" : "add";
   let classList = classes.split(" ").filter(Boolean);
@@ -120,6 +92,9 @@ const setAttributes = (element, atrs) => {
     const value = atrs[key];
     if (key.toLowerCase().startsWith("on")) {
       console.warn("You can't set events from atributes", key);
+      return;
+    }
+    if (!atrs[key]) {
       return;
     }
     element.setAttribute(key, value);
