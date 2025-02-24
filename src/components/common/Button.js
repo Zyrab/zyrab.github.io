@@ -1,14 +1,14 @@
 import { html, P } from "../../services/DOMConstructor.js";
 import { Icons8 } from "./Icons8.js";
 
-export const Button = ({ icon, atr = {}, text, onClick }) => {
-  let listener = onClick ? { event: "click", callback: onClick } : "";
+export const Button = ({ icon, atr = {}, text, onClick, type = "button" }) => {
+  let listener = onClick ? { click: onClick } : "";
   return html({
     el: "button",
     clasS: "btn-default",
-    attributes: { type: "button", ...atr },
+    attributes: { type, ...atr },
 
-    events: [listener],
+    events: listener,
     children: [
       icon ? Icons8({ icon }) : "",
       P({

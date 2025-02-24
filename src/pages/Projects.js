@@ -1,14 +1,15 @@
 import { ProjectCard } from "../components/projects/ProjectCard.js";
 import { html } from "../services/DOMConstructor.js";
+import { onReplace } from "../services/DinamicDOM.js";
+import { EmbdedVideo } from "../components/projects/EmbdedVideo.js";
 export const Projects = async () => {
-  // Fetch the JSON file
   const response = await fetch("data/projects.json");
   const projects = await response.json();
-  // Map over the projects and generate HTML
-
+  const handlePlayVideo = (e) => onReplace(e, ".toChange", EmbdedVideo);
   return html({
     el: "section",
     clasS: "projects",
+    events: { click: handlePlayVideo },
     children: projects.map((project) => ProjectCard(project)),
   });
 };

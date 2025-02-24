@@ -1,6 +1,6 @@
 import { IMG, DIV, SPAN } from "../../services/DOMConstructor.js";
 
-export const ProjectImage = (project, video = false) => {
+export const ProjectImage = (project) => {
   return DIV(
     [
       IMG({
@@ -9,7 +9,7 @@ export const ProjectImage = (project, video = false) => {
         ID: project.id,
         clasS: "w-100 h-100",
       }),
-      video
+      project.video
         ? SPAN({
             clasS: "play-button",
             style: {

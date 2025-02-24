@@ -1,8 +1,14 @@
 import { H, html, INPUT, IMG, TEXTAREA } from "../services/DOMConstructor.js";
 import { Button } from "../components/common/Button.js";
 import { Icons8 } from "../components/common/Icons8.js";
-import { Projects } from "./Projects.js";
-export const Contact = async () => {
+export const Contact = () => {
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    data.forEach((value, name) => {
+      console.log(name, value);
+    });
+  };
   return html({
     el: "section",
     children: [
@@ -10,6 +16,7 @@ export const Contact = async () => {
         el: "form",
         clasS: "form",
         ID: "contact-form",
+        events: { submit: handleFormSubmit },
         children: [
           H("h2", {
             clasS: "xxxl center p-1",
@@ -17,29 +24,30 @@ export const Contact = async () => {
             text: "Get in Touch",
           }),
           INPUT({
-            placeholder: "Your Name",
+            placeholder: "name",
             name: "name",
             id: "name",
             type: "text",
             clasS: "form-input",
           }),
           INPUT({
-            placeholder: "Your Email",
+            placeholder: "email",
             name: "email",
             id: "email",
             type: "email",
             clasS: "form-input",
           }),
           TEXTAREA({
-            placeholder: "Your Message",
+            placeholder: "message",
             name: "message",
             id: "message",
             clasS: "form-input",
             rows: "5",
           }),
-          Button({ text: "Send" }),
+          Button({ text: "Send", type: "submit" }),
         ],
       }),
+
       html({
         clasS: "flex col gap-2 p-2",
         children: [
@@ -79,7 +87,6 @@ export const Contact = async () => {
           }),
         ],
       }),
-      await Projects(),
     ],
   });
 };

@@ -14,12 +14,7 @@ export const Header = () => {
     children: [
       html({
         el: "nav",
-        events: [
-          {
-            event: "click",
-            callback: (e) => handaleNavigation(e),
-          },
-        ],
+        events: { click: (e) => handaleNavigation(e) },
         children: navData.map(({ route, iconKey }) =>
           A({
             clasS: "nav-link",
