@@ -3,7 +3,7 @@ export const html = ({
   clasS,
   ID,
   attributes = {},
-  events = [],
+  events = {},
   style = {},
   ns = null, // Add `ns` prop for namespace
   children = [],
@@ -19,6 +19,13 @@ export const html = ({
 };
 
 export const DIV = (children = [], clasS) => html({ clasS, children });
+export const SWAPPER = ({ children = [], clasS, data, ID }) =>
+  html({
+    clasS,
+    attributes: { "data-props": JSON.stringify({ data }) },
+    ID,
+    children,
+  });
 export const SPAN = ({ children = [], style = {}, clasS }) =>
   html({ el: "span", style, clasS, children });
 export const P = ({ text, clasS, ID }) =>
@@ -101,10 +108,12 @@ const setAttributes = (element, atrs) => {
   });
 };
 
-const addEventListeners = (element, listeners) => {
-  listeners.forEach(({ event, callback, options }) => {
-    if (event && typeof callback === "function") {
-      element.addEventListener(event, callback, options);
+const addEventListeners = (element, events) => {
+  Object.entries(events).forEach(([event, value]) => {
+    if (typeof value === "function") {
+      element.addEventListener(event, value);
+    } else if (value && typeof value.callback === "function") {
+      element.addEventListener(event, value.callback, value.options);
     }
   });
 };
