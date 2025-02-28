@@ -161,6 +161,9 @@ body {
 .w-30{
   width: 30%;
 }
+.max-w-550{
+  max-width: 550px;
+}
 .p-05{
   padding: 0.5rem;
 }
@@ -190,6 +193,15 @@ body {
 }
 .relative{
   position: relative;
+}
+.bg-greysh{
+  background-color: var(--greysh);
+}
+.bg-black{
+  background-color: var(--black);
+}
+.overflowX-auto{
+  overflow-x: auto;
 }
 /* form */
 .form {
@@ -382,6 +394,31 @@ section{
   cursor: pointer;
   scale: 1.1;
   transition: all 0.2s ease-in-out;
+}
+
+.keyword,.operator{
+  color: violet;
+}
+.string{
+  color: gold;
+}
+.number, .tag {
+  color:rgb(196, 144, 13);
+}
+.boolean{
+  color: red;
+  font-style: italic;
+}
+.function{
+  color: #82AAFF;
+  font-style: italic;
+}
+.comment{
+  color: rgb(133, 133, 133);
+}
+.object, .attribute{
+  color:aqua;
+  font-style: italic;
 }
 
 
