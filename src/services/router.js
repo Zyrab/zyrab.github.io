@@ -1,4 +1,6 @@
 import { Home } from "../pages/Home.js";
+import { Blog } from "../pages/Blog.js";
+import { BlogPost } from "../components/blog/BlogPost.js";
 import { Projects } from "../pages/Projects.js";
 import { ProjectPage } from "../components/projects/ProjectPage.js";
 import { Contact } from "../pages/Contact.js";
@@ -19,6 +21,19 @@ const routes = {
       "/": {
         component: Projects,
         meta: { title: "Projects", description: "Projects" },
+      },
+    },
+  },
+  "/blog": {
+    component: Blog,
+    children: {
+      "/:slug": {
+        component: BlogPost,
+        meta: { title: "Blog", description: "Blog" },
+      },
+      "/": {
+        component: Blog,
+        meta: { title: "Blog", description: "Blog" },
       },
     },
   },
@@ -69,6 +84,7 @@ export const initializeRouter = () => {
 };
 
 export const navigateTo = async (path) => {
+  saveScrollPosition(previousUrl);
   previousUrl = path;
   const { segments, pureUrl } = parseUrl(path);
   const { routeData, params } = matchNestedRoute(segments);
@@ -85,6 +101,7 @@ const initRouter = async () => {
   previousUrl = url;
   const { segments, pureUrl } = parseUrl(url);
   const { routeData, params } = matchNestedRoute(segments);
+  pushStateGuard(pureUrl);
   setActiveNav(segments[0]);
   await renderPage(routeData, params);
   restoreScrollPosition();
@@ -94,7 +111,6 @@ export const goBack = () => history.back();
 
 const pushStateGuard = (url) => {
   if (window.location.pathname + window.location.hash !== url) {
-    saveScrollPosition();
     history.pushState(null, null, url);
     return true;
   }
