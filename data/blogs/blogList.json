@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "understanding-how-routing-works-in-spa",
+    "id": 1,
+    "title": "Understanding How Routing Works in SPA",
+    "date": "18.02.2025",
+    "intro": "I'v tried to built SPA, and here i explain the basics of how routing works..."
+  },
+  {
+    "slug": "understanding-how-routing-works-in-spa",
+    "id": 2,
+    "title": "Understanding How Routing Works in SPA",
+    "date": "18.02.2025",
+    "intro": "If you've ever wondered how frameworks handle routing and what it takes to build one, let's break it down and create a simple routing system ourselves."
+  },
+  {
+    "slug": "understanding-how-routing-works-in-spa",
+    "id": 3,
+    "title": "Understanding How Routing Works in SPA",
+    "date": "18.02.2025",
+    "intro": "If you've ever wondered how frameworks handle routing and what it takes to build one, let's break it down and create a simple routing system ourselves."
+  },
+  {
+    "slug": "understanding-how-routing-works-in-spa",
+    "id": 4,
+    "title": "Understanding How Routing Works in SPA",
+    "date": "18.02.2025",
+    "intro": "If you've ever wondered how frameworks handle routing and what it takes to build one, let's break it down and create a simple routing system ourselves."
+  }
+]

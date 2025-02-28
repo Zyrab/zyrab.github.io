@@ -1,0 +1,82 @@
+{
+  "H1": "Understanding How Routing Works in SPA",
+  "date": "18.02.2025",
+  "intro": "If you've ever wondered how frameworks handle routing and what it takes to build one, let's break it down and create a simple routing system ourselves.",
+  "sections": [
+    {
+      "h2": "How Browsers Handle Navigation",
+      "content": [
+        {
+          "p": "By default, browsers load each page separately from the server. When you visit a website and navigate to another page, the browser requests a new page from the server and loads it."
+        },
+        {
+          "p": "But in a Single Page Application (SPA), we don't want this to happen. Instead, we load everything upfront and dynamically change what's displayed using JavaScript—without making new page requests."
+        }
+      ]
+    },
+    {
+      "h2": "Hash-Based Routing (#/url)",
+      "content": [
+        {
+          "p": "The simplest way to implement custom navigation in an SPA is by using hash-based routing."
+        },
+        { "code": "<a href='#/home'>Home</a>", "syntax": "html" },
+        {
+          "p": "#(hash) is ignored by the server, meaning site.com/ and site.com/#/home load the same initial page. However, changing the hash updates the URL and affects browser history, allowing navigation without full page reloads."
+        },
+        {
+          "p": "To determine which content to display, we can use the <code>Location</code> API to read the hash value:"
+        },
+        {
+          "code": "console.log(window.location.hash); // Returns the current hash (e.g., '#/home')",
+          "syntax": "js"
+        },
+        {
+          "p": "With this, we can dynamically change what's displayed on the page based on the URL."
+        },
+        {
+          "p": "While it works fine for small projects, hash routing has some problems:"
+        },
+        {
+          "ul": [
+            "Not great for SEO—search engines ignore #/urls.",
+            "Messy URLs compared to clean /about, /contact.",
+            "Some analytics & social tools might not track #/urls properly."
+          ]
+        },
+        { "p": "For bigger projects, history-based routing is the way to go." }
+      ]
+    },
+    {
+      "h2": "History-Based Routing (/url)",
+      "content": [
+        {
+          "p": "With the History API, we can get clean URLs like /about instead of #/about."
+        },
+        {
+          "code": "<a class='nav-link' data-route='/home'>Home</a> ",
+          "syntax": "html"
+        },
+        { "p": "Then we intercept the click event:" },
+        {
+          "code": "document.addEventListener('click', (e) => {\n  const navLink = e.target.closest('.nav-link');\n  if (navLink) { e.preventDefault(); // Stop full-page reload\n  const route = navLink.getAttribute('data-route');\n  navigateTo(route);\n  }\n});",
+          "syntax": "js"
+        },
+        {
+          "p": "And use history.pushState() to update the URL without refreshing the page:"
+        },
+        {
+          "code": "const navigateTo = (url) => {\n  if (window.location.pathname !== url) {\n   history.pushState(null, null, url);\n }\n\n  renderPage(routes[url]); \n};",
+          "syntax": "js"
+        },
+        {
+          "p": "Let's set up a simple route object, where keys are paths and values HTML elements (or functions returning elements):"
+        },
+        {
+          "code": "const Home = document.createElement('div');\nHome.innerHTML = '<h1>Home Page</h1>';\n\nconst About = document.createElement('div');\nAbout.innerHTML = '<h1>About Page</h1>';\n\nconst Error = document.createElement('div');\nError.innerHTML = '<h1>Error Page</h1>';\n\nconst routes = {\n  '/': Home,\n  '/about': About,\n  '*': Error, // Handles unknown routes\n};",
+          "syntax": "js"
+        }
+      ]
+    }
+  ]
+}
