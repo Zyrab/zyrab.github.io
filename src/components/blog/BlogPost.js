@@ -3,10 +3,21 @@ import { CodeJS } from "./CodeJS.js";
 import { fetchJson } from "../../services/fetch.js";
 export const BlogPost = async (props) => {
   const { slug } = props;
+
+  const handleCopyCode = (e) => {
+    let button = e.target.closest(".copycode");
+    if (button) {
+      let code = button.getAttribute("data-code");
+      navigator.clipboard
+        .writeText(code)
+        .then(() => (button.textContent = "Copied!"));
+      setTimeout(() => (button.textContent = "Copy"), 1000);
+    }
+  };
   const post = await fetchJson(`../../data/blogs/${slug}.json`);
-  const title = H("h1", { clasS: "xxl", text: post.title });
-  const date = P({ clasS: "md right", text: post.date });
-  const intro = P({ clasS: "md h-60", text: post.intro });
+  const title = H("h1", { clasS: "xxxl bege", text: post.title });
+  const date = P({ clasS: "md", text: post.date });
+  const intro = P({ clasS: "xl", text: post.intro });
   const content = (content) => {
     return content.map((item) => {
       let key = Object.keys(item)[0]; // Extract the first (and only) key
@@ -15,7 +26,7 @@ export const BlogPost = async (props) => {
       else return paragraph(item.p);
     });
   };
-  const paragraph = (text) => P({ clasS: "md", text: text });
+  const paragraph = (text) => P({ clasS: "lg", text: text });
   const UL = (list) => {
     console.log(list);
     return html({
@@ -28,9 +39,9 @@ export const BlogPost = async (props) => {
 
   const sections = post.sections.map((section) => {
     return html({
-      clasS: "flex col gap-1 p-2",
+      clasS: "flex col gap-1",
       children: [
-        H("h2", { clasS: "xl", text: section.h2 }),
+        H("h2", { clasS: "xl bege", text: section.title }),
         content(section.content),
       ],
     });
@@ -38,7 +49,8 @@ export const BlogPost = async (props) => {
 
   return html({
     el: "article",
-    clasS: "flex col gap-1 p-2 ",
+    clasS: "blog-post",
+    events: { click: handleCopyCode },
     children: [title, date, intro, sections],
   });
 };

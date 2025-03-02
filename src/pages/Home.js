@@ -4,6 +4,7 @@ import { navigateTo } from "../services/router.js";
 export const Home = () => {
   return html({
     el: "section",
+    clasS: "page",
     children: [
       Button({
         icon: "arrow",

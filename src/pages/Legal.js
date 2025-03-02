@@ -9,6 +9,7 @@ export const Legal = async (props) => {
   const thisApp = legals[props.app];
   return html({
     el: "section",
+    clasS: "page",
     children: [
       html({
         clasS: "w-100 p-1 left flex col gap-2 legal",

@@ -3,7 +3,6 @@ import { H } from "../../services/DOMConstructor.js";
 export const codeParser = (code, name) => {
   let styledCode = [];
   let lastIndex = 0;
-  let counter = 0;
   while (lastIndex < code.length) {
     let bestMatch = null;
     let bestPattern = null;
@@ -13,7 +12,6 @@ export const codeParser = (code, name) => {
       let regex = new RegExp(pattern.pattern, "g");
       regex.lastIndex = lastIndex;
       let match = regex.exec(code);
-      console.log(counter++);
 
       if (match && (!bestMatch || match.index < bestMatch.index)) {
         bestMatch = match;

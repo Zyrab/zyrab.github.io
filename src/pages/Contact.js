@@ -11,6 +11,7 @@ export const Contact = () => {
   };
   return html({
     el: "section",
+    clasS: "page",
     children: [
       html({
         el: "form",

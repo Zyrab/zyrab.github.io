@@ -4,7 +4,7 @@
     "id": 1,
     "title": "Understanding How Routing Works in SPA",
     "date": "18.02.2025",
-    "intro": "I'v tried to built SPA, and here i explain the basics of how routing works..."
+    "intro": "I'v tried to built SPA, and here i explain the basics of how routing works, and how to build a simple routing system ourselves..."
   },
   {
     "slug": "understanding-how-routing-works-in-spa",

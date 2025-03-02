@@ -1,38 +1,40 @@
 {
-  "H1": "Understanding How Routing Works in SPA",
-  "date": "18.02.2025",
-  "intro": "If you've ever wondered how frameworks handle routing and what it takes to build one, let's break it down and create a simple routing system ourselves.",
+  "title": "Understanding How Routing Works in SPA",
+  "intro": "If you’ve ever wondered how frameworks handle routing and what it takes to build one, let’s break it down and create a simple routing system ourselves.",
   "sections": [
     {
-      "h2": "How Browsers Handle Navigation",
+      "title": "How Browsers Handle Navigation",
       "content": [
         {
           "p": "By default, browsers load each page separately from the server. When you visit a website and navigate to another page, the browser requests a new page from the server and loads it."
         },
         {
-          "p": "But in a Single Page Application (SPA), we don't want this to happen. Instead, we load everything upfront and dynamically change what's displayed using JavaScript—without making new page requests."
+          "p": "But in a Single Page Application (SPA), we don’t want this to happen. Instead, we load everything upfront and dynamically change what’s displayed using JavaScript—without making new page requests."
         }
       ]
     },
     {
-      "h2": "Hash-Based Routing (#/url)",
+      "title": "Hash-Based Routing (#/url)",
       "content": [
         {
           "p": "The simplest way to implement custom navigation in an SPA is by using hash-based routing."
         },
-        { "code": "<a href='#/home'>Home</a>", "syntax": "html" },
         {
-          "p": "#(hash) is ignored by the server, meaning site.com/ and site.com/#/home load the same initial page. However, changing the hash updates the URL and affects browser history, allowing navigation without full page reloads."
+          "code": "<a href=\"#/home\">Home</a>",
+          "syntax": "html"
         },
         {
-          "p": "To determine which content to display, we can use the <code>Location</code> API to read the hash value:"
+          "p": "The # (hash) is ignored by the server, meaning site.com/ and site.com/#/home load the same initial page. However, changing the hash updates the URL and affects browser history, allowing navigation without full page reloads."
         },
         {
-          "code": "console.log(window.location.hash); // Returns the current hash (e.g., '#/home')",
+          "p": "To determine which content to display, we can use the Location API to read the hash value:"
+        },
+        {
+          "code": "console.log(window.location.hash); // Returns the current hash (e.g., \"#/home\")",
           "syntax": "js"
         },
         {
-          "p": "With this, we can dynamically change what's displayed on the page based on the URL."
+          "p": "With this, we can dynamically change what’s displayed on the page based on the URL."
         },
         {
           "p": "While it works fine for small projects, hash routing has some problems:"
@@ -44,37 +46,127 @@
             "Some analytics & social tools might not track #/urls properly."
           ]
         },
-        { "p": "For bigger projects, history-based routing is the way to go." }
+        {
+          "p": "For bigger projects, history-based routing is the way to go."
+        }
       ]
     },
     {
-      "h2": "History-Based Routing (/url)",
+      "title": "History-Based Routing (/url)",
       "content": [
         {
           "p": "With the History API, we can get clean URLs like /about instead of #/about."
         },
         {
-          "code": "<a class='nav-link' data-route='/home'>Home</a> ",
+          "code": "<a class=\"nav-link\" data-route=\"/home\">Home</a>",
           "syntax": "html"
         },
-        { "p": "Then we intercept the click event:" },
         {
-          "code": "document.addEventListener('click', (e) => {\n  const navLink = e.target.closest('.nav-link');\n  if (navLink) { e.preventDefault(); // Stop full-page reload\n  const route = navLink.getAttribute('data-route');\n  navigateTo(route);\n  }\n});",
+          "p": "Instead of href, I like to use data-* attributes to add routes. Then we intercept the click event and target nav-link:"
+        },
+        {
+          "code": "document.addEventListener(\"click\", (e) => {\n\tconst navLink = e.target.closest(\".nav-link\");\n\tif (navLink) {\n\t\te.preventDefault(); // Stop full-page reload\n\t\tconst route = navLink.getAttribute(\"data-route\");\n\t\tnavigateTo(route);\n\t}\n});",
           "syntax": "js"
         },
         {
           "p": "And use history.pushState() to update the URL without refreshing the page:"
         },
         {
-          "code": "const navigateTo = (url) => {\n  if (window.location.pathname !== url) {\n   history.pushState(null, null, url);\n }\n\n  renderPage(routes[url]); \n};",
+          "code": "const navigateTo = (url) => {\n\tif (window.location.pathname !== url) {\n\t\thistory.pushState(null, null, url);\n\t}\n\tpreviousUrl = url;\n\trenderPage(routes[url]);\n\trestoreScrollPosition();\n};",
           "syntax": "js"
         },
         {
-          "p": "Let's set up a simple route object, where keys are paths and values HTML elements (or functions returning elements):"
+          "p": "Let’s set up a simple route object, where keys are paths and values are HTML elements (or functions returning elements):"
         },
         {
-          "code": "const Home = document.createElement('div');\nHome.innerHTML = '<h1>Home Page</h1>';\n\nconst About = document.createElement('div');\nAbout.innerHTML = '<h1>About Page</h1>';\n\nconst Error = document.createElement('div');\nError.innerHTML = '<h1>Error Page</h1>';\n\nconst routes = {\n  '/': Home,\n  '/about': About,\n  '*': Error, // Handles unknown routes\n};",
+          "code": "const page = (text) => {\n\tconst div = document.createElement('div');\n\tdiv.textContent = text;\n\treturn div;\n}\n\nconst routes = {\n\t\"/\": page('Home Page'),\n\t\"/about\": page('About Page'),\n\t\"*\": page('Error Page') // Handles unknown routes\n};",
           "syntax": "js"
+        },
+        {
+          "p": "Now let's render the page:"
+        },
+        {
+          "code": "const renderPage = (component) => {\n\tconst view = document.getElementById(\"view\"); // Get the container\n\tview.replaceChildren(); // Clean it up\n\n\tif (component instanceof HTMLElement) {\n\t\tview.appendChild(component); // Render the page\n\t} else {\n\t\tview.appendChild(routes[\"*\"]);\n\t}\n};",
+          "syntax": "js"
+        }
+      ]
+    },
+    {
+      "title": "Handling Browser Navigation Events",
+      "content": [
+        {
+          "p": "The back and forward buttons also change the URL. To catch those events, we use popstate:"
+        },
+        {
+          "code": "window.addEventListener(\"popstate\", () => {\n\tnavigateTo(window.location.pathname);\n});",
+          "syntax": "js"
+        },
+        {
+          "p": "And we should load the correct page when the site first loads:"
+        },
+        {
+          "code": "window.addEventListener(\"DOMContentLoaded\", () => {\n\tnavigateTo(window.location.pathname);\n});",
+          "syntax": "js"
+        }
+      ]
+    },
+    {
+      "title": "Server Configuration for History API",
+      "content": [
+        {
+          "p": "History-based routing won't work properly unless the server serves index.html for all requests. Otherwise, if you go directly to /about, you'll get a 404 error."
+        },
+        {
+          "p": "For GitHub Pages, a quick fix is to create a 404.html that redirects all unknown routes to index.html:"
+        },
+        {
+          "code": "<!DOCTYPE html>\n<html lang=\"en\">\n<body>\n\t<script>\n\t\twindow.location.replace(\"#\" + window.location.pathname);\n\t</script>\n</body>\n</html>",
+          "syntax": "html"
+        },
+        {
+          "p": "This makes URLs work, but for a real project, you need proper server-side routing."
+        }
+      ]
+    },
+    {
+      "title": "Preserving Scroll Position Between Routes",
+      "content": [
+        {
+          "p": "One annoying thing about SPA navigation is that it resets scroll position when you switch pages. To fix that, we save scroll positions in an object and track the previous route:"
+        },
+        {
+          "code": "const scrollPositions = {};\n\nlet previousUrl;",
+          "syntax": "js"
+        },
+        {
+          "p": "Before navigating away, we store the current scroll position:"
+        },
+        {
+          "code": "const saveScrollPosition = (previousUrl) => {\n\tif (previousUrl) {\n\t\tscrollPositions[previousUrl] = window.scrollY;\n\t}\n};",
+          "syntax": "js"
+        },
+        {
+          "p": "And when going back to a page, we restore the saved scroll position:"
+        },
+        {
+          "code": "const restoreScrollPosition = () => {\n\tconst position = scrollPositions[window.location.pathname];\n\twindow.scrollTo(0, position || 0);\n};",
+          "syntax": "js"
+        },
+        {
+          "p": "Now, we update navigateTo() to handle scroll positions:"
+        },
+        {
+          "code": "const navigateTo = (url) => {\n\tsaveScrollPosition(previousUrl);\n\tpreviousUrl = url;\n\n\tif (window.location.pathname !== url) {\n\t\thistory.pushState(null, null, url);\n\t}\n\n\trenderPage(routes[url]);\n\trestoreScrollPosition();\n};",
+          "syntax": "js"
+        },
+        {
+          "p": "Now, when we navigate back and forth, the scroll position will be saved properly."
+        },
+        {
+          "p": "That's it we know the basics of client-side routing!"
+        },
+        {
+          "p": "This is exactly how frameworks like React Router and Vue Router work under the hood. Of course, they include nested routes, guards, lazy loading, and more—but this is the core foundation to build on."
         }
       ]
     }

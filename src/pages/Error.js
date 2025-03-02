@@ -16,6 +16,7 @@ export const Error = (props) => {
 
   return html({
     el: "section",
+    clasS: "page",
     children: [DIV([h1, p, back], "flex col align-c gap-2")],
   });
 };

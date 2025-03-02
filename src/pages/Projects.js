@@ -8,7 +8,7 @@ export const Projects = async () => {
   const handlePlayVideo = (e) => onReplace(e, ".toChange", EmbdedVideo);
   return html({
     el: "section",
-    clasS: "projects",
+    clasS: "page",
     events: { click: handlePlayVideo },
     children: projects.map((project) => ProjectCard(project)),
   });

@@ -3,7 +3,7 @@ export const createLightSpeedAnimation = (parentElement) => {
   let w, h, x, y, z; // Viewport dimensions and center
   let starColorRatio,
     starRatio = 256,
-    starSpeed = 4,
+    starSpeed = 0.4,
     starSpeedPrev = 0;
   const stars = Array.from({ length: n }, () => new Array(5));
   const opacity = 0.1;
@@ -142,14 +142,14 @@ export const createLightSpeedAnimation = (parentElement) => {
   // Attach event listeners
   // document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("keypress", handleKeyPress);
-  document.addEventListener("keyup", handleKeyUp);
-  document.addEventListener("mousewheel", handleMouseWheel, { passive: false });
+  // document.addEventListener("keyup", handleKeyUp);
+  // document.addEventListener("mousewheel", handleMouseWheel, { passive: false });
   window.addEventListener("resize", init);
   window.addEventListener("orientationchange", init);
-  document.addEventListener("mousedown", handleMouseDown);
-  document.addEventListener("mouseup", handleKeyUp);
-  document.addEventListener("touchstart", handleMouseDown);
-  document.addEventListener("touchend", handleKeyUp);
+  // document.addEventListener("mousedown", handleMouseDown);
+  // document.addEventListener("mouseup", handleKeyUp);
+  // document.addEventListener("touchstart", handleMouseDown);
+  // document.addEventListener("touchend", handleKeyUp);
 
   // Start animation
   init();
@@ -157,10 +157,10 @@ export const createLightSpeedAnimation = (parentElement) => {
 
   // Cleanup function (optional)
   return () => {
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("keypress", handleKeyPress);
-    document.removeEventListener("keyup", handleKeyUp);
-    document.removeEventListener("mousewheel", handleMouseWheel);
+    // document.removeEventListener("mousemove", handleMouseMove);
+    // document.removeEventListener("keypress", handleKeyPress);
+    // document.removeEventListener("keyup", handleKeyUp);
+    // document.removeEventListener("mousewheel", handleMouseWheel);
     window.removeEventListener("resize", init);
     window.removeEventListener("orientationchange", init);
     cancelAnimationFrame(timeout);

@@ -6,7 +6,7 @@ export const Blog = async () => {
   const blogList = await fetchJson("data/blogs/blogList.json");
   const handleClick = (e) => {
     e.preventDefault();
-    let button = e.target.closest("button");
+    let button = e.target.closest(".blog-card");
     if (button) {
       let slug = button.getAttribute("data-slug");
       navigateTo(`/blog/${slug}`);
@@ -14,6 +14,7 @@ export const Blog = async () => {
   };
   return html({
     el: "section",
+    clasS: "page",
     events: { click: handleClick },
     children: blogList.map((list) => BlogCard(list)),
   });
