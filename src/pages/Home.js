@@ -1,16 +1,19 @@
 import { html, H } from "../services/DOMConstructor.js";
-import { Button } from "../components/common/Button.js";
-import { navigateTo } from "../services/router.js";
+import { initGame } from "../components/game/game2d.js";
+import { initstartTreck } from "../components/game/starGL.js";
 export const Home = () => {
+  const game = html({
+    el: "div",
+    ID: "game",
+    style: { position: "relative", border: "1px solid black" },
+  });
+  initGame(game);
+  initstartTreck(game);
   return html({
     el: "section",
     clasS: "page",
     children: [
-      Button({
-        icon: "arrow",
-        text: "Privacy Policy",
-        onClick: () => navigateTo("/legal/privacy-policy/numbero"),
-      }),
+      game,
       html({
         clasS: "home-hero",
         children: [
