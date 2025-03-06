@@ -6,6 +6,7 @@
   --silver: hsl(0, 0%, 75%);
   --greysh: hsl(0, 0%, 20%);
   --bg: hsl(0, 0%, 15%);
+  --bgTransparent: rgba(38, 38, 38, 0.5);
   --black: hsl(0, 0%, 0%);
   --f-m: 'Cutive Mono', monospace;
   --f-i: 'Inter', sans-serif;
@@ -80,6 +81,32 @@ body {
   background-color:var(--bg);
   z-index: -1;
 }
+.game {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  background-color: var(--bg);
+  top: 0;
+  left: 0;
+  z-index: 11;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+  transition: opacity 0.8s ease, transform 1s ease;
+}
+
+/* When the modal is active, make it visible */
+.game.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  transition: opacity 0.8s ease, transform 1s ease;
+}
 /* utility classes */
 .flex{
   display: flex;
@@ -125,6 +152,9 @@ body {
 }
 .gap-2{
   gap: 2rem;
+}
+.min-h-100{
+  min-height: 100vh;
 }
 .h-100{
   height: 100%;
@@ -195,6 +225,9 @@ body {
 .relative{
   position: relative;
 }
+.absolute{
+  position: absolute  ;
+}
 .bg-greysh{
   background-color: var(--greysh);
 }
@@ -232,6 +265,21 @@ body {
 }
 
 /* typography */
+.hover-white{
+  transition: color 0.2s ease-in-out;
+}
+.hover-white:hover{
+  color: var(--white);
+}
+.italic {
+  font-style: italic;
+}
+.decoration-none {
+  text-decoration: none;
+}
+.inherit {
+  color: inherit;
+}
 .center {
   text-align: center;
 }
@@ -240,11 +288,6 @@ body {
 }
 .right {
   text-align: right;
-}
-.xxxl {
-  font-size: 2.25rem;
-  font-weight: 500;
-  letter-spacing: -0.04em;  
 }
 .white{
   color: var(--white);
@@ -257,6 +300,11 @@ body {
 }
 .pointer{
   cursor: pointer;
+}
+.xxxl {
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;  
 }
 .xxl {
   font-size: 1.75rem;
@@ -343,6 +391,7 @@ footer{
   padding-top: 3rem;
   padding: 1rem;
   background-color: var(--bg);
+
   font-weight: 900;
 
 }
@@ -358,24 +407,6 @@ footer{
 }
 .current {
   fill: var(--white);}
-
-
-.home-circle{
-  width:400px;
-  height: 400px;
-  border-radius: 50%;
-  border: var(--silver) solid 1px;
-}
-.home-hero{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: end;
-  height: 25vh;
-  color: var(--silver);
-}
-
-
 
 .project-card{
   display: flex;
