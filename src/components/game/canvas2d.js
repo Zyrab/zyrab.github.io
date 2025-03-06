@@ -8,8 +8,8 @@ export const initCanvas2D = (canvasID, parent) => {
 
 export const resizeCanvas2D = (canvas) => {
   const dpr = window.devicePixelRatio || 1;
-  canvas.width = 300 * dpr;
-  canvas.height = 500 * dpr;
+  canvas.width = 700 * dpr;
+  canvas.height = 900 * dpr;
 };
 
 const animations = [];
@@ -45,7 +45,12 @@ export const startAnimationLoop = (ctx) => {
     animationFrame = requestAnimationFrame(() => animate(ctx));
   }
 };
-
+export const stopAnimationLoop = () => {
+  if (animationFrame !== null) {
+    cancelAnimationFrame(animationFrame); // Stop the loop
+    animationFrame = null;
+  }
+};
 export const addAnimation = (animation, ctx) => {
   animations.push(animation);
   startAnimationLoop(ctx);
