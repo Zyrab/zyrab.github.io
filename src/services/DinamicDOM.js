@@ -4,11 +4,19 @@ export const onStyle = (id, style) => {
   Object.assign(element.style, style);
 };
 
-export const onClass = (id, { add, remove, toggle }) => {
-  let element = document.getElementById(id);
-  add && setClassList(element, add);
-  remove && setClassList(element, remove, true);
-  toggle && element.classList.toggle(toggle);
+export const onClass = (id, { add, remove, toggle, delay = false }) => {
+  if (!id) return;
+
+  const element = id instanceof HTMLElement ? id : document.getElementById(id);
+  if (!element) return;
+
+  const applyClasses = () => {
+    if (add) setClassList(element, add);
+    if (remove) setClassList(element, remove, true);
+    if (toggle) element.classList.toggle(toggle);
+  };
+
+  delay ? setTimeout(applyClasses, delay) : applyClasses();
 };
 
 export const onReplace = (e, targetClass, replaceWith, newClass) => {
@@ -18,9 +26,12 @@ export const onReplace = (e, targetClass, replaceWith, newClass) => {
     const props = targetContainer.dataset.props
       ? JSON.parse(targetContainer.dataset.props)
       : {};
-    targetContainer.replaceChildren();
+    targetContainer.replaceChild(replaceWith(props.data), targetContainer);
     targetContainer.classList.remove(targetClass);
     newClass && targetContainer.classList.add(newClass);
-    targetContainer.append(replaceWith(props.data));
   }
+};
+
+export const onShow = (placeHolder, element) => {
+  placeHolder.replaceWith(element);
 };
