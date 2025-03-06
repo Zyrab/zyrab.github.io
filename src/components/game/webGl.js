@@ -14,8 +14,8 @@ export const initWebGL = (canvasId, parent) => {
 
 export const resizeCanvas = (canvas, gl) => {
   const pixelRatio = window.devicePixelRatio || 1;
-  canvas.width = 300 * pixelRatio;
-  canvas.height = 500 * pixelRatio;
+  canvas.width = 700 * pixelRatio;
+  canvas.height = 900 * pixelRatio;
   gl.viewport(0, 0, canvas.width, canvas.height);
 };
 
