@@ -1,12 +1,12 @@
 import { initWebGL, resizeCanvas, createShaderProgram } from "./webGl.js";
 export const initstartTreck = (parent) => {
   const animations = [];
+  let animationFrameId;
 
-  // === Initialize webGl ===
+  // === Initialize WebGL ===
   const { canvas, gl, buffer } = initWebGL("webglCanvas", parent);
   resizeCanvas(canvas, gl);
 
-  // Stars program
   const starProgram = createShaderProgram(gl, starVertex, starFragment);
   const starArray = generateStarData(60, 20, canvas.width, canvas.height);
   starBuffer(gl, starProgram, buffer, starArray);
@@ -14,14 +14,20 @@ export const initstartTreck = (parent) => {
   animations.push(drawStars);
 
   function renderFrame(time) {
-    gl.clear(gl.COLOR_BUFFER_BIT); // Clear before drawing each frame
+    gl.clear(gl.COLOR_BUFFER_BIT);
     for (let draw of animations) {
       draw(time);
     }
-    requestAnimationFrame(renderFrame);
+    animationFrameId = requestAnimationFrame(renderFrame);
   }
 
   renderFrame(0);
+
+  // Cleanup function
+  return () => {
+    cancelAnimationFrame(animationFrameId);
+    gl.getExtension("WEBGL_lose_context")?.loseContext(); // Free WebGL resources
+  };
 };
 
 export const starVertex = `
