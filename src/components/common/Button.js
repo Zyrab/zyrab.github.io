@@ -11,10 +11,12 @@ export const Button = ({ icon, atr = {}, text, onClick, type = "button" }) => {
     events: listener,
     children: [
       icon ? Icons8({ icon }) : "",
-      P({
-        clasS: "md center",
-        text: text,
-      }),
+      text
+        ? P({
+            clasS: "md center",
+            text,
+          })
+        : "",
     ],
   });
 };
