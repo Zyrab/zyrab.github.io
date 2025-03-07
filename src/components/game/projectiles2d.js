@@ -1,6 +1,6 @@
 import { normalizeSpeed } from "./canvas2d.js";
 export const projectile = (x, y, endX, endY, ctx, bulletArray) => {
-  const { nx, ny } = normalizeSpeed(5, x, y, endX, endY);
+  const { nx, ny } = normalizeSpeed(16, x, y, endX, endY);
   const w = ctx.canvas.width;
   const h = ctx.canvas.height;
   return {
@@ -11,11 +11,12 @@ export const projectile = (x, y, endX, endY, ctx, bulletArray) => {
     dx: nx,
     dy: ny,
     destroyed: false,
+    damage: 25,
     trail: [],
     update(ctx) {
       if (this.destroyed) return false;
       this.trail.push({ x: this.x, y: this.y });
-      if (this.trail.length > 10) this.trail.shift();
+      if (this.trail.length > 5) this.trail.shift();
       if (this.x > w || this.x < 0 || this.y > h || this.y < 0) {
         bulletArray.splice(bulletArray.indexOf(this), 1);
         return false;
