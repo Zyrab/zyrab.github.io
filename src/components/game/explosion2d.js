@@ -1,7 +1,6 @@
-export const createExplosion = (x, y) => {
+export const createExplosion = (x, y, count, size = 4) => {
   const particles = [];
-
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
     const speed = Math.random() * 0.8 + 0.4;
     particles.push({
@@ -10,7 +9,7 @@ export const createExplosion = (x, y) => {
       dx: Math.cos(angle) * speed,
       dy: Math.sin(angle) * speed,
       life: Math.random() * 40 + 10,
-      size: Math.random() * 4 + 1,
+      size: Math.random() * size + 1,
       opacity: 1,
     });
   }
