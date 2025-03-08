@@ -3,7 +3,8 @@ import { createExplosion } from "./explosion2d.js";
 import { addAnimation } from "./canvas2d.js";
 import { updateScore } from "./score.js";
 const TWO_PI = Math.PI * 2;
-export const createAsteroid = (ctx, bulletArray) => {
+export const createAsteroid = (ctx, bulletArray, SpaceCraft) => {
+  const hitZone = SpaceCraft.hitZone;
   const { width: w, height: h } = ctx.canvas;
   const x = Math.random() * w;
   const y = -20;
@@ -38,7 +39,23 @@ export const createAsteroid = (ctx, bulletArray) => {
       this.createTail();
       this.drawTail(ctx);
       this.drawAsteroidShape(ctx);
-
+      if (this.y + size > hitZone[0].y) {
+        for (let i = 0; i < hitZone.length; i++) {
+          const z = hitZone[i];
+          if (
+            this.y + size > z.y &&
+            z.zoneX[0] < this.x &&
+            this.x < z.zoneX[1]
+          ) {
+            SpaceCraft.hp -= this.health;
+            addAnimation(
+              createExplosion(this.x, this.y + size, size * 2, size * 0.4),
+              ctx
+            );
+            return false;
+          }
+        }
+      }
       // Collision detection with bullets
       for (let i = 0; i < bulletArray.length; i++) {
         const bullet = bulletArray[i];
