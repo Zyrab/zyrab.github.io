@@ -9,13 +9,14 @@ import {
 import { projectile } from "./projectiles2d.js";
 import { createAsteroid } from "./asteroid2d.js";
 import { Score, resetScore } from "./score.js";
+import { SpaceCraft } from "./spaceCraft.js";
 
 export const initGame = (parent) => {
   const { canvas, ctx } = initCanvas2D("canvas2D", parent);
   canvas.style.position = "absolute";
   resizeCanvas2D(canvas, ctx);
   const startX = canvas.width / 2;
-  const startY = canvas.height;
+  const startY = canvas.height - 100;
   const projectiles = [];
   let intervalId;
   let isPaused = false;
@@ -35,10 +36,10 @@ export const initGame = (parent) => {
     projectiles.push(projectileInstance);
     addAnimation(projectileInstance, ctx);
   };
-
+  const spaceCraft = SpaceCraft({ cx: startX, cy: startY });
   const startAsteroidSpawner = () => {
     intervalId = setInterval(() => {
-      addAnimation(createAsteroid(ctx, projectiles), ctx);
+      addAnimation(createAsteroid(ctx, projectiles, spaceCraft), ctx);
     }, 1000);
   };
   return {
@@ -46,6 +47,7 @@ export const initGame = (parent) => {
       canvas.addEventListener("click", clickHandler);
       startAsteroidSpawner();
       addAnimation(Score(), ctx);
+      addAnimation(spaceCraft, ctx);
     },
 
     pause() {
