@@ -106,3 +106,44 @@ export const getCursorPosition = (canvas, event) => {
     y: ((event.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height,
   };
 };
+
+export const cacheShapes = (coordinates, center, scale = 10) => {
+  const { cx, cy } = center;
+  const shapes = [];
+  let path = null;
+  coordinates.forEach((p) => {
+    const x = p.x * scale + cx;
+    const y = p.y * scale + cy;
+    if (p.bp) {
+      path = new Path2D();
+    }
+
+    path[p.c](x, y);
+    if (p.fs || p.st) {
+      let shape = { path };
+      p.fs && (shape.fs = p.fs);
+
+      p.st && (shape.st = p.st);
+      p.stw && (shape.stw = p.stw * scale || 1);
+
+      path.closePath();
+      shapes.push(shape);
+      path = null;
+    }
+  });
+  return shapes;
+};
+
+export const drawShape = (ctx, shapes) => {
+  for (const shape of shapes) {
+    if (shape.fs) {
+      ctx.fillStyle = shape.fs;
+      ctx.fill(shape.path);
+    }
+    if (shape.st) {
+      ctx.strokeStyle = shape.st;
+      ctx.lineWidth = shape.stw;
+      ctx.stroke(shape.path);
+    }
+  }
+};
