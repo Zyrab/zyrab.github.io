@@ -6,48 +6,43 @@ import {
   stopAnimationLoop,
   clearAnimations,
 } from "./canvas2d.js";
-import { projectile } from "./projectiles2d.js";
-import { createAsteroid } from "./asteroid2d.js";
+import { projectile } from "./projectiles.js";
+import { asteroid } from "./Objects/asteroid.js";
 import { Score, resetScore } from "./score.js";
 import { SpaceCraft } from "./spaceCraft.js";
 
 export const initGame = (parent) => {
   const { canvas, ctx } = initCanvas2D("canvas2D", parent);
   canvas.style.position = "absolute";
-  resizeCanvas2D(canvas, ctx);
-  const startX = canvas.width / 2;
-  const startY = canvas.height - 100;
-  const projectiles = [];
+  const as = resizeCanvas2D(canvas, ctx);
+  const { width: w, height: h } = ctx.canvas;
   let intervalId;
   let isPaused = false;
+  const projectiles = [];
+  const spaceCraft = SpaceCraft(w, h);
 
   addAnimation(Score(), ctx);
+
   const clickHandler = (e) => {
     if (isPaused) return; // Prevent shooting when paused
     const { x, y } = getCursorPosition(canvas, e);
-    const projectileInstance = projectile(
-      startX,
-      startY,
-      x,
-      y,
-      ctx,
-      projectiles
-    );
-    projectiles.push(projectileInstance);
-    addAnimation(projectileInstance, ctx);
+    const projInst = projectile(x, y, w, h, projectiles);
+    projectiles.push(projInst);
+    addAnimation(projInst, ctx);
+    console.log(projectiles.length);
   };
-  const spaceCraft = SpaceCraft({ cx: startX, cy: startY });
   const startAsteroidSpawner = () => {
     intervalId = setInterval(() => {
-      addAnimation(createAsteroid(ctx, projectiles, spaceCraft), ctx);
+      addAnimation(asteroid(w, h, projectiles, spaceCraft), ctx);
     }, 1000);
   };
+
   return {
     start() {
-      canvas.addEventListener("click", clickHandler);
       startAsteroidSpawner();
       addAnimation(Score(), ctx);
       addAnimation(spaceCraft, ctx);
+      canvas.addEventListener("click", clickHandler);
     },
 
     pause() {
@@ -64,12 +59,10 @@ export const initGame = (parent) => {
     },
 
     restart() {
-      this.destroy(); // Stop everything
-      // Clear existing projectiles
-      projectiles.length = 0;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.destroy();
+      ctx.clearRect(0, 0, w, h);
       isPaused = false;
-      this.start(); // Restart the game
+      this.start();
     },
 
     destroy() {
@@ -77,7 +70,6 @@ export const initGame = (parent) => {
       canvas.removeEventListener("click", clickHandler);
       clearInterval(intervalId);
       clearAnimations();
-      projectiles.length = 0;
     },
   };
 };
