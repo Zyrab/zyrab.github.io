@@ -21,7 +21,7 @@ export const Home = () => {
   let game = SWAPPER({ clasS: "game" });
   return html({
     el: "section",
-    clasS: "flex col align-c just-c gap-2 min-h-100",
+    clasS: "flex col align-c just-c gap-2 min-h-100 p-1",
     children: [
       DIV(
         [
