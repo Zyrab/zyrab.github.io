@@ -6,10 +6,10 @@ import {
   stopAnimationLoop,
   clearAnimations,
 } from "./canvas2d.js";
-import { projectile } from "./projectiles.js";
+import { projectile } from "./Objects/projectiles.js";
 import { asteroid } from "./Objects/asteroid.js";
 import { Score, resetScore } from "./score.js";
-import { SpaceCraft } from "./spaceCraft.js";
+import { SpaceCraft } from "./Objects/spaceCraft.js";
 
 export const initGame = (parent) => {
   const { canvas, ctx } = initCanvas2D("canvas2D", parent);

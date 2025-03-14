@@ -31,7 +31,7 @@ export const asteroid = (w, h, prjs, ship) => {
       ctx.translate(this.x, this.y);
       ctx.rotate(this.rotation);
       ctx.scale(scale, scale);
-      drawShape(ctx, asteroid[shape]);
+      drawShape(ctx, astShp[shape]);
       ctx.restore();
 
       const prj = checkCCVCollision(this, prjs);
@@ -328,4 +328,4 @@ const asteroidsShapes = [
   ],
 ];
 
-const asteroid = asteroidsShapes.map((s) => cacheShapes(s));
+const astShp = asteroidsShapes.map((s) => cacheShapes(s));

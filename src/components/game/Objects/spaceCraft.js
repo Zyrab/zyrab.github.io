@@ -1,4 +1,4 @@
-import { cacheShapes, drawShape } from "./canvas2d.js";
+import { cacheShapes, drawShape } from "../canvas2d.js";
 const hp = 5000;
 const scale = 5;
 export const SpaceCraft = (x, y) => {

@@ -1,6 +1,6 @@
-import { normalizeSpeed } from "./canvas2d.js";
-import { cacheShapes } from "./canvas2d.js";
-import { drawShape } from "./canvas2d.js";
+import { normalizeSpeed } from "../canvas2d.js";
+import { cacheShapes } from "../canvas2d.js";
+import { drawShape } from "../canvas2d.js";
 export const projectile = (endX, endY, w, h, prjArr) => {
   let x = w / 2;
   let y = h - 100;
