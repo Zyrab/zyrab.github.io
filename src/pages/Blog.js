@@ -3,7 +3,9 @@ import { fetchJson } from "../services/fetch.js";
 import { BlogCard } from "../components/blog/BlogCard.js";
 import { navigateTo } from "../services/router.js";
 export const Blog = async () => {
-  const blogList = await fetchJson("data/blogs/blogList.json");
+  const blogList = await fetchJson(
+    "https://raw.githubusercontent.com/Zyrab/dataZ/refs/heads/main/blogs/blogList.json"
+  );
   const handleClick = (e) => {
     e.preventDefault();
     let button = e.target.closest(".blog-card");

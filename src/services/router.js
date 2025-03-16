@@ -3,7 +3,6 @@ import { Blog } from "../pages/Blog.js";
 import { BlogPost } from "../components/blog/BlogPost.js";
 import { Projects } from "../pages/Projects.js";
 import { ProjectPage } from "../components/projects/ProjectPage.js";
-import { Contact } from "../pages/Contact.js";
 import { Legal } from "../pages/Legal.js";
 import { Error } from "../pages/Error.js";
 
@@ -36,10 +35,6 @@ const routes = {
         meta: { title: "Blog", description: "Blog" },
       },
     },
-  },
-  "/contact": {
-    component: Contact,
-    meta: { title: "Contact", description: "Contact" },
   },
   "/legal": {
     children: {

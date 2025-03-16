@@ -14,13 +14,15 @@ export const BlogPost = async (props) => {
       setTimeout(() => (button.textContent = "Copy"), 1000);
     }
   };
-  const post = await fetchJson(`../../data/blogs/${slug}.json`);
+  const post = await fetchJson(
+    `https://raw.githubusercontent.com/Zyrab/dataZ/refs/heads/main/blogs/${slug}.json`
+  );
   const title = H("h1", { clasS: "xxxl bege", text: post.title });
   const date = P({ clasS: "md", text: post.date });
   const intro = P({ clasS: "xl", text: post.intro });
   const content = (content) => {
     return content.map((item) => {
-      let key = Object.keys(item)[0]; // Extract the first (and only) key
+      let key = Object.keys(item)[0];
       if (key === "ul") return UL(item.ul);
       else if (key === "code") return CodeJS(item.code, item.syntax);
       else return paragraph(item.p);

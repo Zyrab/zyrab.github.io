@@ -1,17 +1,21 @@
 import { Button } from "../components/common/Button.js";
 import { navigateTo } from "../services/router.js";
 import { html, P, DIV, H } from "../services/DOMConstructor.js";
-export const Error = (props) => {
-  const back = Button({ text: "Back", onClick: () => navigateTo("/") });
-
-  const p = P({
-    clasS: "lg",
-    text: "The page you are looking for does not exist or has been moved",
+export const Error = () => {
+  const h1 = H("h1", {
+    clasS: "xxl",
+    text: "404 Lost in Cyberspace",
   });
 
-  const h1 = H("h1", {
-    clasS: "xxxl",
-    text: "404 Not Found",
+  const p = P({
+    clasS: "xl",
+    text: "Looks like you're lost in the void. Here, take this wormhole instead!",
+  });
+
+  const back = Button({
+    text: "warp",
+    icon: "warp",
+    onClick: () => navigateTo("/"),
   });
 
   return html({

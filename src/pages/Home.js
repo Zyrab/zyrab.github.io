@@ -33,7 +33,7 @@ export const Home = () => {
           DIV(
             [
               Icons8({
-                icon: "/color/20/gmail-new",
+                icon: "gmail",
                 link: texts.emailLink,
                 size: "20px",
               }),
@@ -52,14 +52,14 @@ export const Home = () => {
             [
               Button({
                 text: "Fight!",
-                icon: "/flat-round/50/galaxy",
+                icon: "glxy",
                 onClick: () => {
                   onShow(game, Game(game));
                   onClass("game", { add: "active", delay: 1 });
                 },
               }),
               Icons8({
-                icon: "/3d-fluency/94/github",
+                icon: "gh",
                 link: texts.sourceCode,
                 size: "20px",
               }),

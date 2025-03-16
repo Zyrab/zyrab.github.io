@@ -1,5 +1,4 @@
-import { DIV, P, H, html } from "../../services/DOMConstructor.js";
-import { Button } from "../common/Button.js";
+import { P, H, html } from "../../services/DOMConstructor.js";
 
 export const BlogCard = (list) => {
   return html({
@@ -9,9 +8,6 @@ export const BlogCard = (list) => {
       H("h1", { text: list.title, clasS: "xxl" }),
       P({ text: list.date, clasS: "sm right" }),
       P({ text: list.intro, clasS: "md" }),
-      // Button({
-      //   text: "Read",
-      // }),
     ],
   });
 };
