@@ -1,7 +1,7 @@
 import { normalizeSpeed } from "../canvas2d.js";
 import { explosion } from "./explosion.js";
 import { addAnimation, cacheShapes, drawShape } from "../canvas2d.js";
-import { updateScore } from "../score.js";
+import { updateScore } from "../UI/score.js";
 import { checkCCVCollision, checkCRCollision } from "../collider.js";
 
 const TWO_PI = Math.PI * 2;
@@ -12,20 +12,20 @@ export const asteroid = (w, h, prjs, ship) => {
   const speed = Math.random() * (h * 0.001) + 3;
   const size = 10 * speed;
   const scale = (10 + size) / 10;
-  const health = size * 3;
+  const hp = size * 3;
   const { nx, ny } = normalizeSpeed(speed, x, y, dirX, h);
-  const shape = Math.round(Math.random() * 2);
+  const shape = Math.round(Math.random() * 4);
   const rotation = Math.random() * TWO_PI;
 
   return {
     x,
     y,
-    health,
+    hp,
     dx: nx,
     dy: ny,
     rotation,
     size: size,
-    update(ctx) {
+    update(ctx, dt) {
       this.rotation += 0.3 / size;
       ctx.save();
       ctx.translate(this.x, this.y);
@@ -36,34 +36,26 @@ export const asteroid = (w, h, prjs, ship) => {
 
       const prj = checkCCVCollision(this, prjs);
       const shp = checkCRCollision(this, ship.hitZone);
-      if (shp) {
+      if (shp && !ship.destroyed) {
+        ship.destroyed = true;
         addAnimation(explosion(this.x, this.y, size * 2, size * 0.4), ctx);
-        ship.health -= this.health;
-        ctx.save();
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 15;
-        ctx.filter = "blur(10px) grayscale(50%)";
-        ctx.rect(0, 0, w, h);
-        ctx.stroke();
-        ctx.filter = "none";
-        ctx.restore();
         return false;
       }
       if (prj) {
-        addAnimation(explosion(prj.x, prj.y, size / 2), ctx);
+        addAnimation(explosion(prj.x, prj.y, size), ctx);
         prj.destroyed = true;
-        this.health -= prj.damage;
+        this.hp -= prj.damage;
         this.dx *= 0.8;
         this.dy *= 0.8;
       }
 
-      if (this.health <= 0) {
-        addAnimation(explosion(this.x, this.y, size * 2, size * 0.4), ctx);
-        updateScore(Math.round(health));
+      if (this.hp <= 0) {
+        addAnimation(explosion(this.x, this.y, size * 2, size * 0.2), ctx);
+        updateScore(Math.round(hp));
         return false;
       }
-      this.x += this.dx;
-      this.y += this.dy;
+      this.x += this.dx * dt;
+      this.y += this.dy * dt;
 
       return !(
         this.x > w + 20 ||

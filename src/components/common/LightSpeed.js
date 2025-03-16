@@ -1,6 +1,6 @@
 export const createLightSpeedAnimation = (parentElement) => {
-  const n = 512; // Number of stars
-  let w, h, x, y, z; // Viewport dimensions and center
+  const n = 512;
+  let w, h, x, y, z;
   let starColorRatio,
     starRatio = 256,
     starSpeed = 0.4,
@@ -12,7 +12,6 @@ export const createLightSpeedAnimation = (parentElement) => {
   let context, timeout;
   let isRunning = true;
 
-  // Create canvas element
   const canvas = document.createElement("canvas");
   canvas.id = "space";
   parentElement.appendChild(canvas);
@@ -31,19 +30,16 @@ export const createLightSpeedAnimation = (parentElement) => {
       star[0] = Math.random() * w * 2 - x * 2; // X
       star[1] = Math.random() * h * 2 - y * 2; // Y
       star[2] = Math.round(Math.random() * z); // Z
-      star[3] = 0; // Calculated X
-      star[4] = 0; // Calculated Y
+      star[3] = 0;
+      star[4] = 0;
     });
     canvas.width = w;
     canvas.height = h;
     context = canvas.getContext("2d");
     context.fillStyle = "rgb(38,38,38)";
     context.strokeStyle = "rgb(255,255,255)";
-
-    // Initialize star positions
   };
 
-  // Animation loop
   const animate = () => {
     const mouseX = cursorX - x;
     const mouseY = cursorY - y;
@@ -52,13 +48,11 @@ export const createLightSpeedAnimation = (parentElement) => {
     stars.forEach((star) => {
       const [prevX, prevY] = [star[3], star[4]];
 
-      // Update star position
       star[0] += mouseX >> 4;
       star[1] += mouseY >> 4;
       star[2] -= starSpeed;
 
       let test = true;
-      // Boundary checks
       if (star[0] > x * 2) {
         star[0] -= w * 2;
         test = false;
@@ -84,11 +78,9 @@ export const createLightSpeedAnimation = (parentElement) => {
         test = false;
       }
 
-      // Calculate screen position
       star[3] = x + (star[0] / star[2]) * starRatio;
       star[4] = y + (star[1] / star[2]) * starRatio;
 
-      // Draw star
       if (prevX > 0 && prevX < w && prevY > 0 && prevY < h && test) {
         context.lineWidth = (1 - starColorRatio * star[2]) * 2;
         context.beginPath();
@@ -102,12 +94,6 @@ export const createLightSpeedAnimation = (parentElement) => {
     if (isRunning) {
       timeout = requestAnimationFrame(animate);
     }
-  };
-
-  // Event handlers
-  const handleMouseMove = (evt) => {
-    cursorX = evt.pageX;
-    cursorY = evt.pageY;
   };
 
   const handleKeyPress = (evt) => {
@@ -128,39 +114,14 @@ export const createLightSpeedAnimation = (parentElement) => {
     }
   };
 
-  const handleMouseDown = () => {
-    // context.fillStyle = `rgba(0,0,0,${opacity})`;
-  };
-  const handleKeyUp = () => {
-    context.fillStyle = "rgb(38,38,38)";
-  };
-
-  const handleMouseWheel = (evt) => {
-    const delta = evt.wheelDelta ? evt.wheelDelta / 120 : -evt.detail / 3;
-    starSpeed += delta >= 0 ? -0.2 : 0.2;
-  };
-  // Attach event listeners
-  // document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("keypress", handleKeyPress);
-  // document.addEventListener("keyup", handleKeyUp);
-  // document.addEventListener("mousewheel", handleMouseWheel, { passive: false });
   window.addEventListener("resize", init);
   window.addEventListener("orientationchange", init);
-  // document.addEventListener("mousedown", handleMouseDown);
-  // document.addEventListener("mouseup", handleKeyUp);
-  // document.addEventListener("touchstart", handleMouseDown);
-  // document.addEventListener("touchend", handleKeyUp);
 
-  // Start animation
   init();
   animate();
 
-  // Cleanup function (optional)
   return () => {
-    // document.removeEventListener("mousemove", handleMouseMove);
-    // document.removeEventListener("keypress", handleKeyPress);
-    // document.removeEventListener("keyup", handleKeyUp);
-    // document.removeEventListener("mousewheel", handleMouseWheel);
     window.removeEventListener("resize", init);
     window.removeEventListener("orientationchange", init);
     cancelAnimationFrame(timeout);

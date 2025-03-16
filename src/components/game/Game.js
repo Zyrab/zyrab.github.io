@@ -8,28 +8,28 @@ export const Game = (placeHolder) => {
   let cleanupStartTreck, cleanupGame;
 
   const pauseButton = Button({
-    icon: "color/20/pause",
+    icon: "pause",
     onClick: () => cleanupGame.pause(),
   });
 
   const resumeButton = Button({
-    icon: "color/20/play",
+    icon: "play",
     onClick: () => cleanupGame.resume(),
   });
 
   const restartButton = Button({
-    icon: "color/20/restart",
+    icon: "replay",
     onClick: () => cleanupGame.restart(),
   });
 
   const closeButton = Button({
-    icon: "color/20/delete-sign--v1",
+    icon: "close",
     onClick: () => {
       onClass("game", { remove: "active" });
 
       setTimeout(() => {
-        cleanupStartTreck?.(); // Stop animations & WebGL
-        cleanupGame?.destroy(); // Remove event listeners & intervals
+        cleanupStartTreck?.();
+        cleanupGame?.destroy();
         onShow(game, placeHolder);
       }, 1000);
     },

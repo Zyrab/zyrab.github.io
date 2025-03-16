@@ -41,16 +41,22 @@ export const resizeCanvas2D = (canvas) => {
 
 const animations = [];
 let animationFrame = null;
-const animate = (ctx) => {
+let lastTime = 0;
+const TARGET_FPS = 60;
+const FRAME_TIME = 1000 / TARGET_FPS; // 16.67ms per frame at 60 FPS
+const animate = (ctx, timestamp) => {
   if (animations.length === 0) {
     animationFrame = null;
     return;
   }
+  if (lastTime === 0) lastTime = timestamp; // Initialize properly
+  let deltaTime = (timestamp - lastTime) / FRAME_TIME;
+  lastTime = timestamp;
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   const toRemove = [];
 
   animations.forEach((animation, index) => {
-    const isActive = animation.update(ctx);
+    const isActive = animation.update(ctx, deltaTime);
     if (!isActive) {
       toRemove.push(index);
     }
@@ -58,13 +64,13 @@ const animate = (ctx) => {
   for (let i = toRemove.length - 1; i >= 0; i--) {
     animations.splice(toRemove[i], 1);
   }
-  animationFrame = requestAnimationFrame(() => animate(ctx));
+  animationFrame = requestAnimationFrame(animate.bind(null, ctx));
 };
 
 // Function to start the loop (if not running)
 export const startAnimationLoop = (ctx) => {
   if (!animationFrame) {
-    animationFrame = requestAnimationFrame(() => animate(ctx));
+    animationFrame = requestAnimationFrame(animate.bind(null, ctx));
   }
 };
 export const clearAnimations = () => (animations.length = 0);
@@ -72,6 +78,7 @@ export const stopAnimationLoop = () => {
   if (animationFrame !== null) {
     cancelAnimationFrame(animationFrame); // Stop the loop
     animationFrame = null;
+    lastTime = 0;
   }
 };
 export const addAnimation = (animation, ctx) => {

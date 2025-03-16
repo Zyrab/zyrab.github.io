@@ -1,12 +1,12 @@
 import { cacheShapes, drawShape } from "../canvas2d.js";
-const hp = 5000;
+import { addAnimation } from "../canvas2d.js";
+import { explosion } from "./explosion.js";
 const scale = 5;
-export const SpaceCraft = (x, y) => {
+export const spaceCraft = (x, y, gmOv) => {
   let cx = x / 2;
   let cy = y - 100;
-  let time = 0;
   return {
-    hp,
+    destroyed: false,
     scale,
     get hitZone() {
       return colliders.map(({ x, y, width, height }) => ({
@@ -17,30 +17,18 @@ export const SpaceCraft = (x, y) => {
       }));
     },
     update(ctx) {
-      time += 0.05; // Adjust speed of movement
-      this.scale = 5 + Math.sin(time) * 0.04; // Oscillates scale between 1.9 and 2.1
-      let blur = 3 + Math.sin(time) * 0.1; // Oscillates blur between 0.5 and 0.6
-
       ctx.save();
       ctx.translate(cx, cy);
-      ctx.filter = "blur(" + blur + "px) grayscale(50%)";
       ctx.scale(this.scale, this.scale);
       drawShape(ctx, engine);
-      ctx.filter = "none";
       drawShape(ctx, shapes);
       ctx.restore();
-
-      // Draw health bar
-      ctx.beginPath();
-      ctx.rect(ctx.canvas.width - 170, 5, 150, 20);
-      ctx.strokeStyle = "black";
-      ctx.stroke();
-      ctx.closePath();
-      ctx.beginPath();
-      ctx.rect(ctx.canvas.width - 170, 6, (150 * this.hp) / hp, 18);
-      ctx.fillStyle = "red";
-      ctx.fill();
-
+      if (this.destroyed) {
+        addAnimation(gmOv, ctx);
+        gmOv.active = true;
+        addAnimation(explosion(cx, cy, 300, 10), ctx);
+        return false;
+      }
       return true;
     },
   };
@@ -66,16 +54,6 @@ const colliders = [
     height: 2.75,
   },
 ];
-
-const getRelativeHitZone = (center, scale) => {
-  const { cx, cy } = center;
-  return colliders.map(({ rect: [x, y, width, height] }) => ({
-    y: y * scale + cy,
-    x: x * scale + cx,
-    width: width * scale,
-    height: height * scale,
-  }));
-};
 
 const enginePath = [
   {

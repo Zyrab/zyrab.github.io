@@ -12,11 +12,10 @@ export const projectile = (endX, endY, w, h, prjArr) => {
     dx: nx,
     dy: ny,
     destroyed: false,
-    damage: 25,
-    trail: [],
+    damage: 55,
     zIndex: -1,
     size: 1,
-    update(ctx) {
+    update(ctx, dt) {
       ctx.save();
       ctx.translate(this.x, this.y);
       ctx.rotate(angle);
@@ -26,8 +25,8 @@ export const projectile = (endX, endY, w, h, prjArr) => {
       drawShape(ctx, shape);
       ctx.restore();
       if (this.destroyed) return false;
-      this.x += this.dx;
-      this.y += this.dy;
+      this.x += this.dx * dt;
+      this.y += this.dy * dt;
 
       if (this.x > w || this.x < 0 || this.y > h || this.y < 0) {
         prjArr.splice(prjArr.indexOf(this), 1);

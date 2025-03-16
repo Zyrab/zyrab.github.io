@@ -4,71 +4,68 @@ import {
   getCursorPosition,
   addAnimation,
   stopAnimationLoop,
+  startAnimationLoop,
   clearAnimations,
 } from "./canvas2d.js";
 import { projectile } from "./Objects/projectiles.js";
-import { asteroid } from "./Objects/asteroid.js";
-import { Score, resetScore } from "./score.js";
-import { SpaceCraft } from "./Objects/spaceCraft.js";
-
+import { Score, resetScore } from "./UI/score.js";
+import { spaceCraft } from "./Objects/spaceCraft.js";
+import { asteroidSpawner } from "./Objects/asteroidSpawner.js";
+import { gameOver } from "./UI/gameOver.js";
 export const initGame = (parent) => {
   const { canvas, ctx } = initCanvas2D("canvas2D", parent);
+  resizeCanvas2D(canvas);
   canvas.style.position = "absolute";
-  const as = resizeCanvas2D(canvas, ctx);
   const { width: w, height: h } = ctx.canvas;
-  let intervalId;
-  let isPaused = false;
-  const projectiles = [];
-  const spaceCraft = SpaceCraft(w, h);
 
-  addAnimation(Score(), ctx);
+  let isPaused = false;
+  const prjt = [];
+  let spCrft;
+  let gmOv = gameOver(w, h, restartGame);
 
   const clickHandler = (e) => {
     if (isPaused) return; // Prevent shooting when paused
     const { x, y } = getCursorPosition(canvas, e);
-    const projInst = projectile(x, y, w, h, projectiles);
-    projectiles.push(projInst);
+    gmOv.checkClick(x, y);
+    if (spCrft.destroyed) return;
+    const projInst = projectile(x, y, w, h, prjt);
+    prjt.push(projInst);
     addAnimation(projInst, ctx);
-    console.log(projectiles.length);
   };
-  const startAsteroidSpawner = () => {
-    intervalId = setInterval(() => {
-      addAnimation(asteroid(w, h, projectiles, spaceCraft), ctx);
-    }, 1000);
-  };
+  function startGame() {
+    spCrft = spaceCraft(w, h, gmOv);
+    addAnimation(asteroidSpawner(w, h, prjt, spCrft), ctx);
+    addAnimation(Score(), ctx);
+    addAnimation(spCrft, ctx);
+    canvas.addEventListener("click", clickHandler);
+  }
+  function restartGame() {
+    stopAnimationLoop();
+    ctx.clearRect(0, 0, w, h);
+    resetScore();
+    clearAnimations();
+    startGame();
+  }
 
   return {
-    start() {
-      startAsteroidSpawner();
-      addAnimation(Score(), ctx);
-      addAnimation(spaceCraft, ctx);
-      canvas.addEventListener("click", clickHandler);
-    },
-
+    start: startGame,
     pause() {
       if (isPaused) return;
       isPaused = true;
-      clearInterval(intervalId);
       stopAnimationLoop();
     },
 
     resume() {
       if (!isPaused) return;
       isPaused = false;
-      startAsteroidSpawner();
+      startAnimationLoop(ctx);
     },
 
-    restart() {
-      this.destroy();
-      ctx.clearRect(0, 0, w, h);
-      isPaused = false;
-      this.start();
-    },
+    restart: restartGame,
 
     destroy() {
       resetScore();
       canvas.removeEventListener("click", clickHandler);
-      clearInterval(intervalId);
       clearAnimations();
     },
   };
