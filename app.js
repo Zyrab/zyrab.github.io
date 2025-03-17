@@ -1,7 +1,7 @@
-import { Header } from "./components/common/Header.js";
-import { Footer } from "./components/common/Footer.js";
-import { createLightSpeedAnimation } from "./components/common/LightSpeed.js";
-import { router, initializeRouter } from "./services/router.js";
+import { Header } from "./src/components/common/Header.js";
+import { Footer } from "./src/components/common/Footer.js";
+import { createLightSpeedAnimation } from "./src/components/common/LightSpeed.js";
+import { router, initializeRouter } from "./src/services/router.js";
 
 const initializeApp = () => {
   const app = document.getElementById("app");
