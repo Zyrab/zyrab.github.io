@@ -5,13 +5,15 @@ export const ProjectCard = (project) => {
   const raw =
     "https://raw.githubusercontent.com/Zyrab/dataZ/refs/heads/main/projects/icons/";
   const title = H("h1", { clasS: "xxl", text: project.ttl });
-  const date = P({ clasS: "md right", text: project.date });
+  const date = P({ clasS: "md right italic", text: project.date });
   const description = P({ clasS: "md h-60", text: project.description });
-  const button = Button({
-    text: project.btn[0],
-    icon: project.btn[1],
-    data: project.btn[2],
-  });
+  const button = project.btn
+    ? Button({
+        text: project.btn[0],
+        icon: project.btn[1],
+        data: project.btn[2],
+      })
+    : "";
   const img = IMG({
     src: raw + project.img,
     alt: project.ttl,
@@ -19,7 +21,7 @@ export const ProjectCard = (project) => {
   });
 
   return html({
-    clasS: "flex col gap-1 p-1 bg-greysh w380 h250",
+    clasS: "flex col gap-1 p-1 bg-greysh w400",
     children: [
       DIV([img, title], "flex gap-1 align-c"),
       date,

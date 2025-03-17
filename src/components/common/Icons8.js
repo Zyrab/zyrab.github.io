@@ -30,5 +30,12 @@ const icons = {
   play: "color/20/play",
   pause: "color/20/pause",
   replay: "color/20/replay",
-  warp: "color/48/black-hole",
+  warp: "color/20/black-hole",
+  dwnld: "color/20/download--v1",
+  unt: "fluency/20/unity",
+  cshrp: "color/20/c-sharp-logo-2",
+  css: "color/20/css3",
+  js: "color/20/javascript--v1",
+  html: "color/20/html-5--v1",
+  lnkdn: "color/20/linkedin",
 };

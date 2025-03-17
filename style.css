@@ -198,40 +198,47 @@ body {
 .w380{
   width: 380px;
 }
+.w400{
+  width: 400px;
+}
 .w35{
   width: 35px;
-}.h250{
+}
+.h250{
   height: 250px;
+}
+.h300{
+  height: 300px;
 }
 .h35{
   height: 35px;
 }
 .p-05{
-  padding: 0.5rem;
+  padding: 0.5em;
 }
 .p-1{
-  padding: 1rem;
+  padding: 1em;
 }
 .p-2{
-  padding: 2rem;
+  padding: 2em;
 }
 .pt-05{
-  padding-top: 0.5rem;
+  padding-top: 0.5em;
 }
 .pt-1{
-  padding-top: 1rem;
+  padding-top: 1em;
 }
 .pt-2{
-  padding-top: 2rem;
+  padding-top: 2em;
 }
 .pb-05{
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.5em;
 }
 .pb-1{
-  padding-bottom: 1rem;
+  padding-bottom: 1em;
 }
 .pb-2{
-  padding-bottom: 2rem;
+  padding-bottom: 2em;
 }
 .relative{
   position: relative;
@@ -507,7 +514,7 @@ footer{
 
 
 /* Responsive Grid */
-@media (min-width: 1280px) {
+@media (min-width:65.25rem) {
   header{
     top: 0;
     bottom: auto;
