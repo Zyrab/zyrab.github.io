@@ -1,16 +1,7 @@
 import { getScore } from "./score.js";
 export const gameOver = (w, h, restartCallback) => {
   return {
-    active: false, // Controls visibility
-
-    show() {
-      this.active = true;
-    },
-
-    hide() {
-      this.active = false;
-    },
-
+    active: false,
     update(ctx) {
       ctx.save();
       ctx.beginPath();
@@ -41,11 +32,11 @@ export const gameOver = (w, h, restartCallback) => {
       ctx.restore();
       return true;
     },
-
     checkClick(x, y) {
       if (!this.active) return;
       if (x >= w / 2 - 75 && x <= w / 2 + 75 && y >= h / 2 && y <= h / 2 + 50) {
-        restartCallback(); // Restart when clicking the replay button
+        this.active = false;
+        restartCallback();
       }
     },
   };
