@@ -24,7 +24,6 @@ const routes = {
     },
   },
   "/blog": {
-    component: Blog,
     children: {
       "/:slug": {
         component: BlogPost,

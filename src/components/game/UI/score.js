@@ -1,7 +1,5 @@
 let score = 0;
 export const Score = () => {
-  // Draw updated score
-
   return {
     score,
     update(ctx) {

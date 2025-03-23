@@ -17,7 +17,7 @@ export const explosion = (x, y, count, size = 4) => {
   return {
     particles,
     update(ctx, dt) {
-      particles.forEach((p) => {
+      this.particles.forEach((p) => {
         p.x += p.dx * dt;
         p.y += p.dy * dt;
         p.life--;
@@ -30,10 +30,10 @@ export const explosion = (x, y, count, size = 4) => {
         ctx.fillStyle = `rgba(204, 204, 204, ${p.opacity})`;
         ctx.fill();
         if (p.life <= 0) {
-          particles.splice(particles.indexOf(p), 1);
+          this.particles = this.particles.filter((p) => p.life > 0);
         }
       });
-      return particles.length > 0;
+      return this.particles.length > 0;
     },
   };
 };

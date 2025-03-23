@@ -5,13 +5,13 @@ export const BlogPost = async (props) => {
   const { slug } = props;
 
   const handleCopyCode = (e) => {
-    let button = e.target.closest(".copycode");
-    if (button) {
-      let code = button.getAttribute("data-code");
+    let copy = e.target.closest(".copycode");
+    if (copy) {
+      let code = copy.getAttribute("data-code");
       navigator.clipboard
         .writeText(code)
-        .then(() => (button.textContent = "Copied!"));
-      setTimeout(() => (button.textContent = "Copy"), 1000);
+        .then(() => (copy.textContent = "Copied!"));
+      setTimeout(() => (copy.textContent = "Copy"), 1000);
     }
   };
   const post = await fetchJson(
@@ -30,7 +30,6 @@ export const BlogPost = async (props) => {
   };
   const paragraph = (text) => P({ clasS: "lg", text: text });
   const UL = (list) => {
-    console.log(list);
     return html({
       el: "ul",
       children: list.map((item) => {
@@ -55,4 +54,40 @@ export const BlogPost = async (props) => {
     events: { click: handleCopyCode },
     children: [title, date, intro, sections],
   });
+};
+
+const post = {
+  title: "ttl",
+  intro: "intro",
+  sections: [
+    {
+      title: "sec1",
+      content: [
+        {
+          p: "p1",
+        },
+        {
+          p: "p2",
+        },
+      ],
+    },
+    {
+      title: "sec2",
+      content: [
+        {
+          p: "",
+        },
+        { code: "", syntax: "html" },
+        {
+          ul: ["itm1", "itm2", "itm3"],
+        },
+        {
+          code: 'document.addEventListener("click", (e) => {\n\tconst navLink = e.target.closest(".nav-link");\n\tif (navLink) {\n\t\te.preventDefault(); // Stop full-page reload\n\t\tconst route = navLink.getAttribute("data-route");\n\t\tnavigateTo(route);\n\t}\n});',
+          syntax: "js",
+        },
+
+        { p: "" },
+      ],
+    },
+  ],
 };

@@ -10,8 +10,8 @@ export const Home = () => {
       "Here, you'll find my projects, thoughts, and things I'm building.",
     description2:
       "If you're here to connect or collaborate, feel free to reach out.",
-    email: "zyrab.dev@gmail.com",
-    emailLink: "mailto:zyrab.dev@gmail.com",
+    email: "hello@zyrab.dev",
+    emailLink: "mailto:hello@zyrab.dev",
     ideas: "I'm always up for cool ideas.",
     gameInvite:
       "Or if you're just passing through, why not play a quick game? I built it with passion—think you can beat my score?",

@@ -1,20 +1,23 @@
 export const html = ({
   el = "div",
-  clasS,
-  ID,
+  clasS = "",
+  ID = "",
+  value = "",
   attributes = {},
   events = {},
   style = {},
-  ns = null, // Add `ns` prop for namespace
+  ns = null,
   children = [],
 }) => {
   let element = createElement(el, ns);
-  setClassList(element, clasS);
+  clasS && setClassList(element, clasS);
   ID && (element.id = ID);
+  value && (element.value = value);
+  Object.assign(element.style, style);
+
   setAttributes(element, attributes);
   addEventListeners(element, events);
   appendChildren(element, children);
-  Object.assign(element.style, style);
   return element;
 };
 
