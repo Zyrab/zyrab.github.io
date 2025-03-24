@@ -24,6 +24,7 @@ export const initGame = (parent) => {
   let gmOv = gameOver(w, h, restartGame);
 
   const clickHandler = (e) => {
+    e.preventDefault();
     if (isPaused) return; // Prevent shooting when paused
     const { x, y } = getCursorPosition(canvas, e);
     gmOv.checkClick(x, y);
