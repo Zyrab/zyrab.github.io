@@ -1,5 +1,5 @@
 import { Button } from "../components/common/Button.js";
-import { navigateTo } from "../services/router.js";
+import { Router } from "../services/router.js";
 import { html, P, DIV, H } from "../services/DOMConstructor.js";
 export const Error = () => {
   const h1 = H("h1", {
@@ -15,7 +15,7 @@ export const Error = () => {
   const back = Button({
     text: "warp",
     icon: "warp",
-    onClick: () => navigateTo("/"),
+    onClick: () => Router.go("/"),
   });
 
   return html({

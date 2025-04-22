@@ -1,15 +1,19 @@
 import { A, html, SVG } from "../../services/DOMConstructor.js";
-import { navigateTo } from "../../services/router.js";
+import { Router } from "../../services/router.js";
 export const Header = () => {
-  const handaleNavigation = (e) => {
+  function handaleNavigation(e) {
+    e.preventDefault();
     let navLink = e.target.closest(".nav-link");
     if (navLink) {
-      let route = navLink.getAttribute("data-route");
-      navigateTo(route);
+      header.querySelectorAll(".nav-link").forEach((link) => {
+        link.children[0].classList.remove("current");
+      });
+      Router.go(navLink.getAttribute("data-route"));
+      navLink.children[0].classList.add("current");
     }
-  };
+  }
 
-  return html({
+  const header = html({
     el: "header",
     children: [
       html({
@@ -34,6 +38,12 @@ export const Header = () => {
       }),
     ],
   });
+
+  header
+    .querySelector(`[data-route='${Router.segments()[0] || "/"}']`)
+    .children[0].classList.add("current");
+
+  return header;
 };
 
 const navData = [

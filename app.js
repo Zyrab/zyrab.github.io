@@ -1,16 +1,22 @@
 import { Header } from "./src/components/common/Header.js";
 import { Footer } from "./src/components/common/Footer.js";
 import { createLightSpeedAnimation } from "./src/components/common/LightSpeed.js";
-import { router, initializeRouter } from "./src/services/router.js";
+import { Router } from "./src/services/router.js";
+import { routes } from "./src/pages/routes.js";
 
 const initializeApp = () => {
   const app = document.getElementById("app");
-  app.appendChild(Header());
-  app.appendChild(router());
-  app.appendChild(Footer());
+
+  const fragment = document.createDocumentFragment();
+  fragment.appendChild(Header());
+  fragment.appendChild(Router.mount());
+  fragment.appendChild(Footer());
+
+  app.appendChild(fragment); // only one reflow triggered here
 
   const cleanup = createLightSpeedAnimation(app);
-  initializeRouter();
+  Router.routes(routes);
+  Router.init();
 };
 
 initializeApp();

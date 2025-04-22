@@ -1,7 +1,7 @@
 import { html, H, P } from "../services/DOMConstructor.js";
 import { fetchJson } from "../services/fetch.js";
 import { BlogCard } from "../components/blog/BlogCard.js";
-import { navigateTo } from "../services/router.js";
+import { Router } from "../services/router.js";
 export const Blog = async () => {
   const blogList = await fetchJson(
     "https://raw.githubusercontent.com/Zyrab/dataZ/refs/heads/main/blogs/blogList.json"
@@ -11,7 +11,7 @@ export const Blog = async () => {
     let button = e.target.closest(".blog-card");
     if (button) {
       let slug = button.getAttribute("data-slug");
-      navigateTo(`/blog/${slug}`);
+      Router.go(`/blog/${slug}`);
     }
   };
   return html({
