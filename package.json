@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@zyrab/domo": "github:zyrab/domo"
+  }
+}
