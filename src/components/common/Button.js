@@ -1,29 +1,24 @@
-import { html, P } from "../../services/DOMConstructor.js";
-import { Icons8 } from "./Icons8.js";
+import { Domo } from "@zyrab/domo";
+import { createIcons8 } from "../common/Icons8.js";
 
-export const Button = ({
-  icon,
-  atr = {},
-  text,
-  data,
+export const createButton = ({
+  icon = "",
+  attr = {},
+  text = "",
+  data = "",
   onClick,
   type = "button",
 }) => {
-  let listener = onClick ? { click: onClick } : "";
-  return html({
-    el: "button",
-    clasS: "btn-default",
-    attributes: { type, ...atr, "data-btn": data || "" },
-
-    events: listener,
-    children: [
-      icon ? Icons8({ icon }) : "",
-      text
-        ? P({
-            clasS: "md center",
-            text,
-          })
-        : "",
-    ],
-  });
+  return Domo("button")
+    .cls("btn-default")
+    .attr({ type, ...attr })
+    .data({ btn: data })
+    .on(onClick && "click", onClick)
+    .child([
+      createIcons8({ icon }).if(icon !== ""),
+      Domo("p")
+        .cls("md center")
+        .if(text !== "")
+        .txt(text),
+    ]);
 };

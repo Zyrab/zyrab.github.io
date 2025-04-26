@@ -1,5 +1,4 @@
-import { H } from "../../services/DOMConstructor.js";
-
+import { Domo } from "@zyrab/domo";
 export const codeParser = (code, name) => {
   let styledCode = [];
   let lastIndex = 0;
@@ -19,17 +18,19 @@ export const codeParser = (code, name) => {
     }
 
     if (!bestMatch) {
-      styledCode.push(H("span", { text: code.slice(lastIndex) }));
+      styledCode.push(Domo("span").txt(code.slice(lastIndex)).build());
       break;
     }
 
     if (bestMatch.index > lastIndex) {
       styledCode.push(
-        H("span", { text: code.slice(lastIndex, bestMatch.index) })
+        Domo("span").txt(code.slice(lastIndex, bestMatch.index)).build()
       );
     }
 
-    styledCode.push(H("span", { clasS: bestPattern.type, text: bestMatch[0] }));
+    styledCode.push(
+      Domo("span").cls(bestPattern.type).txt(bestMatch[0]).build()
+    );
 
     lastIndex = bestMatch.index + bestMatch[0].length;
   }

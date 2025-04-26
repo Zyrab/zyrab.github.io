@@ -1,61 +1,65 @@
-import { html, H, P } from "../services/DOMConstructor.js";
+import { Domo } from "@zyrab/domo";
+import { fetchJson } from "../services/fetch.js";
 
 export const Legal = async (props) => {
   const dynamicText = (text, placeholders) => {
     return text.replace(/\${(.*?)}/g, (_, key) => placeholders[key] || "");
   };
-  const response = await fetch(`../../data/${props.legal}.json`);
-  const legals = await response.json();
+  console.log(props.legal, props.app);
+
+  const legals = await fetchJson(`../../data/${props.legal}.json`);
   const thisApp = legals[props.app];
-  return html({
-    el: "section",
-    clasS: "page",
-    children: [
-      html({
-        clasS: "w-100 p-1 left flex col gap-2 legal",
-        children: [
-          H("h1", { clasS: "xxl", text: legals.title }),
-          html({ el: "hr" }),
-          P({
-            clasS: "xl",
-            text: dynamicText(legals.intro, {
-              "app-name": thisApp.name,
-              "app-type": thisApp.type,
-            }),
-          }),
+
+  return Domo("section")
+    .cls("page")
+    .child([
+      Domo()
+        .cls("w-100 p-1 left flex col gap-2 legal")
+        .child([
+          Domo("h1").cls("xxl").txt(legals.title),
+          Domo("hr"),
+          Domo("p")
+            .cls("xl")
+            .txt(
+              dynamicText(legals.intro, {
+                "app-name": thisApp.name,
+                "app-type": thisApp.type,
+              })
+            ),
           thisApp.text.map((item) => content(item)),
-          html({
-            el: "hr",
-            style: { border: "none", borderTop: "1px dashed ", width: "100%" },
+          Domo("hr").css({
+            border: "none",
+            borderTop: "1px dashed ",
+            width: "100%",
           }),
-          P({
-            clasS: "lg",
-            text: dynamicText(legals.contact, {
-              "app-name": thisApp.name,
-            }),
-          }),
-          P({
-            clasS: "xl",
-            text: dynamicText(legals.conclusion, {
-              "app-name": thisApp.name,
-            }),
-          }),
-        ],
-      }),
-    ],
-  });
+          Domo("p")
+            .cls("xl")
+            .txt(
+              dynamicText(legals.contact, {
+                "app-name": thisApp.name,
+              })
+            ),
+          Domo("p")
+            .cls("xl")
+            .txt(
+              dynamicText(legals.conclusion, {
+                "app-name": thisApp.name,
+              })
+            ),
+        ]),
+    ])
+    .build();
 };
 
-const content = (con) => {
-  return html({
-    clasS: "flex col gap-1",
-    children: [
-      H("h3", { clasS: "xl", text: con.title }),
-      html({
-        el: "hr",
-        style: { border: "none", borderTop: "1px dashed ", width: "100%" },
+const content = (con) =>
+  Domo()
+    .cls("flex col gap-1")
+    .child([
+      Domo("h3").cls("xl").txt(con.title),
+      Domo("hr").css({
+        border: "none",
+        borderTop: "1px dashed ",
+        width: "100%",
       }),
-      P({ clasS: "lg", text: con.text }),
-    ],
-  });
-};
+      Domo("p").cls("lg").txt(con.text),
+    ]);

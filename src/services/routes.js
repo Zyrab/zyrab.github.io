@@ -1,10 +1,9 @@
-import { Home } from "./Home.js";
-import { Blog } from "./Blog.js";
-import { BlogPost } from "../components/blog/BlogPost.js";
-import { Projects } from "./Projects.js";
-import { ProjectPage } from "../components/projects/ProjectPage.js";
-import { Legal } from "./Legal.js";
-import { Error } from "./Error.js";
+import { Home } from "../pages/Home.js";
+import { Blog } from "../pages/Blog.js";
+import { Post as BlogPost } from "../components/blog/Post.js";
+import { Projects } from "../pages/Projects.js";
+import { Legal } from "../pages/Legal.js";
+import { Error } from "../pages/Error.js";
 
 const routes = {
   "/": {
@@ -13,10 +12,6 @@ const routes = {
   },
   "/projects": {
     children: {
-      "/:id": {
-        component: ProjectPage,
-        meta: { title: "Projects", description: "Project" },
-      },
       "/": {
         component: Projects,
         meta: { title: "Projects", description: "Projects" },

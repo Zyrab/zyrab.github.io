@@ -1,58 +1,48 @@
-import { html } from "../../services/DOMConstructor.js";
-import { Button } from "../common/Button.js";
-import { onShow, onClass } from "../../services/DinamicDOM.js";
+import { Domo } from "@zyrab/domo";
+import { createButton } from "../common/Button.js";
 import { initGame } from "./game2d.js";
 import { initstartTreck } from "./starGL.js";
 
 export const Game = (placeHolder) => {
   let cleanupStartTreck, cleanupGame;
 
-  const pauseButton = Button({
+  const pauseButton = createButton({
     icon: "pause",
     onClick: () => cleanupGame.pause(),
   });
 
-  const resumeButton = Button({
+  const resumeButton = createButton({
     icon: "play",
     onClick: () => cleanupGame.resume(),
   });
 
-  const restartButton = Button({
+  const restartButton = createButton({
     icon: "replay",
     onClick: () => cleanupGame.restart(),
   });
 
-  const closeButton = Button({
+  const closeButton = createButton({
     icon: "close",
     onClick: () => {
-      onClass("game", { remove: "active" });
-
+      game.rmvCls("active");
       setTimeout(() => {
         cleanupStartTreck?.();
         cleanupGame?.destroy();
-        onShow(game, placeHolder);
+        game.replace(game.element, placeHolder);
       }, 1000);
     },
   });
 
-  const controls = html({
-    el: "div",
-    clasS: "absolute flex gap-05 top-0",
-    style: {
-      zIndex: 35,
-    },
-    children: [pauseButton, resumeButton, restartButton, closeButton],
-  });
+  const controls = Domo()
+    .cls("absolute flex gap-05 top-0")
+    .css({ zIndex: 35 })
+    .child([pauseButton, resumeButton, restartButton, closeButton])
+    .build();
 
-  const game = html({
-    el: "div",
-    clasS: "game",
-    ID: "game",
-    children: [controls],
-  });
+  const game = Domo().cls("game").id("game").child([controls]);
 
-  cleanupStartTreck = initstartTreck(game);
-  cleanupGame = initGame(game);
+  cleanupStartTreck = initstartTreck(game.element);
+  cleanupGame = initGame(game.element);
   cleanupGame.start();
 
   return game;

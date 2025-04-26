@@ -1,16 +1,18 @@
-import { A, IMG } from "../../services/DOMConstructor.js";
+import { Domo } from "@zyrab/domo";
 
-export const Icons8 = ({ icon, link, size = "20px" }) => {
-  return A({
-    href: link,
-    target: "_blank",
-    clasS: "flex just-c",
-    child: IMG({
-      style: { width: size, height: size },
-      src: "https://img.icons8.com/" + icons[icon] + ".png",
-      alt: icon,
-    }),
-  });
+export const createIcons8 = ({ icon, link, size = "20px" }) => {
+  return Domo("a")
+    .cls("flex just-c")
+    .attr({ href: link, target: "_blank" })
+    .child([
+      Domo("img")
+        .css({ width: size, height: size })
+        .attr({
+          src: "https://img.icons8.com/" + icons[icon] + ".png",
+          alt: icon,
+        })
+        .build(),
+    ]);
 };
 
 const icons = {
@@ -38,4 +40,6 @@ const icons = {
   js: "color/20/javascript--v1",
   html: "color/20/html-5--v1",
   lnkdn: "color/20/linkedin",
+  npm: "color/20/npm",
+  html5: "color/20/html-5--v1",
 };
