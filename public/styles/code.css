@@ -1,0 +1,33 @@
+.keyword,
+.operator {
+  color: violet;
+}
+
+.string {
+  color: gold;
+}
+
+.number,
+.tag {
+  color: rgb(196, 144, 13);
+}
+
+.boolean {
+  color: red;
+  font-style: italic;
+}
+
+.function {
+  color: #82AAFF;
+  font-style: italic;
+}
+
+.comment {
+  color: rgb(133, 133, 133);
+}
+
+.object,
+.attribute {
+  color: aqua;
+  font-style: italic;
+}
