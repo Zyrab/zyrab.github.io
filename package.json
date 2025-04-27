@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "esbuild public/app.js --minify --allow-overwrite --bundle --outfile=public/app.js  && esbuild public/main.css --minify --allow-overwrite --outfile=public/main.css"
+    "build": "esbuild public/app.js --minify --allow-overwrite --bundle --outfile=public/app.js  && esbuild public/main.css --minify --allow-overwrite --outfile=public/main.css --bundle"
   },
   "dependencies": {
     "@zyrab/domo": "github:zyrab/domo"
