@@ -1,7 +1,9 @@
 import { Domo } from "@zyrab/domo";
 import { parseInline } from "./parseInline.js";
 import { parseCode } from "./parseCode.js";
+import { readingTime } from "./readingTime.js";
 export function parseBlocks(markdown) {
+  // console.log(readingTime(markdown));
   // Normalize line endings and split into lines
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   const blocks = [];

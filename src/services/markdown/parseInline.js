@@ -51,7 +51,10 @@ export function parseInline(text) {
     if (groups.tagWithType !== undefined) {
       results.push(
         Domo("span")
-          .cls(["tag-with-type", groups.tagWithType_type])
+          .cls("highlight-tag")
+          .css({
+            color: groups.tagWithType_type,
+          })
           .txt(groups.tagWithType_name)
           .build()
       );
@@ -65,9 +68,12 @@ export function parseInline(text) {
       );
       // [Link Text](URL)
     } else if (groups.markdownLink !== undefined) {
+      const colors = ["e9bc3f", "3498db", "ffd700", "ee82ee"];
+      console.log(Math.random() * colors.length);
       results.push(
         Domo("a")
-          .cls("md-link")
+          .cls("underline-text")
+          .css({ "text-decoration-color": Math.random() * colors.length })
           .attr({
             href: groups.markdownLink_url,
             target: "_blank",
@@ -90,7 +96,7 @@ export function parseInline(text) {
       // __Underline__
     } else if (groups.underline !== undefined) {
       results.push(
-        Domo("u").cls("underline").txt(groups.underline_content).build()
+        Domo("u").cls("underline-text").txt(groups.underline_content).build()
       );
       // ~~Strike~~
     } else if (groups.strike !== undefined) {
