@@ -151,6 +151,8 @@ footer{
   padding-top: 3rem;
   padding: 1rem;
   font-weight: 900;
+  max-width: 40rem;
+  margin: auto;
 
 }
 .nav-icon{
@@ -224,8 +226,6 @@ footer{
   }
   .blog-post{
     padding-top: 6rem;
-    max-width: 40rem;
-    margin: auto;
   }
   footer{
     margin-bottom: 0;
