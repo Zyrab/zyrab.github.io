@@ -2,28 +2,38 @@
 .operator {
   color: violet;
 }
-
+.doctype{
+  color: #00C9A7;
+  font-style: italic;
+}
+.entity {
+  color: #FF6F61;
+}
 .string {
-  color: gold;
+  color: #E9BC3F;
 }
 
-.number,
+.number {
+  color: #C4900D;
+}
+
 .tag {
-  color: rgb(196, 144, 13);
+  color: #EB4888;
 }
 
 .boolean {
-  color: red;
+  color: #EB4888;
   font-style: italic;
 }
 
 .function {
-  color: #82AAFF;
+  color: #10A2F5;
   font-style: italic;
 }
 
 .comment {
-  color: rgb(133, 133, 133);
+  color: #7C7C7C;
+  font-style: italic;
 }
 
 .object,

@@ -150,8 +150,6 @@ footer{
   gap: 2rem;
   padding-top: 3rem;
   padding: 1rem;
-  background-color: var(--bg);
-
   font-weight: 900;
 
 }
@@ -226,8 +224,8 @@ footer{
   }
   .blog-post{
     padding-top: 6rem;
-    padding-left: 25%;
-    padding-right: 25%;
+    max-width: 40rem;
+    margin: auto;
   }
   footer{
     margin-bottom: 0;
