@@ -16,3 +16,22 @@ export const fetchJson = async (url) => {
     return null;
   }
 };
+
+export const fetchText = async (url) => {
+  try {
+    const encodedUrl = encodeURIComponent(url);
+    const local = sessionStorage.getItem(encodedUrl);
+    if (local) {
+      return local;
+    }
+    const response = await fetch(url);
+    const data = await response.text();
+    sessionStorage.setItem(encodedUrl, data);
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+
+    return null;
+  }
+};
