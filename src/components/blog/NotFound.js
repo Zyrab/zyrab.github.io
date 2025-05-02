@@ -16,7 +16,7 @@ export const NotFound = () => {
       createButton({
         text: "warp",
         icon: "warp",
-        onClick: () => Router.back(),
+        onClick: () => Router.goTo("/blog"),
       }),
     ]);
 };
