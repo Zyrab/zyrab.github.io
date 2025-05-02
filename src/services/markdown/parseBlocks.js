@@ -10,6 +10,7 @@ export function parseBlocks(markdown) {
   let i = 0;
   let currentParagraphLines = [];
   let ulList = [];
+  let olList = [];
 
   const pushPendingParagraph = () => {
     if (currentParagraphLines.length > 0) {
@@ -26,6 +27,12 @@ export function parseBlocks(markdown) {
       ulList = [];
     }
   };
+  const pushOlList = () => {
+    if (olList.length > 0) {
+      blocks.push(Domo("ol").cls("md-ol").child(olList).build());
+      olList = [];
+    }
+  };
   // Main loop iterating through each line
   while (i < lines.length) {
     const line = lines[i];
@@ -35,6 +42,7 @@ export function parseBlocks(markdown) {
     match = line.match(/^```(\w*)\s*$/);
     if (match) {
       pushUlList();
+      pushOlList();
       pushPendingParagraph(); // Finalize preceding paragraph
       const lang = match[1] || null;
       const contentLines = [];
@@ -53,6 +61,7 @@ export function parseBlocks(markdown) {
     match = line.match(/^:::\s*(\w+)\s*$/);
     if (match) {
       pushUlList();
+      pushOlList();
       pushPendingParagraph();
       const blockType = match[1];
       const contentLines = [];
@@ -77,6 +86,7 @@ export function parseBlocks(markdown) {
     match = line.match(/^(#{1,6})\s+(.*\S.*)/);
     if (match) {
       pushUlList();
+      pushOlList();
       pushPendingParagraph();
       const level = match[1].length;
       const headingTag = `h${level}`; // h1, h2, etc.
@@ -94,6 +104,7 @@ export function parseBlocks(markdown) {
     // --- Horizontal Rule: --- or *** ---
     if (/^ {0,3}([-*_])(?:\s*\1){2,}\s*$/.test(line)) {
       pushUlList();
+      pushOlList();
       pushPendingParagraph();
       blocks.push(Domo("hr").cls("md-hr").build()); // Add base class
       i++;
@@ -105,6 +116,7 @@ export function parseBlocks(markdown) {
     match = line.match(/^ {0,3}>\s?(.*)/);
     if (match) {
       pushUlList();
+      pushOlList();
       pushPendingParagraph();
       const quoteLines = [];
       // Consume all consecutive blockquote lines
@@ -135,13 +147,14 @@ export function parseBlocks(markdown) {
     // It does NOT handle nested lists based on indentation.
     match = line.match(/^(\s*)([-*+])\s+(.*)/);
     if (match) {
+      pushOlList();
       pushPendingParagraph();
       // const indent = match[1].length; // Indentation level (captured but not used for nesting)
       const content = match[3].trim();
       if (content) {
         ulList.push(
           Domo("li")
-            .cls("md-li", "md-ul-li") // Base li class + ul-specific li class
+            .cls("md-li") // Base li class + ul-specific li class
             .child(parseInline(content))
             .build()
         );
@@ -163,9 +176,9 @@ export function parseBlocks(markdown) {
       // const startNum = parseInt(match[2], 10); // Start number (captured but not used)
       const content = match[3].trim();
       if (content) {
-        blocks.push(
+        olList.push(
           Domo("li")
-            .cls("md-li", "md-ol-li") // Base li class + ol-specific li class
+            .cls("md-li") // Base li class + ol-specific li class
             .child(parseInline(content))
             .build()
         );
@@ -183,6 +196,7 @@ export function parseBlocks(markdown) {
     } else {
       // Empty line: signifies a break, finalize and push any pending paragraph
       pushUlList();
+      pushOlList();
       pushPendingParagraph();
     }
     i++; // Move to the next line

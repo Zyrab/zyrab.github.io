@@ -1,6 +1,7 @@
 import { Domo } from "@zyrab/domo";
 import { fetchText } from "../../services/fetch.js";
 import { parseBlocks } from "../../services/markdown/parseBlocks.js";
+import { NotFound } from "./NotFound.js";
 export const Post = async (props) => {
   const { slug } = props;
 
@@ -17,10 +18,10 @@ export const Post = async (props) => {
   const post = await fetchText(
     `https://raw.githubusercontent.com/Zyrab/dataZ/refs/heads/main/blogs/${slug}.txt`
   );
-
+  const notFound = post === "404: Not Found";
   return Domo("article")
     .cls("blog-post")
     .on("click", handleCopyCode)
-    .child(parseBlocks(post))
+    .child([notFound ? NotFound() : parseBlocks(post)])
     .build();
 };

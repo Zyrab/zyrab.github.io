@@ -68,12 +68,19 @@ export function parseInline(text) {
       );
       // [Link Text](URL)
     } else if (groups.markdownLink !== undefined) {
-      const colors = ["e9bc3f", "3498db", "ffd700", "ee82ee"];
-      console.log(Math.random() * colors.length);
+      const colors = [
+        "#00FFFF",
+        "#3498db",
+        "#ffd700",
+        "#ee82ee",
+        "#66BB6A",
+        "#EB4888",
+      ];
+      const i = Math.round(Math.random() * colors.length);
       results.push(
         Domo("a")
-          .cls("underline-text")
-          .css({ "text-decoration-color": Math.random() * colors.length })
+          .css({ textDecorationColor: colors[i] })
+          .cls("underline-text inherit")
           .attr({
             href: groups.markdownLink_url,
             target: "_blank",
