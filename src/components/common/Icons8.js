@@ -8,6 +8,7 @@ export const createIcons8 = ({ icon, link, size = "20px" }) => {
       Domo("img")
         .css({ width: size, height: size })
         .attr({
+          loading: "lazy",
           src: "https://img.icons8.com/" + icons[icon] + ".png",
           alt: icon,
         })

@@ -14,7 +14,7 @@ export const ProjectCard = (project) => {
         .child([
           Domo("img")
             .cls("w35 h35")
-            .attr({ src: raw + project.img, alt: project.ttl })
+            .attr({ loading: "lazy", src: raw + project.img, alt: project.ttl })
             .build(),
           Domo("h1").cls("xxl").txt(project.ttl),
         ]),
