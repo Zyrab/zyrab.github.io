@@ -46,7 +46,9 @@
 .align-e {
   align-items: end;
 }
-
+.align-content-s{
+  align-content:start;
+}
 .gap-05 {
   gap: 0.5rem;
 }
@@ -57,6 +59,15 @@
 
 .gap-2 {
   gap: 2rem;
+}
+.gap-25{
+  gap:2.5rem
+}
+.gap-3{
+  gap:3rem
+}
+.gap-35{
+  gap:3.5rem
 }
 
 .min-h-100 {

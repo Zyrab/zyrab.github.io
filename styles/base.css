@@ -13,11 +13,30 @@
   --transition: all 0.3s ease;
 }
 
-/* Hide scrollbar but keep scrolling */
+/* For Chrome, Edge, Safari */
 ::-webkit-scrollbar {
-  display: none;
+  width: 4px;
+  height: 4px;
 }
 
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 10px;
+}
+
+/* Optional: thinner on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #999 transparent;
+}
 /* Global Reset */
 * {
   margin: 0;
@@ -27,9 +46,9 @@
 
 /* Base Styling */
 body {
-  overflow: auto;
-    -ms-overflow-style: none;
-  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center ;
   font-family: var(--f-m);
   color: var(--silver);
   background-color: var(--bg);
@@ -73,43 +92,6 @@ body {
   pointer-events: auto;
   transition: opacity 0.8s ease, transform 1s ease;
 }
-/* form */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap:0.75rem;
-  padding: 1rem 1.75rem;
-  background-color: var(--greysh);
-}
-.form-input {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--silver);
-  background-color: var(--greysh);
-  color: var(--silver);
-  font-family: var(--f-m);
-  font-size: 1rem;
-  font-weight: 500;
-}
-.form-input::placeholder{
-  color: var(--bege);
-}
-.form-input:focus {
-  outline: none ;
-  border-color: var(--black);
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 header{
   display: flex;
@@ -137,9 +119,6 @@ footer{
 
 .page{
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
   gap: 3.5rem;
   padding: 1rem 0.5rem;
@@ -149,11 +128,29 @@ footer{
   flex-direction: column;
   gap: 2rem;
   padding-top: 3rem;
+  padding-bottom: 3rem;
   padding: 1rem;
   font-weight: 900;
   max-width: 40rem;
   margin: auto;
 
+}
+/* underline styling for hover effect */
+.und{
+  font-feature-settings: "liga" 1, "dlig" 1;
+  text-decoration-thickness: 0.15em;
+  text-underline-offset: 0.1em;
+  -webkit-text-decoration-thickness: 0.15em;
+  -webkit-text-underline-offset: 0.3em;
+  transition: all 0.2s ease-in-out;
+}
+.und:hover{
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: inherit;
+  -webkit-text-decoration-line: underline;
+  -webkit-text-decoration-style: solid;
+  -webkit-text-decoration-color: inherit;
 }
 .nav-icon{
   width: 32px;
@@ -226,6 +223,7 @@ footer{
   }
   .blog-post{
     padding-top: 6rem;
+    padding-bottom: 4rem;
   }
   footer{
     margin-bottom: 0;

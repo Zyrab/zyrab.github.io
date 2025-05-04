@@ -11,19 +11,21 @@
 .brackets-highlight{
   color: #48eb5e;
   font-style: italic;
-  color: linear-gradient(to right, #48eb5e,#b748eb, #d848eb);
 }
 
 .underline-text {
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-thickness: 0.15em;
-  text-underline-offset: 0.2em;
-  text-decoration-color:inherit;
-  -webkit-text-decoration-line: underline;
-  -webkit-text-decoration-style: solid;
-  -webkit-text-decoration-color: inherit;
-  transition: all 0.2s ease-in-out;
+    font-feature-settings: "liga" 1, "dlig" 1;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-color: inherit;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    -webkit-text-decoration-thickness: 0.15em;
+    -webkit-text-underline-offset: 0.3em;
+    -webkit-text-decoration-line: underline;
+    -webkit-text-decoration-style: solid;
+    -webkit-text-decoration-color: inherit;
+    transition: all 0.2s ease-in-out;
 }
 .underline-text:hover{
   color: greenyellow;
