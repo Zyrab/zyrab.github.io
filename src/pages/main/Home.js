@@ -20,7 +20,6 @@ const Home = () => {
               createIcons8({
                 icon: "gmail",
                 link: texts.emailLink,
-                size: "20px",
               }),
               Domo("a")
                 .cls("md inherit italic decoration-none hover-white")
@@ -45,7 +44,6 @@ const Home = () => {
               createIcons8({
                 icon: "gh",
                 link: texts.sourceCode,
-                size: "20px",
               }),
               Domo("a")
                 .cls("md inherit italic decoration-none hover-white")

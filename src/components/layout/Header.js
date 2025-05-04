@@ -21,7 +21,7 @@ export const createHeader = () => {
           navData.map(({ route, iPath }) =>
             Domo("a")
               .cls("nav-link")
-              .attr({ href: route })
+              .attr({ href: route, title: route })
               // .data({ route })
               .child([
                 DSVG("svg")

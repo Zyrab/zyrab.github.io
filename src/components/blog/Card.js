@@ -25,7 +25,7 @@ export const Card = (list) => {
         .cls("und xl link")
         .css({ textDecorationColor: colors[i] })
         .attr({ href: detailUrl })
-        .child([Domo("h3").cls("xl").txt(list.title)]),
+        .txt(list.title),
       Domo("aside")
         .cls("flex gap-05 align-c")
         .child([
