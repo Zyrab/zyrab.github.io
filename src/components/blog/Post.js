@@ -1,4 +1,4 @@
-import { Domo } from "@zyrab/domo";
+import { Domo, Router } from "@zyrab/domo";
 import { fetchText } from "../../services/fetch.js";
 import { parseBlocks } from "../../services/markdown/parseBlocks.js";
 import { NotFound } from "./NotFound.js";
@@ -16,7 +16,7 @@ export const Post = async (props) => {
     }
   };
   const post = await fetchText(
-    `https://raw.githubusercontent.com/Zyrab/dataZ/refs/heads/main/blogs/${slug}.txt`
+    `https://raw.githubusercontent.com/Zyrab/dataZ/refs/heads/main${Router.base()}/${slug}.txt`
   );
   const notFound = post === "404: Not Found";
   return Domo("article")
