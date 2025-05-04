@@ -40,7 +40,7 @@ const data = [
   {
     icon: "gh",
     link: "https://github.com/Zyrab",
-    text: "github.com/Zyrab",
+    text: "/Zyrab",
   },
   {
     icon: "lnkdn",
