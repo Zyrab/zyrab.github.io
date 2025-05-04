@@ -76,7 +76,7 @@ export function parseInline(text) {
         "#66BB6A",
         "#EB4888",
       ];
-      const i = Math.round(Math.random() * colors.length);
+      const i = Math.floor(Math.random() * colors.length);
       results.push(
         Domo("a")
           .css({ textDecorationColor: colors[i] })

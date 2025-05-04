@@ -6,7 +6,7 @@ export const parseCode = (code, name) => {
     let bestMatch = null;
     let bestPattern = null;
 
-    for (const pattern of regex[name]) {
+    for (const pattern of regex[name] || regex.js) {
       let regex = new RegExp(pattern.pattern, "g");
       regex.lastIndex = lastIndex;
       let match = regex.exec(code);
