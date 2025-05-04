@@ -6,7 +6,7 @@ export const createHeader = () => {
     e.preventDefault();
     let navLink = e.target.closest(".nav-link");
     if (navLink) {
-      let link = navLink.getAttribute("data-route");
+      let link = navLink.getAttribute("href");
       svgRefs[Router.base() || "/"]?.classList.remove("current");
       Router.goTo(link);
       svgRefs[link].classList.add("current");
@@ -21,7 +21,8 @@ export const createHeader = () => {
           navData.map(({ route, iPath }) =>
             Domo("a")
               .cls("nav-link")
-              .data({ route })
+              .attr({ href: route })
+              // .data({ route })
               .child([
                 DSVG("svg")
                   .ref((svg) => (svgRefs[route] = svg))

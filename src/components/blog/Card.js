@@ -17,14 +17,15 @@ export const Card = (list) => {
   ];
   const i = Math.floor(Math.random() * colors.length);
 
+  const detailUrl = `/${list.intro ? "blog" : "bugs"}/${list.slug}`;
   return Domo("article")
-    .cls("bg-greysh p-1 flex col gap-05 max-w-550 pointer")
-    .data({ slug: list.slug })
+    .cls("bg-greysh p-1 flex col gap-05 max-w-550")
     .child([
-      Domo("h3")
-        .cls("xl und ")
+      Domo("a")
+        .cls("und xl link")
         .css({ textDecorationColor: colors[i] })
-        .txt(list.title),
+        .attr({ href: detailUrl })
+        .child([Domo("h3").cls("xl").txt(list.title)]),
       Domo("aside")
         .cls("flex gap-05 align-c")
         .child([

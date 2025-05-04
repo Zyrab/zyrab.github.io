@@ -16,10 +16,10 @@ const Bugs = async () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    let button = e.target.closest("article");
+    let button = e.target.closest(".link");
     if (button) {
-      let slug = button.getAttribute("data-slug");
-      Router.goTo(`/bugs/${slug}`);
+      let slug = button.getAttribute("href");
+      Router.goTo(slug);
     }
   };
 

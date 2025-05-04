@@ -109,6 +109,26 @@ footer{
   width: 100%;
   margin-bottom: 5rem;
 }
+a {
+  text-decoration: none;
+  /* Removes the underline */
+  color: inherit;
+  /* Inherits the color from the parent element */
+}
+
+a:visited {
+  color: inherit;
+  /* Ensures visited links also inherit color */
+}
+
+/* Optional: You might also want to set hover/active colors if you don't
+   want the default browser styles, although inheriting is often fine */
+
+a:hover,
+a:active {
+  color: inherit;
+}
+
 
 .page{
   display: flex;
