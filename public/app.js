@@ -1,6 +1,6 @@
 import { createLightSpeedAnimation } from "../src/components/common/LightSpeed.js";
 import { Router } from "@zyrab/domo";
-import { routes } from "../src/services/routes.js";
+import { routes } from "../src/pages/Index.js";
 import { createHeader } from "../src/components/layout/Header.js";
 import { Footer } from "../src/components/layout/Footer.js";
 
