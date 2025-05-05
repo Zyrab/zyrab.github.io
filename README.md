@@ -1,4 +1,4 @@
-# My Personal Website
+# My Personal Website 
 
 This is where I share my projects, blogs, interesting findings, and occasional updates on bugs and solutions I come across in my development journey.
 
@@ -15,15 +15,16 @@ Feel free to explore the source code and contribute if you're interested!
 
 ## Blogs
 
-I occasionally write blogs about the insights into projects I'm working on, tutorials, and my personal experience in tech. Chek latest posts:
+I occasionally write blogs about the insights into projects I'm working on, tutorials, and my personal experience in tech. Check latest posts:
 
-- [How Router works in SPA](https://www.zyrab.dev/blog/how-routing-works-in-spa) – An exploration of the inner workings of routing in Single Page Applications.
+- [How Router works in SPA](https://www.zyrab.dev/blog/how-routing-works-in-spa).
+- [SVG to Canvas Converter — Parsect](https://www.zyrab.dev/blog/svg-to-canvas-converter-parsect).
 
 ## Bugs & Interesting Stuff
 
 In this section, I’ll be sharing interesting bugs, challenges, and solutions I’ve encountered while coding. You’ll also find notes on cool tools or techniques that I find useful or noteworthy.
 
-coming soon ...
+- [SPA Breaks on Direct Access to Nested Routes](https://www.zyrab.dev/bugs/spa-breaks-on-direct-access-to-nested-routes).
 
 ## Contributing
 
@@ -31,4 +32,4 @@ If you'd like to contribute to any of my projects or simply suggest improvements
 
 ## License
 
-This repository is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This repository is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
