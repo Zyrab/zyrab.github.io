@@ -16,12 +16,12 @@ export const projectile = (endX, endY, w, h, prjArr) => {
     size: 1,
     update(ctx, dt) {
       ctx.save();
-      ctx.translate(this.x, this.y);
+      ctx.translate(this.x - dims.w / 2, this.y - dims.h / 2);
       ctx.rotate(angle);
       ctx.scale(3, 3);
       ctx.shadowColor = "purple";
       ctx.shadowBlur = 20;
-      drawShape(ctx, shape);
+      drawShape(ctx, shapes);
       ctx.restore();
       if (this.destroyed) return false;
       this.x += this.dx * dt;
@@ -50,4 +50,4 @@ const projectileShapes = [
   },
 ];
 
-const shape = toPath2D(projectileShapes);
+const { shapes, dims } = toPath2D(projectileShapes);

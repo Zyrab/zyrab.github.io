@@ -34,17 +34,25 @@
 
     <link
       rel="stylesheet"
-      href="/main.css"
+      href="./main.css"
       media="print"
       onload="this.media='all'"
     />
 
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+    <script type="importmap">
+      {
+        "imports": {
+          "@zyrab/domo": "/node_modules/@zyrab/domo/index.js",
+          "@zyrab/parsect-renderer": "/node_modules/@zyrab/parsect-renderer/index.js"
+        }
+      }
+    </script>
   </head>
   <body id="app">
     <noscript>
       <p>Please enable JavaScript to view this website correctly.</p>
     </noscript>
-    <script type="module" src="/app.js" defer></script>
+    <script type="module" src="./app.js" defer></script>
   </body>
 </html>

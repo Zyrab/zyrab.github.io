@@ -10,17 +10,18 @@ export const spaceCraft = (x, y, gmOv) => {
     scale,
     get hitZone() {
       return colliders.map(({ x, y, width, height }) => ({
-        x: x * scale + cx - (sc.x * scale) / 2,
-        y: y * scale + cy - (sc.y * scale) / 2,
+        x: x * scale + cx - (dims.w * scale) / 2,
+        y: y * scale + cy - (dims.h * scale) / 2,
         width: width * scale,
         height: height * scale,
       }));
     },
     update(ctx) {
       ctx.save();
+      ctx.translate(0 - (dims.w * scale) / 2, (-dims.h * scale) / 2);
       ctx.translate(cx, cy);
       ctx.scale(this.scale, this.scale);
-      drawShape(ctx, engine);
+      drawShape(ctx, engine.shapes);
       drawShape(ctx, shapes);
       ctx.restore();
       if (this.destroyed) {
@@ -123,6 +124,5 @@ const spaceCraftPath = [
   },
 ];
 
-const shapes = toPath2D(spaceCraftPath);
+const { shapes, dims } = toPath2D(spaceCraftPath);
 const engine = toPath2D(enginePath);
-const sc = shapes.center;

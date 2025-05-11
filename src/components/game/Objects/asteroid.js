@@ -29,10 +29,13 @@ export const asteroid = (w, h, prjs, ship) => {
     update(ctx, dt) {
       this.rotation += 0.3 / size;
       ctx.save();
-      ctx.translate(this.x, this.y);
+      ctx.translate(
+        this.x - astShp[shape].dims.w / 2,
+        this.y - astShp[shape].dims.h / 2
+      );
       ctx.rotate(this.rotation);
       ctx.scale(scale, scale);
-      drawShape(ctx, astShp[shape]);
+      drawShape(ctx, astShp[shape].shapes);
       ctx.restore();
 
       const prj = checkCCVCollision(this, prjs);
