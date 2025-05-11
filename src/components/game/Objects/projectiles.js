@@ -1,6 +1,5 @@
 import { normalizeSpeed } from "../canvas2d.js";
-import { cacheShapes } from "../canvas2d.js";
-import { drawShape } from "../canvas2d.js";
+import { toPath2D, drawShape } from "@zyrab/parsect-renderer";
 export const projectile = (endX, endY, w, h, prjArr) => {
   let x = w / 2;
   let y = h - 100;
@@ -51,4 +50,4 @@ const projectileShapes = [
   },
 ];
 
-const shape = cacheShapes(projectileShapes);
+const shape = toPath2D(projectileShapes);

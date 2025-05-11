@@ -222,7 +222,6 @@ a:active {
 }
 
 
-/* Responsive Grid */
 @media (min-width:65.25rem) {
   header{
     top: 0;

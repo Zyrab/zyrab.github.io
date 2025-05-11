@@ -3,7 +3,8 @@
     "build": "esbuild public/app.js --minify --allow-overwrite --bundle --outfile=public/app.js  && esbuild public/main.css --minify --allow-overwrite --outfile=public/main.css --bundle"
   },
   "dependencies": {
-    "@zyrab/domo": "github:zyrab/domo"
+    "@zyrab/domo": "^1.0.3",
+    "@zyrab/parsect-renderer": "^0.0.1"
   },
   "devDependencies": {
     "esbuild": "^0.24.2"
