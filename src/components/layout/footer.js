@@ -1,16 +1,13 @@
 import { Domo } from "@zyrab/domo";
 import { createIcons8 } from "../common/Icons8.js";
-export const Footer = () => {
+export const createFooter = () => {
   const currentYear = new Date().getFullYear();
   const links = ({ icon, link, text }) =>
     Domo()
       .cls("flex align-c gap-05")
       .child([
         createIcons8({ icon, link }),
-        Domo("a")
-          .cls("sm hover-white decoration-none inherit")
-          .attr({ href: link, target: "_blank" })
-          .txt(text),
+        Domo("a").cls("sm hover-white decoration-none inherit").attr({ href: link, target: "_blank" }).txt(text),
       ]);
 
   return Domo("footer")
