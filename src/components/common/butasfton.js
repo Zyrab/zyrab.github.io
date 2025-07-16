@@ -1,19 +1,12 @@
-import { Domo } from "@zyrab/domo";
-import { createIcons8 } from "../common/Icons8.js";
+import Domo from "@zyrab/domo";
+import { createIcons8 } from "./Icons8.js";
 
-export const createButton = ({
-  icon = "",
-  attr = {},
-  text = "",
-  data = "",
-  onClick,
-  type = "button",
-}) => {
+export const createButton = ({ icon = "", attr = {}, text = "", data = "", type = "button" }) => {
   return Domo("button")
     .cls("btn-default")
     .attr({ type, ...attr })
     .data({ btn: data })
-    .on(onClick && "click", onClick)
+    .id("button-click")
     .child([
       createIcons8({ icon }).if(icon !== ""),
       Domo("p")
