@@ -1,4 +1,4 @@
-import { Domo } from "@zyrab/domo";
+import Domo from "@zyrab/domo";
 
 export const createIcons8 = ({ icon, link, size = "20px" }) => {
   return Domo("a")
@@ -11,8 +11,7 @@ export const createIcons8 = ({ icon, link, size = "20px" }) => {
           loading: "lazy",
           src: "https://img.icons8.com/" + icons[icon] + ".png",
           alt: icon,
-        })
-        .build(),
+        }),
     ]);
 };
 
