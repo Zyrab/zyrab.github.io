@@ -1,19 +1,19 @@
 import Domo from "@zyrab/domo";
 
-export const createIcons8 = ({ icon, link, size = "20px" }) => {
-  return Domo("a")
-    .cls("flex just-c")
-    .attr({ href: link, target: "_blank" })
+export default function createIcon({ icon, size = "1.25rem" }) {
+  return Domo()
+    .cls("flex jc-c ai-c")
     .child([
       Domo("img")
         .css({ width: size, height: size })
         .attr({
           loading: "lazy",
           src: "https://img.icons8.com/" + icons[icon] + ".png",
-          alt: icon,
+          alt: "",
+          "aria-hidden": "true",
         }),
     ]);
-};
+}
 
 const icons = {
   gh: "3d-fluency/35/github",
