@@ -1,9 +1,13 @@
 {
+  "type": "module",
   "scripts": {
-    "build": "esbuild public/app.js --minify --allow-overwrite --bundle --outfile=public/app.js  && esbuild public/main.css --minify --allow-overwrite --outfile=public/main.css --bundle"
+    "build:ssg": "node ./node_modules/@zyrab/domo-ssg/src/index.js"
   },
   "dependencies": {
-    "@zyrab/domo": "^1.0.3",
+    "@zyrab/domo": "^1.2.0",
+    "@zyrab/domo-router": "^0.1.0",
+    "@zyrab/domo-ssg": "^0.1.0",
+    "@zyrab/domo-svg": "^0.1.0",
     "@zyrab/parsect-renderer": "^0.0.1"
   },
   "devDependencies": {
