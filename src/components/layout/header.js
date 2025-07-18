@@ -1,42 +1,37 @@
-import { Domo, Router, DSVG } from "@zyrab/domo";
+import DSVG from "@zyrab/domo-svg";
+import Domo from "@zyrab/domo";
+import Router from "@zyrab/domo-router";
+
 export const createHeader = () => {
-  let svgRefs = {};
-
-  function handaleNavigation(e) {
-    e.preventDefault();
-    let navLink = e.target.closest(".nav-link");
-    if (navLink) {
-      let link = navLink.getAttribute("href");
-      svgRefs[Router.base() || "/"]?.classList.remove("current");
-      Router.goTo(link);
-      svgRefs[link].classList.add("current");
-    }
-  }
-
   return Domo("header")
+    .attr({ "aria-label": "Primary navigation" })
+    .cls("flex jc-c ai-c w-full bg-prim fix bottom-0 z-10 lg:top-0 lg:bottom-auto")
     .child([
       Domo("nav")
-        .on("click", handaleNavigation)
+        .cls("flex g-1 p-1 bb-1-sec")
         .child(
           navData.map(({ route, iPath }) =>
             Domo("a")
               .cls("nav-link")
               .attr({ href: route, title: route })
-              // .data({ route })
+              .data({ route })
               .child([
                 DSVG("svg")
-                  .ref((svg) => (svgRefs[route] = svg))
-                  .cls([
-                    "nav-icon",
-                    route === (Router.base() || "/") ? "current" : "",
-                  ])
+                  .attr({
+                    "aria-hidden": "true",
+                    focusable: "false",
+                  })
+                  .css({
+                    width: "32px",
+                    height: "32px",
+                  })
+                  .cls(["nav-icon", route === (Router.base() || "/") ? "current" : ""])
                   .attr({ viewBox: "0 0 17 17" })
                   .child([DSVG("path").attr({ stroke: "#fff", d: iPath })]),
               ])
           )
         ),
-    ])
-    .build();
+    ]);
 };
 
 const navData = [

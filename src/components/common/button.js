@@ -16,7 +16,7 @@ export default function createButton({
   const isExternal = href && /^https?:\/\//.test(href);
 
   return Domo(isLink ? "a" : "button")
-    .cls("flex jc-c ai-c g-05 p-05 bg-black bg-trans-03 hv-bg-dark unset pointer")
+    .cls("flex jc-c ai-c g-0.5 p-0.5 b-accent bg-accent trans:bg-0.3 hv:bg-pprim pointer")
     .attr({
       ...(isLink ? {} : { type }),
       ...(aria ? { "aria-label": aria } : {}),

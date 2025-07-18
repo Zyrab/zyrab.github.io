@@ -19,7 +19,7 @@ export default async function createPost(props) {
   );
 
   return Domo("article")
-    .cls("flex col g-2 py-3 px-1 lg-py-6 m-auto max-w-40 ")
+    .cls("flex col g-2 py-3 px-1 lg:py-6 m-auto max-w-40")
     .id("article-click")
     .on("click", handleCopyCode)
     .child([parseBlocks(post)]);

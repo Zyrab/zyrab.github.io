@@ -14,13 +14,13 @@ export default function createCard(list) {
   const detailUrl = `/${list.intro ? "blog" : "bugs"}/${list.slug}`;
 
   return Domo("article")
-    .cls("flex col g-1 bg-greysh p-15 max-w-550")
+    .cls("flex col g-1 bg-pprim p-1.5 max-w-31")
     .child([
       Domo("h2").child([
         Domo("a").cls("und xl link").css({ textDecorationColor: colors[i] }).attr({ href: detailUrl }).txt(list.title),
       ]),
       Domo("aside")
-        .cls("flex g-05 ai-c")
+        .cls("flex g-0.5 ai-c")
         .child([
           Domo("time").cls("md boolean").attr({ datetime: list.date }).txt(formatDate(list.date)),
           Domo("span").txt("•"),
