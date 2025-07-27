@@ -1,0 +1,88 @@
+/* ==== Flex & Layout ==== */
+.flex { display: flex; }
+.col { flex-direction: column; }
+.wrap { flex-wrap: wrap; }
+.ai-c { align-items: center; }
+.jc-s { justify-content: start; }
+.jc-c { justify-content: center; }
+.jc-sb { justify-content: space-between; }
+/* ==== Flex & gaps ==== */
+.g-0\.5 { gap: 0.5rem; }
+.g-1 { gap: 1rem; }
+.g-2 { gap: 2rem; }
+.g-3 { gap: 3rem; }
+.g-3\.5 { gap: 3.5rem; }
+/* ==== Spacing ==== */
+.m-auto { margin: auto;}
+.p-0\.5 { padding: 0.5rem; }
+.p-1 { padding: 1rem; }
+.p-1\.5 { padding: 1.5rem;}
+.px-1 { padding:0 1rem; }
+.py-3 { padding: 3rem 0; }
+.mb-5 { margin-bottom: 5rem; }
+.p-2 { padding: 2rem; }
+.py-0\.5 { padding: 0.5rem 0; }
+/* ==== Width & Height ==== */
+.w-full { width: 100%; }
+.w-2\.125r { width: 2.125rem; }
+.h-2\.125r { height: 2.125rem; }
+.max-w-25 { max-width: 25rem; }
+.max-w-31 { max-width: 31rem; }
+.max-w-35 { max-width: 35rem; }
+.max-w-40 { max-width: 40rem; }
+.max-w-65 { max-width:65rem;}
+.max-w-81 { max-width:81rem;}
+.min-h-100vh {min-height: 100vh;}
+/* ==== Typography ==== */
+.ta-c { text-align: center; }
+.sm  { font-size: 0.8125rem; letter-spacing: 0.02em; }
+.md  { font-size: 0.875rem; letter-spacing: 0.018em; }
+.lg  { font-size: 1rem; letter-spacing: 0.015em; }
+.xl  { font-size: 1.25rem; letter-spacing: -0.01em; }
+.xxl  { font-size: 1.75rem; letter-spacing: -0.02em; }
+.italic { font-style: italic ; }
+.txt-bege { color: var(--color-bege); }
+/* ==== Colors ==== */
+.bg-prim { background-color: var(--color-primary); }
+.bg-pprim { background-color: var(--color-pre-primary); }
+.bg-bege { background-color: var(--color-bege); }
+.bg-accent { background-color: var(--color-accent); }
+/* ==== Border & Radius ==== */
+.b-accent { border: var(--color-accent) solid 1px;}
+.bb-1-sec { border-bottom: var(--color-secondary) solid 1px; }
+/* ==== Positioning ==== */
+.fix { position: fixed; }
+.abs { position: absolute; }
+.bottom-0 { bottom: 0;}
+.top-0 { top: 0;}
+.z-10 { z-index: 10;}
+/* ==== Transition & Transform ==== */
+.trans\:bg-0\.3 { transition: background-color 0.3s ease }
+/* === cursor === */
+.pointer { cursor: pointer;}
+.overflowX-auto { overflow-x: auto; }
+.tab-2 {tab-size: 2;}
+/* === hovers === */
+.hv\:txt-psec:hover { color: var(--color-pre-secondary);}
+.hv\:bg-pprim:hover { background-color: var(--color-pre-primary); }
+.hv\:bg-dark:hover { background-color: var(--dark); }
+/* Desktop (Large screens) */
+@media (min-width: 65.25rem) {
+  .lg\:py-6 { padding: 6rem 0; }
+  .lg\:mb-0 { margin-bottom: 0;}
+  .lg\:bottom-auto { bottom: auto; }
+  .lg\:top-0 { top: 0;}
+}
+/* code */
+.keyword,
+.operator { color: violet; }
+.doctype{ color: #00C9A7; font-style: italic; }
+.entity { color: #FF6F61; }
+.string { color: #E9BC3F; }
+.number { color: #C4900D; }
+.tag { color: #EB4888; }
+.boolean { color: #EB4888; font-style: italic; }
+.function { color: #10A2F5; font-style: italic; }
+.comment { color: #7C7C7C; font-style: italic; }
+.object,
+.attribute { color: aqua; font-style: italic; }
