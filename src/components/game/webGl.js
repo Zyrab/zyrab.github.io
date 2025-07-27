@@ -1,7 +1,5 @@
-export const initWebGL = (canvasId, parent) => {
-  const canvas = document.createElement("canvas");
-  canvas.id = canvasId;
-  parent.appendChild(canvas);
+export const initWebGL = (canvasId) => {
+  const canvas = document.getElementById(canvasId);
   const gl = canvas.getContext("webgl");
 
   if (!gl) throw new Error("WebGL not supported");

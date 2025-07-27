@@ -1,7 +1,8 @@
 import Domo from "@zyrab/domo";
 import createIcon from "../../components/common/icon.js";
 import createButton from "../../components/common/button.js";
-const Home = () => {
+
+export default function createHome() {
   return Domo("section")
     .cls("flex col ai-c jc-c g-2 min-h-100vh p-1")
     .child([
@@ -38,7 +39,7 @@ const Home = () => {
             ]),
         ]),
     ]);
-};
+}
 
 const texts = {
   title: "Welcome to my space.",
@@ -51,5 +52,3 @@ const texts = {
     "Or if you're just passing through, why not play a quick game? I built it with passion—think you can beat my score?",
   sourceCode: "See the game's source code here",
 };
-
-export default Home;

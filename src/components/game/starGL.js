@@ -1,10 +1,11 @@
 import { initWebGL, resizeCanvas, createShaderProgram } from "./webGl.js";
-export const initstartTreck = (parent) => {
+
+export const initstartTreck = () => {
   const animations = [];
   let animationFrameId;
 
   // === Initialize WebGL ===
-  const { canvas, gl, buffer } = initWebGL("webglCanvas", parent);
+  const { canvas, gl, buffer } = initWebGL("webglCanvas");
   resizeCanvas(canvas, gl);
 
   const starProgram = createShaderProgram(gl, starVertex, starFragment);
@@ -83,12 +84,7 @@ const getRandomStarColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-export const generateStarData = (
-  numClusters,
-  maxClusterSize,
-  width,
-  height
-) => {
+export const generateStarData = (numClusters, maxClusterSize, width, height) => {
   let starData = [];
   for (let i = 0; i < numClusters; i++) {
     let centerX = Math.random() * width;
@@ -126,14 +122,7 @@ export const starBuffer = (gl, program, starBuffer, starArray) => {
   for (let attr in attributes) {
     let location = gl.getAttribLocation(program, attr);
     let { size, offset } = attributes[attr];
-    gl.vertexAttribPointer(
-      location,
-      size,
-      gl.FLOAT,
-      false,
-      stride,
-      offset * Float32Array.BYTES_PER_ELEMENT
-    );
+    gl.vertexAttribPointer(location, size, gl.FLOAT, false, stride, offset * Float32Array.BYTES_PER_ELEMENT);
     gl.enableVertexAttribArray(location);
   }
 };

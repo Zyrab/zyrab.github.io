@@ -1,7 +1,17 @@
-import { Domo } from "@zyrab/domo";
-import { parseInline } from "./parseInline.js";
-import { parseCode } from "./parseCode.js";
-import { readingTime } from "./readingTime.js";
+import Domo from "@zyrab/domo";
+import { parseInline } from "./parse-inline.js";
+import { parseCode } from "./parse-code.js";
+import { readingTime } from "./reading-time.js";
+
+// --- Code Block: ```lang ... ``` ---
+// --- Custom Block: ::: type ... ::: ---
+// --- Heading: # to ###### ---
+// --- Horizontal Rule: --- or *** ---
+// --- Blockquote: > ... ---
+// --- Unordered List Item: -/*/+ ... ---
+// --- Ordered List Item: 1./) ... ---
+// --- Paragraph Line or Blank Line ---
+
 export function parseBlocks(markdown) {
   // console.log(readingTime(markdown));
   // Normalize line endings and split into lines
@@ -15,21 +25,19 @@ export function parseBlocks(markdown) {
   const pushPendingParagraph = () => {
     if (currentParagraphLines.length > 0) {
       const paragraphText = currentParagraphLines.join("\n");
-      blocks.push(
-        Domo("p").cls("md-p").child(parseInline(paragraphText)).build()
-      );
+      blocks.push(Domo("p").cls("md-p").child(parseInline(paragraphText)));
       currentParagraphLines = [];
     }
   };
   const pushUlList = () => {
     if (ulList.length > 0) {
-      blocks.push(Domo("ul").cls("md-ul").child(ulList).build());
+      blocks.push(Domo("ul").cls("md-ul").child(ulList));
       ulList = [];
     }
   };
   const pushOlList = () => {
     if (olList.length > 0) {
-      blocks.push(Domo("ol").cls("md-ol").child(olList).build());
+      blocks.push(Domo("ol").cls("md-ol").child(olList));
       olList = [];
     }
   };
@@ -76,7 +84,6 @@ export function parseBlocks(markdown) {
         Domo("div")
           .cls(["custom-block", `custom-${blockType}`]) // Base and specific class
           .child(parseInline(content)) // Assume inline parsing for content
-          .build()
       );
       i++;
       continue;
@@ -95,7 +102,6 @@ export function parseBlocks(markdown) {
         Domo(headingTag)
           .cls(`md-${headingTag}`) // Add base class (md-h1) and size class
           .child(parseInline(content)) // Parse inline content
-          .build()
       );
       i++;
       continue;
@@ -106,11 +112,10 @@ export function parseBlocks(markdown) {
       pushUlList();
       pushOlList();
       pushPendingParagraph();
-      blocks.push(Domo("hr").cls("md-hr").build()); // Add base class
+      blocks.push(Domo("hr").cls("md-hr")); // Add base class
       i++;
       continue;
     }
-
     // --- Blockquote: > ... ---
     // Groups consecutive lines starting with ">"
     match = line.match(/^ {0,3}>\s?(.*)/);
@@ -135,7 +140,6 @@ export function parseBlocks(markdown) {
         Domo("blockquote")
           .cls("md-blockquote") // Add base class
           .child(parseInline(quoteContent))
-          .build()
       );
       // 'i' is already advanced past the last quote line by the inner loop
       continue; // Continue the outer loop
@@ -156,7 +160,6 @@ export function parseBlocks(markdown) {
           Domo("li")
             .cls("md-li") // Base li class + ul-specific li class
             .child(parseInline(content))
-            .build()
         );
       }
       // If content is empty (e.g., "- "), we just skip adding the li
@@ -180,7 +183,6 @@ export function parseBlocks(markdown) {
           Domo("li")
             .cls("md-li") // Base li class + ol-specific li class
             .child(parseInline(content))
-            .build()
         );
       }
       // If content is empty (e.g., "1. "), we just skip adding the li

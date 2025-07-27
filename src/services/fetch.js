@@ -1,37 +1,24 @@
-export const fetchJson = async (url) => {
+import fs from "fs";
+import { resolve } from "path";
+
+export const fetchJson = async (path) => {
   try {
-    const encodedUrl = encodeURIComponent(url);
-    const local = sessionStorage.getItem(encodedUrl);
-    if (local) {
-      return JSON.parse(local);
-    }
-    const response = await fetch(url);
-    const data = await response.json();
-    sessionStorage.setItem(encodedUrl, JSON.stringify(data));
-
-    return data;
+    const filePath = resolve(process.cwd(), path.replace(/^\/+/, ""));
+    const content = await fs.promises.readFile(filePath, "utf-8");
+    return JSON.parse(content);
   } catch (error) {
-    console.error("Error fetching data:", error);
-
+    console.error("Error fetching JSON:", error);
     return null;
   }
 };
 
-export const fetchText = async (url) => {
+export const fetchText = async (path) => {
   try {
-    const encodedUrl = encodeURIComponent(url);
-    const local = sessionStorage.getItem(encodedUrl);
-    if (local) {
-      return local;
-    }
-    const response = await fetch(url);
-    const data = await response.text();
-    sessionStorage.setItem(encodedUrl, data);
-
-    return data;
+    const filePath = resolve(process.cwd(), path.replace(/^\/+/, ""));
+    const content = await fs.promises.readFile(filePath, "utf-8");
+    return content;
   } catch (error) {
-    console.error("Error fetching data:", error);
-
+    console.error("Error fetching text:", error);
     return null;
   }
 };

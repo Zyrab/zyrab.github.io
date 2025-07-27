@@ -15,9 +15,9 @@ export default function createProjectCard(project) {
           Domo("img")
             .cls("w-2.125r h-2.125r")
             .attr({ loading: "lazy", src: raw + project.img, alt: "" }),
-          Domo("h3").cls("xxl").id(`project-title-${project.id}`).txt(project.ttl),
+          Domo("h3").cls("xxl").id(`project-title-${project.id}`).txt(project.title),
         ]),
-      Domo("p").cls("md italic").txt(project.date),
+      Domo("p").cls("md italic string").txt(project.date),
       Domo("p").cls("lg").txt(project.description),
       Domo()
         .cls("flex jc-sb")
@@ -28,7 +28,7 @@ export default function createProjectCard(project) {
           createButton({
             text: btn ? btn[0] : "",
             icon: btn ? btn[1] : "",
-            data: btn ? btn[2] : "",
+            href: btn ? btn[2] : "",
           }).if(btn),
         ]),
     ]);

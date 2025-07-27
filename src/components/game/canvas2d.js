@@ -1,7 +1,5 @@
-export const initCanvas2D = (canvasID, parent) => {
-  const canvas = document.createElement("canvas");
-  canvas.id = canvasID;
-  parent.appendChild(canvas);
+export const initCanvas2D = () => {
+  const canvas = document.getElementById("canvas2D");
   const ctx = canvas.getContext("2d");
   return { canvas, ctx };
 };

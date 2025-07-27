@@ -1,4 +1,4 @@
-import { Domo } from "@zyrab/domo";
+import Domo from "@zyrab/domo";
 export const parseCode = (code, name) => {
   let styledCode = [];
   let lastIndex = 0;
@@ -18,43 +18,41 @@ export const parseCode = (code, name) => {
     }
 
     if (!bestMatch) {
-      styledCode.push(Domo("span").txt(code.slice(lastIndex)).build());
+      styledCode.push(Domo("span").txt(escapeHtml(code.slice(lastIndex))));
       break;
     }
 
     if (bestMatch.index > lastIndex) {
-      styledCode.push(
-        Domo("span").txt(code.slice(lastIndex, bestMatch.index)).build()
-      );
+      styledCode.push(Domo("span").txt(escapeHtml(code.slice(lastIndex, bestMatch.index))));
     }
 
-    styledCode.push(
-      Domo("span").cls(bestPattern.type).txt(bestMatch[0]).build()
-    );
+    styledCode.push(Domo("span").cls(bestPattern.type).txt(escapeHtml(bestMatch[0])));
 
     lastIndex = bestMatch.index + bestMatch[0].length;
   }
 
   return Domo().child([
     Domo()
-      .cls("flex just-sb p-05 bg-greysh")
+      .cls("flex jc-sb p-0.5 bg-pprim")
       .child([
         Domo("p").cls("md").txt(name),
-        Domo("span").cls("sm pointer bege copyCode").data({ code }).txt("Copy"),
+        Domo("span").cls("sm pointer txt-bege copyCode").data({ code }).txt("Copy"),
       ]),
     Domo("pre")
-      .cls("p-1 bg-black overflowX-auto md")
+      .cls("p-1 bg-accent overflowX-auto tab-2 md")
       .child([Domo("code").child(styledCode)]),
   ]);
 };
+
+const escapeHtml = (str = "") =>
+  String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const regex = {
   js: [
     { type: "comment", pattern: /\/\/[^\n]*|\/\*[\s\S]*?\*\// },
     {
       type: "keyword",
-      pattern:
-        /\b(let|const|var|if|else|for|while|do|switch|case|break|continue|return|import|export)\b/,
+      pattern: /\b(let|const|var|if|else|for|while|do|switch|case|break|continue|return|import|export)\b/,
     },
     { type: "string", pattern: /(["'`])(?:(?=(\\?))\2.)*?\1/ },
     { type: "number", pattern: /\b\d+(\.\d+)?\b/ },
@@ -117,8 +115,7 @@ const regex = {
 
     {
       type: "color",
-      pattern:
-        /\b(#(?:[0-9a-fA-F]{3}){1,2}|rgb(?:a)?\([0-9, \.\%]+\)|hsl(?:a)?\([0-9, \.\%\°]+\))\b/g,
+      pattern: /\b(#(?:[0-9a-fA-F]{3}){1,2}|rgb(?:a)?\([0-9, \.\%]+\)|hsl(?:a)?\([0-9, \.\%\°]+\))\b/g,
     },
 
     {

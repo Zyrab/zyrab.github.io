@@ -12,6 +12,7 @@ import { Score, resetScore } from "./UI/score.js";
 import { spaceCraft } from "./Objects/spaceCraft.js";
 import { asteroidSpawner } from "./Objects/asteroidSpawner.js";
 import { gameOver } from "./UI/gameOver.js";
+
 export const initGame = (parent) => {
   const { canvas, ctx } = initCanvas2D("canvas2D", parent);
   resizeCanvas2D(canvas);
@@ -56,18 +57,19 @@ export const initGame = (parent) => {
       stopAnimationLoop();
     },
 
-    resume() {
+    play() {
       if (!isPaused) return;
       isPaused = false;
       startAnimationLoop(ctx);
     },
 
-    restart: restartGame,
+    replay: restartGame,
 
-    destroy() {
+    close() {
       resetScore();
       canvas.removeEventListener("click", clickHandler);
       clearAnimations();
+      window.location.href = "/";
     },
   };
 };

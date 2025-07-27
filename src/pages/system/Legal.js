@@ -1,4 +1,4 @@
-import { Domo } from "@zyrab/domo";
+import Domo from "@zyrab/domo";
 import { fetchJson } from "../../services/fetch.js";
 
 const Legal = async (props) => {
@@ -7,7 +7,7 @@ const Legal = async (props) => {
   };
   console.log(props.legal, props.app);
 
-  const legals = await fetchJson(`../../data/${props.legal}.json`);
+  const legals = await fetchJson(`/data/${props.legal}.json`);
   const thisApp = legals[props.app];
 
   return Domo("section")
@@ -47,8 +47,7 @@ const Legal = async (props) => {
               })
             ),
         ]),
-    ])
-    .build();
+    ]);
 };
 
 const content = (con) =>

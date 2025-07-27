@@ -1,4 +1,15 @@
-import { Domo } from "@zyrab/domo";
+import Domo from "@zyrab/domo";
+
+// {{Name::Type}}
+// {{HighlightTag}} - Uses negative lookahead to avoid matching {{Name::Type}}
+// [Link Text](URL) - Improved URL matching to grab non-space/non-) characters.
+// [[bracketed]]
+// **Bold**
+// __Underline__
+// ~~Strike~~
+// ^^Highlight^^
+// `Inline Code` - Basic version, doesn't handle escaped/nested backticks.
+// *Italic* - Tries to avoid matching '*' inside bold or adjacent to spaces.
 
 export function parseInline(text) {
   if (text === null || text === undefined || text === "") {
@@ -31,10 +42,7 @@ export function parseInline(text) {
   ];
 
   // Combine all patterns into a single global regex
-  const combinedRegex = new RegExp(
-    patterns.map((r) => r.source).join("|"),
-    "g"
-  );
+  const combinedRegex = new RegExp(patterns.map((r) => r.source).join("|"), "g");
 
   const results = [];
   let lastIndex = 0;
@@ -56,26 +64,13 @@ export function parseInline(text) {
             color: groups.tagWithType_type,
           })
           .txt(groups.tagWithType_name)
-          .build()
       );
       // {{HighlightTag}}
     } else if (groups.highlightTag !== undefined) {
-      results.push(
-        Domo("span")
-          .cls("highlight-tag")
-          .txt(groups.highlightTag_content)
-          .build()
-      );
+      results.push(Domo("span").cls("highlight-tag").txt(groups.highlightTag_content));
       // [Link Text](URL)
     } else if (groups.markdownLink !== undefined) {
-      const colors = [
-        "#00FFFF",
-        "#3498db",
-        "#ffd700",
-        "#ee82ee",
-        "#66BB6A",
-        "#EB4888",
-      ];
+      const colors = ["#00FFFF", "#3498db", "#ffd700", "#ee82ee", "#66BB6A", "#EB4888"];
       const i = Math.floor(Math.random() * colors.length);
       results.push(
         Domo("a")
@@ -87,42 +82,28 @@ export function parseInline(text) {
             rel: "noopener noreferrer",
           })
           .txt(groups.markdownLink_text)
-          .build()
       );
       // [[bracketed]]
     } else if (groups.bracketed !== undefined) {
-      results.push(
-        Domo("span")
-          .cls("brackets-highlight")
-          .txt(groups.bracketed_content)
-          .build()
-      );
+      results.push(Domo("span").cls("brackets-highlight").txt(groups.bracketed_content));
       // **Bold**
     } else if (groups.bold !== undefined) {
-      results.push(Domo("b").cls("bold").txt(groups.bold_content).build());
+      results.push(Domo("b").cls("bold").txt(groups.bold_content));
       // __Underline__
     } else if (groups.underline !== undefined) {
-      results.push(
-        Domo("u").cls("underline-text").txt(groups.underline_content).build()
-      );
+      results.push(Domo("u").cls("underline-text").txt(groups.underline_content));
       // ~~Strike~~
     } else if (groups.strike !== undefined) {
-      results.push(
-        Domo("s").cls("strikethrough").txt(groups.strike_content).build()
-      );
+      results.push(Domo("s").cls("strikethrough").txt(groups.strike_content));
       // ^^Highlight^^
     } else if (groups.highlight !== undefined) {
-      results.push(
-        Domo("mark").cls("highlight").txt(groups.highlight_content).build()
-      );
+      results.push(Domo("mark").cls("highlight").txt(groups.highlight_content));
       // `Inline Code`
     } else if (groups.inlineCode !== undefined) {
-      results.push(
-        Domo("code").cls("inline-code").txt(groups.inlineCode_content).build()
-      );
+      results.push(Domo("code").cls("inline-code").txt(groups.inlineCode_content));
       // *Italic*
     } else if (groups.italic !== undefined) {
-      results.push(Domo("i").cls("italic").txt(groups.italic_content).build());
+      results.push(Domo("i").cls("italic").txt(groups.italic_content));
     }
 
     lastIndex = combinedRegex.lastIndex;

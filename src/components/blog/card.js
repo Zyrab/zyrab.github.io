@@ -11,7 +11,7 @@ export default function createCard(list) {
   const colors = ["#00FFFF", "#3498db", "#ffd700", "#ee82ee", "#66BB6A", "#EB4888"];
   const i = Math.floor(Math.random() * colors.length);
 
-  const detailUrl = `/${list.intro ? "blog" : "bugs"}/${list.slug}`;
+  const detailUrl = `/${list.description ? "blog" : "bugs"}/${list.slug}`;
 
   return Domo("article")
     .cls("flex col g-1 bg-pprim p-1.5 max-w-31")
@@ -22,10 +22,10 @@ export default function createCard(list) {
       Domo("aside")
         .cls("flex g-0.5 ai-c")
         .child([
-          Domo("time").cls("md boolean").attr({ datetime: list.date }).txt(formatDate(list.date)),
+          Domo("time").cls("md string").attr({ datetime: list.date }).txt(formatDate(list.date)),
           Domo("span").txt("•"),
           Domo("span").cls("md doctype").if(list.readTime).txt(list.readTime),
         ]),
-      Domo("p").cls("md").if(list.intro).txt(list.intro),
+      Domo("p").cls("md").if(list.description).txt(list.description),
     ]);
 }

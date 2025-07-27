@@ -10,9 +10,7 @@ export default async function createProjects() {
     "Sometimes games.",
     "Sometimes just an idea that needed to exist.",
   ];
-  const projects = await fetchJson(
-    "https://raw.githubusercontent.com/Zyrab/dataZ/refs/heads/main/projects/projects.json"
-  );
+  const projects = await fetchJson("/public/data/projects.json");
 
   return Domo("section")
     .cls("flex col ai-c jc-c g-2 min-h-100vh p-1 lg:py-6")
