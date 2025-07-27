@@ -14,11 +14,5 @@
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false,
-  "errorOverrides": [
-    {
-      "statusCode": 404,
-      "rewrite": "/404.html"
-    }
-  ]
+  "trailingSlash": false
 }
