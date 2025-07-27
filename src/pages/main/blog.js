@@ -16,7 +16,7 @@ export default async function createBlog() {
     .id("blog-page-click")
     .child([
       createIntros(intro),
-      Domo()
+      Domo("div")
         .cls("flex wrap jc-s g-3 m-auto max-w-65")
         .child(blogList.map((list) => createCard(list))),
     ]);
