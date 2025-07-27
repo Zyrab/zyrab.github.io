@@ -3,7 +3,7 @@ import createProjects from "./main/projects.js";
 import createBlog from "./main/blog.js";
 import createBugs from "./main/bugs.js";
 import createPost from "../components/blog/post.js";
-import Legal from "./system/Legal.js";
+import Legal from "./system/legal.js";
 import createGame from "./main/game.js";
 import createError from "./system/error.js";
 
