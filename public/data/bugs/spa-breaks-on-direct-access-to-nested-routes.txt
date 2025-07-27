@@ -1,0 +1,36 @@
+# SPA Breaks on Direct Access to Nested Routes
+
+While deploying my custom SPA on Vercel, I noticed that navigating via client-side routing worked fine,  but directly accessing nested routes (e.g., [[/dashboard/settings]]) caused a crash with this error:
+
+```pgsql
+Failed to load module script: 
+Expected a JavaScript module script but the server responded with a MIME type of "text/html"
+```
+
+## Root Cause
+
+I had referenced assets like this in `index.html`:
+
+```html
+<script type="module" src="app.js"></script>
+<link rel="stylesheet" href="style.css">
+```
+
+Without a leading `/`, the browser treats these as relative to the current URL path. So at [[/dashboard/settings]], it tries to load:
+
+`/dashboard/settings/app.js`
+`/dashboard/settings/style.css`
+
+These paths don’t exist, so Vercel returns `index.html` (due to SPA rewrites), which leads to the browser trying to interpret {{HTML::gold}} as [[JS/CSS]].  Causing {{MIME type errors::red}}.
+
+## Fix
+
+Change asset paths to be root-relative:
+
+```html
+<script type="module" src="/app.js"></script>
+<link rel="stylesheet" href="/style.css">
+```
+
+This ensures assets are loaded from the root regardless of the current route.
+

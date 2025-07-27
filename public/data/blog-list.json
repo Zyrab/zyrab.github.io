@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "how-routing-works-in-spa",
+    "id": 1,
+    "title": "How Routing Works in SPA",
+    "date": "18-02-2025",
+    "readTime": "3 min read",
+    "description": "To better understand SPAs and frameworks, I built a custom router. In this post, I'll explain how it works."
+  },
+  {
+    "slug": "svg-to-canvas-converter-parsect",
+    "id": 2,
+    "title": "SVG To Canvas Converter Parsect",
+    "date": "18-03-2025",
+    "readTime": "2 min read",
+    "description": "While working on my mini game, I needed a way to import SVG graphics into a canvas. so I built a converter."
+  },
+  {
+    "slug": "fixing-broken-georgian-fonts",
+    "id": 3,
+    "title": "Fixing Broken Georgian Fonts",
+    "date": "16-06-2025",
+    "readTime": "2 min read",
+    "description": "Ever found a font you liked, only to run into strange issues? Well then, let's fix them together."
+  }
+]

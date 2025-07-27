@@ -1,0 +1,63 @@
+[
+  {
+    "title": "Ani Bani",
+    "img": "aiia.png",
+    "description": "An app designed for Georgian kids, inspired by 'Duo ABC'. The app will feature interactive lessons, stories, and games to teach children the Georgian alphabet and basic words. The app requires further development.",
+    "date": "in progress",
+    "tech": ["fg", "rn", "exp", "frb", "gh"]
+  },
+  {
+    "title": "Zyrab.dev",
+    "img": "zrb.png",
+    "description": "Built from scratch with no libraries or frameworks, this website features a SPA routing system, I wrote functions to dynamically create and modify DOM elements, providing an efficient, lightweight experience.",
+    "date": "01.2025 - 03.2025",
+    "tech": ["fg", "js", "css", "html", "gh"]
+  },
+  {
+    "title": "Numbero",
+    "img": "nmbr.png",
+    "description": "A feature-rich mobile game built with React Native. It modernizes the classic Bulls and Cows logic game with multiple modes, a ranking system, friends list, in-game currency, a shop, an energy system, ads, quests, and achievements.",
+    "date": "03.2024 - 11.2024",
+    "tech": ["fg", "rn", "exp", "frb", "gh", "admb"],
+    "btn": ["Play Store", "gglplay", "https://play.google.com/store/apps/details?id=com.anonymous.Numbero10&hl=en"]
+  },
+  {
+    "title": "High Way",
+    "img": "hghw.png",
+    "description": "A simple race survival game built in Unity as a personal request. Players control a car, switching lanes to avoid obstacles by tapping the screen. Features include multiple car skins and smooth touch-based controls.",
+    "date": "07.2024 - 08.2024",
+    "tech": ["unt", "cshrp", "fg"],
+    "btn": ["HighWay.apk", "dwnld", "https://drive.google.com/uc?export=download&id=1ngw__oKn4r1p4wAYM6fbBMmircr_RGNe"]
+  },
+  {
+    "title": "Recepio",
+    "img": "rcp.png",
+    "description": "A React Native app that generates recipe suggestions based on available ingredients. Features a history of generated recipes, favorites. UI fully designed in Figma and implemented, with LLM integration planned.",
+    "date": "03.2024 - current",
+    "tech": ["fg", "rn", "exp", "frb", "gh"]
+  },
+  {
+    "title": "KEI Holding",
+    "img": "kei.png",
+    "description": "This was my first live project and my introduction to Vue.js. The website is designed for a real estate company to showcase their projects, attract investors, and connect with potential customers.",
+    "date": "03.2024 - 07.2024",
+    "tech": ["fg", "vue", "tlwcss", "gh"],
+    "btn": ["keiholding", "dmn", "https://keiholding.com/"]
+  },
+  {
+    "title": "Domo",
+    "img": "domo.png",
+    "description": "A lightweight DOM helper library designed to simplify element creation and manipulation with a fluent API. Includes a custom router for building SPAs with nested routes and history-based navigation.",
+    "date": "01.2025 - 03.2025",
+    "tech": ["js", "npm", "gh"],
+    "btn": ["Domo", "gh", "https://github.com/Zyrab/Domo"]
+  },
+  {
+    "title": "Parsect",
+    "img": "prsct.png",
+    "description": "Converts SVG files into JSON-mapped Canvas Path2D shapes. Provides a toPath2D(map) function to create paths and a drawShapes(paths) to render them. Shapes are raw Canvas objects — fully compatible with native Canvas API methods.",
+    "date": "03.2025 - present",
+    "tech": ["fg", "js", "html5", "npm", "gh"],
+    "btn": ["Parsect", "dmn", "http://parsect.zyrab.dev"]
+  }
+]

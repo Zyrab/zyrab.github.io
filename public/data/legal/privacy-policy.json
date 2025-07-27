@@ -1,0 +1,36 @@
+{
+  "title": "Privacy Policy",
+  "intro": "Welcome to ${app-name}! This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our ${app-type}. By using the ${app-type}, you agree to the collection and use of information in accordance with this policy.",
+  "contact": "If you have any questions about this Privacy Policy, please contact us at: zyrab.dev+${app-name}@gmail.com",
+  "conclusion": "By using ${app-name}, you agree to this Privacy Policy. We are committed to protecting your data and ensuring transparency regarding how we collect and use your information.",
+  "numbero": {
+    "name": "Numbero",
+    "type": "Game",
+    "text": [
+      {
+        "title": "Information We Collect",
+        "text": "Email Address: Collected during account registration for authentication and account management purposes. User IDs: Collected to identify and manage user accounts. Messages: Collected to facilitate real-time chat between users. Friends List: Collected to manage and display your friends within the game."
+      },
+      {
+        "title": "How We Use Your Information",
+        "text": "To Provide and Maintain Our Service: We use your information to authenticate users, manage accounts, and enable game functionalities such as multiplayer, ranking, and friends system. To Improve Our Service: We analyze usage patterns to improve the game's performance and functionality. To Communicate with You: We may use your email address to send updates, notifications, or respond to your inquiries."
+      },
+      {
+        "title": "Information Sharing and Disclosure",
+        "text": "Service Providers: We may share your information with third-party service providers (e.g., Firebase) to facilitate our services. Legal Requirements: We may disclose your information if required to do so by law or in response to valid requests by public authorities."
+      },
+      {
+        "title": "Data Security",
+        "text": "Encryption: All data transmitted between the game and our servers is encrypted using HTTPS. Data Retention: We retain your information for as long as your account is active or as needed to provide you services. You can request the deletion of your account and associated data."
+      },
+      {
+        "title": "Your Data Protection Rights",
+        "text": "Access: You have the right to access the personal information we hold about you. Correction: You can request correction of any incorrect or incomplete data. Deletion: You can request the deletion of your personal data. Objection: You can object to the processing of your data in certain circumstances."
+      },
+      {
+        "title": "Changes to This Privacy Policy",
+        "text": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. Changes are effective immediately upon posting."
+      }
+    ]
+  }
+}
