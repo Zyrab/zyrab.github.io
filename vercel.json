@@ -6,13 +6,6 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1/index.html",
-      "status": 200
-    }
-  ],
   "cleanUrls": true,
   "trailingSlash": false
 }
