@@ -1,3 +1,24 @@
 {
-  "routes": [{ "handle": "filesystem" }, { "src": "/(.*)", "dest": "/index.html" }]
+  "version": 2,
+  "builds": [
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1/index.html",
+      "status": 200
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "errorOverrides": [
+    {
+      "statusCode": 404,
+      "rewrite": "/404.html"
+    }
+  ]
 }
