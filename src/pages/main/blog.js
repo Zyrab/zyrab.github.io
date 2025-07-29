@@ -12,7 +12,7 @@ export default async function createBlog() {
   const blogList = await fetchJson("/public/data/blog-list.json");
 
   return Domo("section")
-    .cls("flex col g-2 py-3 px-1 lg:py-6 min-h-100vh")
+    .cls("flex col g-2 p-1 lg:py-6 min-h-100vh")
     .id("blog-page-click")
     .child([
       createIntros(intro),
