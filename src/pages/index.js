@@ -17,7 +17,7 @@ const routes = {
       description:
         "Zyrab is a developer building indie tools, mobile Apps, and more. Explore projects built with code-first precision.",
       ogdescription: "Explore the work of Zyrab - tools, apps, and ideas, all in one place.",
-      ogImage: "/assets/og-image.png",
+      ogImage: "https://www.zyrab.dev/assets/og-image.png",
     },
   },
   "/star-defence": {
