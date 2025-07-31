@@ -35,7 +35,7 @@ export default function createHome() {
               Domo("a")
                 .cls("md italic hv:txt-psec")
                 .attr({ href: texts.sourceCode, target: "_blank", rel: "noopener noreferrer" })
-                .txt(texts.sourceCode),
+                .txt(texts.sourceCodeText),
             ]),
         ]),
     ]);
@@ -50,5 +50,6 @@ const texts = {
   ideas: "I'm always up for cool ideas.",
   gameInvite:
     "Or if you're just passing through, why not play a quick game? I built it with passion—think you can beat my score?",
-  sourceCode: "See the game's source code here",
+  sourceCodeText: "See the game's source code here",
+  sourceCode: "https://github.com/Zyrab/zyrab.github.io/tree/main/src/components/game",
 };

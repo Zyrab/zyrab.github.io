@@ -29,12 +29,11 @@ export const asteroid = (w, h, prjs, ship) => {
     update(ctx, dt) {
       this.rotation += 0.3 / size;
       ctx.save();
-      ctx.translate(
-        this.x - astShp[shape].dims.w / 2,
-        this.y - astShp[shape].dims.h / 2
-      );
+      ctx.translate(this.x, this.y);
       ctx.rotate(this.rotation);
       ctx.scale(scale, scale);
+      ctx.translate(-astShp[shape].dims.w / 2, -astShp[shape].dims.h / 2);
+
       drawShape(ctx, astShp[shape].shapes);
       ctx.restore();
 
@@ -61,12 +60,7 @@ export const asteroid = (w, h, prjs, ship) => {
       this.x += this.dx * dt;
       this.y += this.dy * dt;
 
-      return !(
-        this.x > w + 20 ||
-        this.y < -20 ||
-        this.x < -20 ||
-        this.y > h + 20
-      );
+      return !(this.x > w + 20 || this.y < -20 || this.x < -20 || this.y > h + 20);
     },
   };
 };

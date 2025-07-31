@@ -11,7 +11,7 @@ import { projectile } from "./Objects/projectiles.js";
 import { Score, resetScore } from "./UI/score.js";
 import { spaceCraft } from "./Objects/spaceCraft.js";
 import { asteroidSpawner } from "./Objects/asteroidSpawner.js";
-import { gameOver } from "./UI/gameOver.js";
+import { gameOver } from "./UI/game-over.js";
 
 export const initGame = (parent) => {
   const { canvas, ctx } = initCanvas2D("canvas2D", parent);
