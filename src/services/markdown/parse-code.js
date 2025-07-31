@@ -18,15 +18,15 @@ export const parseCode = (code, name) => {
     }
 
     if (!bestMatch) {
-      styledCode.push(Domo("span").txt(escapeHtml(code.slice(lastIndex))));
+      styledCode.push(Domo("span").txt(code.slice(lastIndex)));
       break;
     }
 
     if (bestMatch.index > lastIndex) {
-      styledCode.push(Domo("span").txt(escapeHtml(code.slice(lastIndex, bestMatch.index))));
+      styledCode.push(Domo("span").txt(code.slice(lastIndex, bestMatch.index)));
     }
 
-    styledCode.push(Domo("span").cls(bestPattern.type).txt(escapeHtml(bestMatch[0])));
+    styledCode.push(Domo("span").cls(bestPattern.type).txt(bestMatch[0]));
 
     lastIndex = bestMatch.index + bestMatch[0].length;
   }
@@ -94,28 +94,23 @@ const regex = {
     },
 
     {
-      type: "selector",
-      pattern: /([a-zA-Z0-9#._-]+)/g,
+      type: "media-query",
+      pattern: /@media[\s\S]*?{[\s\S]*?}/g,
     },
 
     {
-      type: "property",
-      pattern: /\b([a-zA-Z\-]+)(?=\s*:)/g,
+      type: "at-rule",
+      pattern: /@([a-zA-Z0-9\-]+)(\s*[^;{]*)/g,
     },
 
     {
-      type: "value",
-      pattern: /\b([a-zA-Z0-9%\.#\-\(\)]+)(?=\s*;|\s*\})/g,
+      type: "pseudo-element",
+      pattern: /::([a-zA-Z0-9_-]+)/g,
     },
 
     {
-      type: "unit",
-      pattern: /\b(\d+(?:\.\d+)?)(px|em|rem|%|vh|vw|deg|s)\b/g,
-    },
-
-    {
-      type: "color",
-      pattern: /\b(#(?:[0-9a-fA-F]{3}){1,2}|rgb(?:a)?\([0-9, \.\%]+\)|hsl(?:a)?\([0-9, \.\%\°]+\))\b/g,
+      type: "pseudo-class",
+      pattern: /:([a-zA-Z0-9_-]+)/g,
     },
 
     {
@@ -129,23 +124,29 @@ const regex = {
     },
 
     {
-      type: "pseudo-class",
-      pattern: /:(\w+)/g,
+      type: "color",
+      pattern: /\b(#(?:[0-9a-fA-F]{3}){1,2}|rgb(?:a)?\([0-9,.\s%]+\)|hsl(?:a)?\([0-9,.\s%°]+\))\b/g,
     },
 
     {
-      type: "pseudo-element",
-      pattern: /::(\w+)/g,
+      type: "unit",
+      pattern: /\b(\d+(?:\.\d+)?)(px|em|rem|%|vh|vw|deg|s)\b/g,
     },
 
     {
-      type: "media-query",
-      pattern: /@media[\s\S]*?{[\s\S]*?}/g,
+      type: "value",
+      pattern: /\b([a-zA-Z0-9#.\-%\(\)]+)(?=\s*;|\s*\})/g,
     },
 
     {
-      type: "at-rule",
-      pattern: /@([a-zA-Z0-9\-]+)(\s*[^;]*)/g,
+      type: "property",
+      pattern: /\b([a-zA-Z\-]+)(?=\s*:)/g,
+    },
+
+    // Optional: restrict selector to tags (not already matched classes/ids)
+    {
+      type: "selector",
+      pattern: /\b([a-zA-Z][a-zA-Z0-9-]*)\b(?=\s*\{)/g,
     },
   ],
 };

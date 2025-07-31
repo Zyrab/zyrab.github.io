@@ -28,12 +28,11 @@
 }
 
 .inline-code {
-  background: var(--greysh);
+  background: var(--color-pre-primary);
   color: #d9d9d9;
   padding: 0.22rem;
   font-size: 1rem;
   border-radius: 3px;
-  font-family: monospace;
 }
 
 .md-h1 {

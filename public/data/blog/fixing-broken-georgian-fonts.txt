@@ -1,73 +1,72 @@
 # Fixing Broken Georgian Fonts
 
-Have you ever found a font you liked, only to have it cause unexpected issues? In my case, it completely broke Latin characters, I couldn’t use them at all. So let’s figure out why.
+Ever found a font you liked, only to have it break in some weird, annoying way? In my case, it completely wrecked Latin characters, like, they just vanished. So I had to dig in and figure out what the hell was going on.
 
-## Discovering the History
+## A Bit of Background.
 
-I come from {{Georgia::#EB4888}}, a small country between Russia and Turkey. Despite our size, we have our own unique {{language::gold}} and, more impressively, our own *writing system*. In fact, there are three [Georgian scripts](https://en.wikipedia.org/wiki/Georgian_scripts), and all are still used to some extent today. But only {{Mkhedruli}} is widely adopted in modern writing.
+I come from {{Georgia::#EB4888}}, a small country between Russia and Turkey. We’ve got our own {{language::gold}} and, better yet, our own *writing system*. [Thress scripts](https://en.wikipedia.org/wiki/Georgian_scripts), to be exact. But {{Mkhedruli}} is one everyone uses today.
 
-In the digital world, there are fonts for Georgian too. Until recently, I never thought much about them. Whenever I needed one, I’d just go to [font.ge](https://fonts.ge/ka/), download a font, install it, or drop it directly into a project.
+Digital fonts for Georgian exist, sure. But I never gave them much thought. Usually, I’d just grab one from [font.ge](https://fonts.ge/ka/), install it, and move on.
+
+Until last week
 
 ## The Problem
 
-A week ago, while working on a website, I picked a font I liked from font.ge. I installed it and used it in Figma. Everything looked fine at first. But there was a strange issue:
+I picked a nice-looking font from font.ge and dropped it into Figma. All good, until it wasn’t:
 
-- The styled Georgian font only appeared when typing Latin characters (e.g., `a → ა`).
-- When I typed in Georgian, it showed a default system font instead of the styled one.
+- Georgian letters showed up when typing Latin characters (e.g. typing a gave me ა)
+- Typing actual Georgian gave me a fallback system font
 
-At first, I thought it was a Figma bug. But it turned out to be a font issue: the font author had placed the Georgian characters on Latin Unicode points, not where they actually belong.
 
-[[screenshot from FontForge showing Georgian letters on English Unicode points]]
+At first I thought Figma was the reason. Turns out, the font itself was broken: the author had mapped Georgian glyphs onto Latin Unicode points.
 
-To use styled Georgian characters, I had to type Latin letters while using the Georgian layout. Not ideal.
+![image showing gergian characters mapped on latin unicod points](/data/blog/imgs/fonts-fontforge-incorect.webp)
 
-Even worse: on the actual website, using Latin characters (like `a` or `b`) showed Georgian characters instead. I had to wrap Latin letters in `<span>` tags and apply a different font, obviously not a scalable solution.
+So if I wanted to see the styled Georgian characters, I had to type English letters while using the Georgian layout. Not ideal.
 
-## Enter FontForge
+Even worse, on the actual website, Latin characters like `a` or `b` showed up as Georgian letters. I had to wrap all Latin text in `<span>` tags with a separate font, just to make it readable. Obviously it wasn't a good thing to leave as is.
 
-This issue led me to discover [FontForge](https://fontforge.org/en-US), an [[open-source]] font editor. It can open font files and let you inspect or modify everything: [[glyphs]], [[mappings]], [[scripts]], and more.
+## Discovering FontForge
 
-When I opened the font in FontForge, the issue was clear: the author had taken an {{English::#3498db}} font and placed {{Georgian::#EB4888}} glyphs on Latin codepoints. That may have made sense years ago when Georgian Unicode support was poor, but today it’s broken behavior.
+This problem led me to [FontForge](https://fontforge.org/en-US), an [[open-source]] font editor. It lets you open font files, inspect {{glyphs}}, remap them, and basically do {{surgery}} on broken fonts.
+
+Once I opened the font, the issue was obvious: The font author had taken an English font and recreated Georgian letters on the Latin Unicode points. That might’ve been a workaround years ago when Georgian support was bad, but today? It’s broken.
 
 So I:
 
-- Moved the Georgian glyphs to their correct Unicode points.
-- Removed the incorrect Latin substitutions.
+1. Moved the Georgian glyphs to their correct Unicode points.
+2. Removed the incorrect Latin substitutions.
 
-[[screen showing correctly placed glyphs]]
+![image showing correctly placed glyphs for gergian alphabet](/data/blog/imgs/correctly-placed-glyphs.webp)
 
-But this created another problem: the font no longer had any real Latin letters. The system fell back to the default font, which worked. but I wanted matching Latin letters too.
+But now I had another problem: the font had no real Latin letters anymore. It fell back to the system font. Functional, but visually inconsistent.
 
-I examined the font and found some leftover Latin glyphs. I took screenshots, searched online, and discovered that the original Latin font was {{Bauhaus}}. Unfortunately, it’s copyrighted, so I skipped including it for now. But now I know where to look if I ever want to fully restore Latin support.
+After some digging, I figured out the original Latin font was Bauhaus, unfortunately, copyrighted. So I skipped bundling it for now, but at least I knew what I was missing.
 
-## About Georgian Uppercase ({{Mtavruli}})
+## {{Mtavruli}} and Casing Support
 
-Georgian is a [[monocase]] script, we don’t have native uppercase letters like `A–Z` in Latin. However, we do have a stylistic [[uppercase]] called {{Mtavruli}}, used for emphasis or titles. Example:
+Georgian is an unicase script, we don’t have a native uppercase like Latin’s A-Z. However, we do have a stylistic version called Mtavruli, which is used like uppercase for emphasis or titles. 
 
-- Mkhedruli: გამარჯობა
+Example:
+
+- Mkhedruli: გამარჯობა (gamarjoba - hello)
 - Mtavruli: ᲒᲐᲛᲐᲠᲯᲝᲑᲐ
 
-Georgian casing isn’t well-supported in fonts. Even if you press `Shift` in the Georgian layout, you still get Mkhedruli, no transformation occurs.
+Georgian casing isn't well supported in fonts either. If you press Shift in Georgian layout, you still get Mkhedruli, no case transformation happens. because to write შ თ ჭ ღ ჟ ძ ჩ you need to use combinations of shift+ს ტ წ რ ჯ ზ ც. so having a Mtavruli attached to shift would break this. 
 
-This is because to write characters like შ, თ, ჭ, ღ, ჟ, ძ, ჩ, you use combinations like `Shift+ს`, `Shift+ტ, etc. Mapping Shift to Mtavruli would break this.
+Whenever i needed uppercase looking georgian letters i had to use a second font and also if i know i will have to use both i look for a font that have both styles made to look cohesive on website.
 
-Whenever I needed uppercase-style Georgian, I had to load a second font. And if I knew both styles would be needed, I looked for a font where Mkhedruli and Mtavruli were designed to be cohesive.
+However, I noticed some modern Georgian websites using both cases in one font, which was intriguing. I inspected those fonts and found something interesting: they used Unicode ranges for both Mkhedruli and Mtavruli, and implemented casing using OpenType lookups substitutions.
 
-But then I noticed some modern Georgian websites using {{both}} cases in one font. Upon inspection, I saw they used Unicode ranges for both Mkhedruli and Mtavruli, and implemented casing with [[OpenType lookups]].
+This is done using case feature scripts in the font itself. These allow substitution rules based on text context, so that if uppercase is detected, the font shows the Mtavruli glyph instead.
 
-This is done with a `case` feature inside the font, allowing it to substitute glyphs based on casing context.
+This was my first real exposure to OpenType features like this:
 
-```fontforge
-lookup CASE {
-  sub uni10D0 by uni1C90;  -- ა → Ა
-  sub uni10D1 by uni1C91;  -- ბ → Ბ
-  ...
-} CASE;
-```
+![image showing how substitutions look like in fonte forg](/data/blog/imgs/showing-subtitution-in-fontforge.webp)
 
 ## Usage on Website
 
-To selectively enable casing features on a website, you can use `font-feature-settings`.
+to display font cases selectively you would use font-feature-settings for case:
 
 ```css
 .ffs-case {
@@ -75,7 +74,7 @@ To selectively enable casing features on a website, you can use `font-feature-se
 }
 ```
 
-But note: using this directly inside `@font-face` doesn’t work:
+so note using this inside font-face 
 
 ```css
 @font-face {
@@ -85,23 +84,19 @@ But note: using this directly inside `@font-face` doesn’t work:
 }
 ```
 
-As far as I can tell, you can’t modify internal font options inside `@font-face`. It’s better to enable casing where it’s needed with a `class`, rather than trying to make separate font-faces for each use case.
+didn't work for me, because i guess you can't change internal font options while declaring the font. In either way it's better to just apply casing whenever u need and it's not necessary to make different font faces for that specific usage.
 
 ## Final Touches and Pain Points
 
-After remapping glyphs and adding casing behavior, FontForge started throwing validation errors: curve intersections, control points, missing extrema, etc.
+errors about curve points and intersections. That part was painfully slow, it took forever to fix all the curve, extrema and rounding issues so the font would export cleanly.
 
-That part was painfully slow. Fixing each curve took forever, but in the end, I managed to export a clean font with no warnings.
+But eventually, I had a fully working font:
 
-I now had a font that:
+- Proper Georgian Unicode mapping
+- Working Latin letters
+- Support for Mtavruli “uppercase”
+- Clean curves and no export warnings
 
-- Mapped Georgian characters to the correct Unicode points
-- Included usable Latin letters
-- Supported Mtavruli casing
-- Had clean curves and no export errors
+Fonts seem simple from the outside, but once you dig in, especially for non-Latin scripts, you realize how much can go wrong if they're not built properly.
 
-## Final Thoughts
-
-Fonts may seem simple, but especially for non-Latin scripts, so much can go wrong if they’re not designed properly.
-
-Now, when I run into font issues, I know how to fix them. And maybe someday, I’ll design my own from scratch.
+Now, whenever I run into a font issue, I know how to fix it. And maybe one day, I’ll even create my own from scratch.
