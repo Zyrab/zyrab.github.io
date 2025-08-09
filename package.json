@@ -5,8 +5,9 @@
   },
   "dependencies": {
     "@zyrab/domo": "^1.3.0",
-    "@zyrab/domo-router": "^0.1.1",
-    "@zyrab/domo-ssg": "^0.4.0",
+    "@zyrab/domo-og": "^0.1.4",
+    "@zyrab/domo-router": "^0.2.0",
+    "@zyrab/domo-ssg": "^0.5.2",
     "@zyrab/domo-svg": "^0.1.2",
     "@zyrab/parsect-renderer": "^0.0.1"
   },
