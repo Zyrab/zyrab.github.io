@@ -1,0 +1,38 @@
+{
+  "/blog/how-routing-works-in-spa": {
+    "path": "assets/og-images/how-routing-works-in-spa-5add0408a0.png",
+    "hash": "3ea0b1a6a5",
+    "title": "How Routing Works in SPA",
+    "templateId": "v6"
+  },
+  "/blog/svg-to-canvas-converter-parsect": {
+    "path": "assets/og-images/svg-to-canvas-converter-parsect-d90cbeeeab.png",
+    "hash": "8f02aded83",
+    "title": "SVG To Canvas Converter Parsect",
+    "templateId": "v6"
+  },
+  "/blog/fixing-broken-georgian-fonts": {
+    "path": "assets/og-images/fixing-broken-georgian-fonts-23d3472825.png",
+    "hash": "982509632b",
+    "title": "Fixing Broken Georgian Fonts",
+    "templateId": "v6"
+  },
+  "/bugs/canvas-has-zero-dimensions-on-initial-render": {
+    "path": "assets/og-images/canvas-has-zero-dimensions-on-initial-render-4ef2163602.png",
+    "hash": "3ba78d7452",
+    "title": "Canvas Has Zero Dimensions on Initial Render",
+    "templateId": "v5"
+  },
+  "/bugs/spa-breaks-on-direct-access-to-nested-routes": {
+    "path": "assets/og-images/spa-breaks-on-direct-access-to-nested-routes-864f7c7a6f.png",
+    "hash": "204307dd70",
+    "title": "SPA Breaks on Direct Access to Nested Routes",
+    "templateId": "v5"
+  },
+  "/bugs/svg-path-transformation-broke-smooth-curves": {
+    "path": "assets/og-images/svg-path-transformation-broke-smooth-curves-694840cc20.png",
+    "hash": "e7f133af29",
+    "title": "SVG Path Transformation Broke Smooth Curves",
+    "templateId": "v5"
+  }
+}
