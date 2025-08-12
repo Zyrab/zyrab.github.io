@@ -12,8 +12,8 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0
       '@zyrab/domo-og':
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.1.5
+        version: 0.1.5
       '@zyrab/domo-router':
         specifier: ^0.2.0
         version: 0.2.0
@@ -194,6 +194,11 @@ packages:
     engines: {node: '>=18.0.0'}
     os: [darwin, linux, win32]
 
+  '@zyrab/domo-og@0.1.5':
+    resolution: {integrity: sha512-tw2vYeN6L6mAW2yyhag8sI1HRdlfXyuWZEzd5oWDIxP3HlkxMfcarczQYe1zAVNh5fKGbnGvWkfLsJGUC+eY5w==}
+    engines: {node: '>=18.0.0'}
+    os: [darwin, linux, win32]
+
   '@zyrab/domo-router@0.2.0':
     resolution: {integrity: sha512-isBFrgtmxCvpZMgwds8EC0O3MijXAif8vIsVHR7s7IfNMa9udhjCU/7270jL9V6gbf5Xjd+DhDzt1QR41GRo2w==}
 
@@ -298,6 +303,8 @@ snapshots:
     optional: true
 
   '@zyrab/domo-og@0.1.4': {}
+
+  '@zyrab/domo-og@0.1.5': {}
 
   '@zyrab/domo-router@0.2.0': {}
 
