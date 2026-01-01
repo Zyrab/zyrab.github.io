@@ -1,6 +1,6 @@
 import Domo from "@zyrab/domo";
 
-export default function createCard(list) {
+export default function createCard(list, page) {
   function formatDate(dateStr) {
     const [day, month, year] = dateStr.split("-").map(Number);
     const date = new Date(year, month - 1, day);
@@ -11,7 +11,7 @@ export default function createCard(list) {
   const colors = ["#00FFFF", "#3498db", "#ffd700", "#ee82ee", "#66BB6A", "#EB4888"];
   const i = Math.floor(Math.random() * colors.length);
 
-  const detailUrl = `/${list.description ? "blog" : "bugs"}/${list.slug}`;
+  const detailUrl = `/${page || "blog"}/${list.slug}`;
 
   return Domo("article")
     .cls("flex col g-1 bg-pprim p-1.5 max-w-31")

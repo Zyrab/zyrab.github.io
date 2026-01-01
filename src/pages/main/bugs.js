@@ -19,6 +19,6 @@ export default async function createBugs() {
       createIntros(intro),
       Domo()
         .cls("flex col ai-c g-3.5")
-        .child(blogList.map((list) => createCard(list))),
+        .child(blogList.map((list) => createCard(list, "bugs"))),
     ]);
 }

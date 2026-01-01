@@ -3,7 +3,7 @@ import createProjects from "./main/projects.js";
 import createBlog from "./main/blog.js";
 import createBugs from "./main/bugs.js";
 import createPost from "../components/blog/post.js";
-import Legal from "./system/legal.js";
+import createLegal from "./system/legal.js";
 import createGame from "./main/game.js";
 import createError from "./system/error.js";
 
@@ -152,18 +152,24 @@ const routes = {
       },
     },
   },
-  // "/legal": {
-  //   component: Legal,
-  //   "/:legal": {
-  //     "/:app": {
-  //       component: Legal,
-  //       meta: {
-  //         title: "Privacy Policy – Zyrab",
-  //         description: "The legal stuff. Learn how I handle data and privacy across my projects.",
-  //       },
-  //     },
-  //   },
-  // },
+  "/privacy-policy": {
+    component: createLegal,
+    meta: {
+      title: "Privacy Policy – Zyrab",
+      description: "Privacy Policy",
+    },
+    "/:slug": {
+      routeParams: async () => await fetchJson("/public/data/privacy-policy.json"),
+      component: createPost,
+      styles: ["markdown.css"],
+      fonts: [{ href: "vt323.woff2", preload: true }],
+      meta: {
+        title: "Privacy Policy – Zyrab",
+        description: "Privacy Policy",
+        type: "article",
+      },
+    },
+  },
   "*": {
     component: createError,
     meta: {

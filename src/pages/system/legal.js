@@ -1,66 +1,19 @@
 import Domo from "@zyrab/domo";
 import { fetchJson } from "../../services/fetch.js";
+import createCard from "../../components/blog/card.js";
+import createIntros from "../../components/common/intro.js";
 
-const Legal = async (props) => {
-  const dynamicText = (text, placeholders) => {
-    return text.replace(/\${(.*?)}/g, (_, key) => placeholders[key] || "");
-  };
-  console.log(props.legal, props.app);
-
-  const legals = await fetchJson(`/data/${props.legal}.json`);
-  const thisApp = legals[props.app];
+export default async function createBugs() {
+  const intro = ["Choose an App name", "You want to see a Privacy Policy for,"];
+  const privacyList = await fetchJson("/public/data/privacy-policy.json");
 
   return Domo("section")
-    .cls("page")
+    .cls("flex col ai-c jc-c g-2 min-h-100vh p-1 lg:py-6")
+    .id("pivacy-page-click")
     .child([
+      createIntros(intro),
       Domo()
-        .cls("w-100 p-1 left flex col gap-2 legal")
-        .child([
-          Domo("h1").cls("xxl").txt(legals.title),
-          Domo("hr"),
-          Domo("p")
-            .cls("xl")
-            .txt(
-              dynamicText(legals.intro, {
-                "app-name": thisApp.name,
-                "app-type": thisApp.type,
-              })
-            ),
-          thisApp.text.map((item) => content(item)),
-          Domo("hr").css({
-            border: "none",
-            borderTop: "1px dashed ",
-            width: "100%",
-          }),
-          Domo("p")
-            .cls("xl")
-            .txt(
-              dynamicText(legals.contact, {
-                "app-name": thisApp.name,
-              })
-            ),
-          Domo("p")
-            .cls("xl")
-            .txt(
-              dynamicText(legals.conclusion, {
-                "app-name": thisApp.name,
-              })
-            ),
-        ]),
+        .cls("flex col ai-c g-3.5")
+        .child(privacyList.map((list) => createCard(list, "privacy-policy"))),
     ]);
-};
-
-const content = (con) =>
-  Domo()
-    .cls("flex col gap-1")
-    .child([
-      Domo("h3").cls("xl").txt(con.title),
-      Domo("hr").css({
-        border: "none",
-        borderTop: "1px dashed ",
-        width: "100%",
-      }),
-      Domo("p").cls("lg").txt(con.text),
-    ]);
-
-export default Legal;
+}

@@ -1,0 +1,43 @@
+# Privacy Policy
+
+**Last updated:** 01.01.2026
+
+This Privacy Policy describes how **ანი ბანი** ("the App") handles information.
+
+## 1. Introduction
+**ანი ბანი** is an educational mobile application designed to teach the Georgian alphabet to children approximately aged 3–8, including Georgian-speaking children living abroad.
+
+The App is intended solely for educational purposes.
+
+## 2. Information Collection and Use
+The App **does not collect, store, process, or share any personal data**.
+
+Specifically, the App:
+- Does not request or collect personal information
+- Does not collect names, email addresses, or identifiers
+- Does not collect location data
+- Does not use analytics, tracking, or advertising services
+- Does not transmit data to third parties
+
+## 3. Children’s Privacy
+The App is designed for children and respects children's privacy.
+
+Since no personal data is collected, the App does not store, process, or share any information related to children or their guardians.
+
+## 4. Third-Party Services
+The App does not integrate or use third-party services that collect or process user data.
+
+## 5. Internet Usage
+The App does not require users to provide personal information to function. Any internet access, if present, is not used to collect or transmit personal data.
+
+## 6. Data Security
+As the App does not collect or store personal data, no user data is retained or exposed.
+
+## 7. Changes to This Privacy Policy
+This Privacy Policy may be updated if the App’s functionality changes. Any updates will be reflected on this page.
+
+## 8. Contact Information
+If you have any questions regarding this Privacy Policy, you may contact:
+
+- **Email:** hello@zyrab.dev
+- **Website:** zyrab.dev

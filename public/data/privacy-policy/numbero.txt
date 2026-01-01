@@ -1,0 +1,76 @@
+# Privacy Policy
+
+**Last updated:** 01.01.2026
+
+Welcome to **Numbero**. This Privacy Policy explains how information is handled when you use the Numbero mobile game.
+
+## 1. Introduction
+Numbero is a game application that uses Google Play Games Services for optional authentication and displays advertisements using Google AdMob.
+
+## 2. Information We Collect
+Numbero does not collect personal information such as names or email addresses.
+
+The following data may be processed:
+
+### a) Play Games Services Player ID
+If a user chooses to sign in with Google Play Games Services, a unique player identifier (UUID) provided by Google is used to:
+- Identify the player
+- Store and retrieve game progress
+- Enable gameplay-related features such as rankings or progress synchronization
+
+If a user does not sign in, no game-related user data is stored.
+
+### b) Advertising Data
+Numbero uses **Google AdMob** to display advertisements.
+
+AdMob may automatically collect:
+- Advertising identifiers
+- Device information
+- Approximate location
+- Interaction data related to ads
+
+This data is collected and processed **by Google**, not directly by Numbero.
+
+## 3. How We Use the Information
+Collected data is used only to:
+- Provide core game functionality
+- Store optional game progress
+- Display advertisements within the app
+
+No data is used for direct marketing or profiling by the developer.
+
+## 4. Third-Party Services
+Numbero uses the following third-party services:
+
+- **Google Play Games Services** – optional user authentication  
+- **Firebase Firestore** – storage of game-related data linked to Player ID  
+- **Google AdMob** – advertising display  
+
+These services operate under their own privacy policies.
+
+## 5. Information Sharing
+Numbero does not sell or share user data with third parties.  
+Data is processed only as required to operate the services listed above or when legally required.
+
+## 6. Data Security
+All communication between the app and backend services is encrypted. Reasonable measures are used to protect stored data.
+
+## 7. Data Retention and Deletion
+Game-related data is retained only as long as necessary to provide the service.
+
+Users may request deletion of their game data by contacting the developer.
+
+## 8. Children’s Privacy
+Numbero is designed for children.
+
+- The app does not knowingly collect personal information from children
+- Authentication via Play Games Services is optional and handled by Google
+- Advertisements are provided by Google AdMob in accordance with Google’s child-directed advertising policies
+
+## 9. Changes to This Privacy Policy
+This Privacy Policy may be updated from time to time. Any changes will be posted on this page and take effect immediately.
+
+## 10. Contact Information
+If you have any questions about this Privacy Policy, please contact:
+
+- **Email:** 	[app@zyrab.dev](app+numbero@zyrab.dev)
