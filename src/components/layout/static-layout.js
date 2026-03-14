@@ -69,7 +69,7 @@ export async function renderLayout(content, data) {
   <!-- Social: OpenGraph -->
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${descriptionOG || description}">
-  <meta property="og:image" content="${baseUrl}${ogImage}">
+  <meta property="og:image" content="${baseUrl}/${ogImage}">
   <meta property="og:url" content="${baseUrl}${Router.path()}">
   <meta property="og:type" content="${type || "website"}">
 
@@ -77,7 +77,7 @@ export async function renderLayout(content, data) {
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${title}">
   <meta name="twitter:description" content="${descriptionOG || description}">
-  <meta name="twitter:image" content="${baseUrl}${ogImage}">
+  <meta name="twitter:image" content="${baseUrl}/${ogImage}">
 
   <!-- Favicon and Touch Icon -->
   <link rel="icon" href="/assets/${favicon}" type="image/x-icon">
