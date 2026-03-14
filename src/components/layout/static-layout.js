@@ -20,13 +20,12 @@ export async function renderLayout(content, data) {
   } = data;
 
   const canonicalUrl = baseUrl + (canonical || Router.path());
-
   const scriptTags = scripts
     .map((file) =>
       file.preload
         ? `<link rel="preload" as="script" href="/js/${file.href}">
           <script defer src="/js/${file.href}"></script>`
-        : `<script defer src="/js/${file.href || file}"></script>`
+        : `<script defer src="/js/${file.href || file}"></script>`,
     )
     .join("\n");
 
@@ -34,7 +33,7 @@ export async function renderLayout(content, data) {
     .map((style) =>
       style.preload
         ? `<link rel="preload" href="/css/${style.href}" as="style" onload="this.rel='stylesheet'">`
-        : `<link rel="stylesheet" href="/css/${style.href || style}">`
+        : `<link rel="stylesheet" href="/css/${style.href || style}">`,
     )
     .join("\n");
 
@@ -42,7 +41,7 @@ export async function renderLayout(content, data) {
     .map((font) =>
       font.preload
         ? `<link rel="preload" href="/assets/fonts/${font.href}" as="font" type="font/woff2" crossorigin="anonymous">`
-        : `<link rel="stylesheet" href="/assets/fonts/${font.href || font}">`
+        : `<link rel="stylesheet" href="/assets/fonts/${font.href || font}">`,
     )
     .join("\n");
 
@@ -70,7 +69,7 @@ export async function renderLayout(content, data) {
   <!-- Social: OpenGraph -->
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${descriptionOG || description}">
-  <meta property="og:image" content="${ogImage}">
+  <meta property="og:image" content="${baseUrl}${ogImage}">
   <meta property="og:url" content="${baseUrl}${Router.path()}">
   <meta property="og:type" content="${type || "website"}">
 
@@ -78,7 +77,7 @@ export async function renderLayout(content, data) {
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${title}">
   <meta name="twitter:description" content="${descriptionOG || description}">
-  <meta name="twitter:image" content="${ogImage}">
+  <meta name="twitter:image" content="${baseUrl}${ogImage}">
 
   <!-- Favicon and Touch Icon -->
   <link rel="icon" href="/assets/${favicon}" type="image/x-icon">
