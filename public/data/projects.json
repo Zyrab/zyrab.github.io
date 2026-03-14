@@ -43,6 +43,15 @@
     "date": "03.2024 - current",
     "tech": ["fg", "rn", "exp", "frb", "gh"]
   },
+
+  {
+    "title": "Capital Rent",
+    "img": "cap.png",
+    "description": "Construction tools renting service. the websites goal was to showcase a gallery of avalable tools with prices. including a contacts and FAQ. it uses DOMO ssg got 100% in all areas on lighthouse. hase custum CMS also built with DOMO. ",
+    "date": "03.2024 - 07.2024",
+    "tech": ["fg", "vue", "tlwcss", "gh"],
+    "btn": ["Capital Rent", "dmn", "https://caprent.ge/"]
+  },
   {
     "title": "KEI Holding",
     "img": "kei.png",
