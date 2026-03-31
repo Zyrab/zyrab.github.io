@@ -10,5 +10,11 @@
     "id": 2,
     "title": "ანი ბანი",
     "date": "01-01-2026"
+  },
+  {
+    "slug": "word-catcher",
+    "id": 3,
+    "title": "Word Catcher",
+    "date": "31-03-2026"
   }
 ]

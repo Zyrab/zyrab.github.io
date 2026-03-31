@@ -1,0 +1,26 @@
+# Canvas Has Zero Dimensions on Initial Render
+
+While building a custom game editor, I ran into a bug where the `canvas` element was rendering at [[0x0]] size. It only resized correctly after a manual window resize.
+
+## Root Cause
+
+I was initializing the renderer and reading the canvas’s parent dimensions **before** appending the full layout to the {{DOM}}. At that point, the canvas wasn’t actually attached to the document, so all layout-related size calculations returned [[0]].
+
+```js
+const render = new Render(canvas);
+render.initRender(); // ← This ran before canvas was in the DOM
+app.appendChild(container.build());
+```
+
+## Fix
+
+I moved the renderer initialization **after** appending everything to the {{DOM}}:
+
+```js
+app.appendChild(container.build()); // ← Moved before initialization
+const render = new Render(canvas);
+render.initRender();
+```
+
+This ensured that layout info like `getBoundingClientRect()` or `offsetWidth` `offsetHeight` reflected the real {{DOM}} size, avoiding [[0x0]] issues.
+

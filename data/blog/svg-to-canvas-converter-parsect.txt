@@ -1,0 +1,92 @@
+# SVG to Canvas Converter — {{Parsect}}
+
+The idea came to me while working on a small game for my website's homepage. The game was meant to fill some empty space and add a personal touch to the site.
+
+I like drawing graphics in Figma using SVG tools. it's quick and easy, so drawing the game assets that way felt natural. I created a shape, and now it was time to render it.
+
+There were a few options for displaying it on canvas:
+
+1. Using PNG – This felt too static and disconnected. I didn’t like the idea at the time.
+2. Extracting points and mapping them manually – I actually did this at first.
+3. Using the `d` attribute from `<path>` tags and rendering with [Path2D()](https://developer.mozilla.org/en-US/docs/Web/API/Path2D) – This was the most promising.
+
+`Path2D()` is a solid option. It {{caches::gold}} shapes, so once you've created a path, you can reuse it efficiently with `ctx.fill(path)` or `ctx.stroke(path)` without recalculating everything. But there’s one problem: SVGs often include more than just paths. They include {{colors::rgb(52, 152, 219)}}, {{strokes::green}}, {{gradients::violet}}, etc., and `Path2D()` doesn’t store that information.
+
+Manually extracting and assigning all those extra attributes for each shape would be a nightmare. So, I built a converter.
+
+## The Converter
+
+To make importing SVGs easier, I added a `<input/>` element that accepts {{SVG}} files. 
+
+```html
+<input type="file" id="svgInput" accept=".svg" />
+```
+
+```js
+document.getElementById("svgInput")
+.addEventListener("change", async function (e) {
+  const file = e.target.files[0];
+
+  if (!file)  return;
+
+  const svgText = await file.text();
+  parseSVG(svgText)
+});
+```
+I use `DOMParser()` to convert the SVG text into {{DOM elements::#EB4888}}, making it easier to iterate through child elements and extract what I need. From the root `<svg>` element, I get the viewBox for retrieving width and height and calculating the center point of the graphic.
+
+```js
+function parseSVG(svgText) {
+  const doc = new DOMParser().parseFromString(svgText, "image/svg+xml");
+
+  const parserError = doc.querySelector("parsererror");
+  if (parserError) throw new Error("Invalid SVG content");
+  const svg = doc.children[0];
+  const viewBox = svg.getAttribute("viewBox");
+  const shapes = Array.from(svg.children);
+
+  return { viewBox, shapes };
+}
+```
+
+For simple SVGs, it's straightforward to extract shapes. Besides `<path>`, there are other basic elements like `<rect>`, `<circle>`, `<polygon>`, and `<line>`. All of which can be easily mapped to canvas equivalents by reading their attributes.
+
+Then there are more complex shapes using elements like `<defs>` for reusable components, `<g>` for grouping, and even filters like `<shadows>` or `<masks>`. Currently, my converter supports `<g>` and `<defs>`, and I plan to add support for more advanced elements soon.
+
+## Optimization: Merging Similar Paths
+
+`Path2D()` can hold multiple drawing commands, but it doesn’t remember their styles. To optimize rendering, I want to merge shapes that share the same {{fill::violet}} and {{stroke::green}} attributes into one `Path2D()`. This will reduce the number of `Path2D()` calls during drawing and will speed up rendering.
+
+## Rendering the Shapes
+
+Once you convert the {{SVG::gold}} to {{JSON::purple}}, you need to draw it.
+
+I created two functions for drawing:
+
+1. `toPath2D()` - Converts the {{JSON::purple}} into an array of objects. Each object contains a `Path2D()` instance and its associated attributes like {{fill::violet}}, {{stroke::green}}, or even {{gradient::#b748eb}} definitions.
+2. `drawShapes()` - Takes a canvas 2D context and the array from `toPath2D()`, then renders everything. It applies the correct styles and draws each shape. (You can later manipulate the canvas, {{rotate::violet}}, {{translate::green}}, {{animate::red}}, since `drawShapes()` doesn’t lock you in.)
+
+```js
+const ctx = canvas.getContext("2d");
+
+const shapesJson = {}
+
+const { dims, shapes } = toPath2D(shapesJson);
+const scale = 5
+
+ctx.save();
+ctx.translate(
+  (ctx.canvas.width - dims.w * scale) / 2,
+  (ctx.canvas.height - dims.h * scale) / 2
+); // translates to the center 
+ctx.scale(scale, scale); // scales the shape
+drawShape(ctx, shapes);
+ctx.restore();
+```
+
+## Try It Out
+
+- You can check out the full source code on [GitHub](https://github.com/Zyrab/parsect)
+- And try it live on [parsect.zyrab.dev](https://parsect.zyrab.dev)
+
+If you're working with SVGs and want to render them on canvas in a more structured way. Or just want to see how it works, feel free to explore, fork, and contribute.

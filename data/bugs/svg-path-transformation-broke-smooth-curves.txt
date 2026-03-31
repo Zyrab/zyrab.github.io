@@ -1,0 +1,44 @@
+# SVG Path Transformation Broke Smooth Curves
+
+While building my SVG-to-Canvas converter [(Parsect)](https://parsect.zyrab.dev), I ran into a strange visual glitch after transforming the `d` attribute of an {{SVG}} path. One shape looked completely off, but I couldn’t figure out why. Everything *seemed* correct.
+
+## What I Was Doing
+
+I was converting all the lowercase path commands (like `s`, `c`, `l`) to uppercase (`S`, `C`, `L`) so they’d all use absolute coordinates.This step was necessary to apply transformation directly on paths. Because I want final data to be as optimized as possible to draw it directly on canvas without any transformation.
+
+But after this change, one curve was totally broken. I spent a while checking the code, but the problem wasn’t obvious. The bug was hiding inside the `s` command.
+
+## The Gotcha
+
+The `s` command is a {{smooth curve::violet}} command that uses the {{previous curve's direction::rgb(52, 152, 219)}} to guess the shape. When I changed it to `S`, it became an absolute smooth curve, but {{without recalculating the needed control point::red}}, it ended up guessing wrong.
+The browser was doing the right thing, but I told it the wrong thing.
+
+## How I Found It
+
+The path was long and messy. I had to:
+- Open the SVG and find the exact shape that looked off
+- Manually dig through the `d` attribute
+- Compare original and transformed paths
+- Paste both into an AI to help me understand what the curve *should* look like
+
+Eventually, I saw that `S` assumes the last control point is already known in absolute terms, but `s` assumes it's relative, and it reflects the previous control point automatically. That logic was lost during the transformation.
+
+## Fix
+
+You **can’t just replace** `s` {{with}} `S`. You need to:
+1. Convert the coordinates from relative to absolute
+2. Recalculate the reflected control point, based on the last curve
+
+
+```js
+// Pseudocode for proper 's' → 'S' conversion
+if (lastCommand is C or S) {
+  reflectedCtrl = reflect(lastControlPoint, currentPoint);
+} else {
+  reflectedCtrl = currentPoint; // No reflection if last wasn't a curve
+}
+absoluteCoords = add(currentPoint, relativeCoords);
+```
+
+That’s the only way to preserve the original shape.
+

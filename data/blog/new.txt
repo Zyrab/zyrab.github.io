@@ -1,0 +1,167 @@
+# Exploring how web frameworks work
+
+## Domo Open Graph
+
+Everything started with a small utility function. I liked it. It felt mine and simple. Then I went deeper and decided to build an SSG with the same idea. I will write about that later.
+
+At one point I needed OG images. I created one or two manually, but then I thought maybe there is a way to just change text while the static site is being generated, using a template, and save them automatically.
+
+So I started by figuring out how I could do it. I like solving small problems myself, especially when I have time. I learn a lot this way. Even if I use AI, I still need to understand the architecture and why decisions are made. Sometimes I even end up arguing with AI because it pushes toward using already established packages. It is trained to optimize for getting to the end result. For me, understanding is the goal.
+
+## First attempt
+
+My research led me to [resvg](https://github.com/linebender/resvg), a Rust-based SVG to PNG tool. Very fast.
+
+My first instinct was to bundle OS-specific binaries into my package. Looking back, it feels strange that I did that, but it worked. This was just for me anyway.
+
+So I designed an OG image in Figma, exported it as SVG, found the text node, and replaced it with {{title}}. Then I wrote a regex-based replacer.
+And it just worked.
+
+```js
+ const svgTemplate = `
+  <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="630" fill="#272727"/>
+   … <text x="600" y="300" text-anchor="middle" dominant-baseline="middle" fill="#F5BC00" font-family="Cutive Mono" font-size="76" letter-spacing="0.04em" >
+{{title}}
+</text>
+  </svg>
+`;
+
+svgTemplate.replace("{{title}}", “Domo Open Graph”)
+```
+
+## Problems with the first version
+
+But there were several problems.
+
+First, to run resvg I had to use child processes and launch it once per image. It outputs one PNG at a time, so using binaries like this becomes expensive.
+
+Then I hit a Linux issue. Different distro needs different binary builds.
+
+I kept this approach for about a year. To be honest, I did not need an OG generator that often, so it was fine.
+
+## Revisiting the idea
+
+After a year, I decided to revisit it and improve things.
+
+The first change was switching from native resvg binaries to [resvg-wasm](https://www.npmjs.com/package/@resvg/resvg-wasm). Same speed, but better behavior. Unlike binaries, WASM loads once and stays in memory until the Node process finishes. That alone simplified things a lot.
+
+Then I realized using SVG as a template for end use was not great. I had to design in Figma, export, search for text, and modify it. It felt fragile. So I changed the approach.
+
+resvg can also render images. Not directly, I had to convert them to base64 before passing them to resvg-wasm, but that was cheap. In most cases only one background template is enough, and dynamic images are rare. Even when they are used, it is still fast enough.
+
+## Template system
+
+To support this, I introduced a template config.
+
+The OG image generator now receives:
+
+- template config
+- output directory path
+- dynamic data
+
+```js
+import { generateOgImage } from "@zyrab/domo-og";
+
+await generateOgImage({
+  ogOutputPath: "./public",
+  title: "Hello World",
+  template: {
+    background: {
+      type: "color",
+      value: "#40C4FF",
+    },
+    elements: [
+      {
+        type: "text",
+        content: "{{title}}",
+        fontSize: 120,
+      },
+    ],
+  },
+});
+```
+
+Everything passed can be used as dynamic input, either text or images.
+
+This approach turned out to be faster. Instead of parsing SVG, I construct it directly. The data is already there, so no need for string searching or regex hacks.
+
+I also added caching. If nothing changes, generation is skipped completely. If something changes, only those images are generated.
+
+## Font problem
+
+Then I hit the font problem again.
+
+With resvg, I had two options:
+
+1. use system fonts
+2. provide a font path
+
+If I used system fonts, they were loaded every time. So generating 100 images, loaded fonts 100 times.
+
+In the old version, I disabled system fonts and either passed a specific font path or just picked the first font from an assets folder.
+
+With resvg-wasm, it is different. It has no access to the system at all. To render text, you must explicitly provide at least one font.
+
+It took me some time to figure this out. It was also my first time working with WASM, so I had to understand how isolated it is compared to native binaries.
+
+## Customisation with Template
+
+When I solved rendering, it was time to make templates easy and familiar to use.
+
+At the time of writing this, the generator lets you define a background image or color once. It can optionally receive a path to a font. Currently only one font is supported. If no font is provided, it looks into an assets/font directory and picks the first font from there. If neither exists, I included a default font in the project so text still renders.
+
+For positioning, alignVertical and alignHorizontal are used. I am thinking of changing this to a single align option with values like "top left", similar to CSS. I also added padding, but right now it applies to all sides equally. I want to extend this to support 2 or 4 values, again like CSS.
+
+There are also options like width, maxLength, and background settings. Precise alignment is not supported yet. The current version is more than enough for me, but I will extend it later when I have time.
+
+## Working with the agent
+
+During this renovation, I used Antigravity agent mode.
+
+Usually I do not trust agents blindly, but on this project it worked unusually well. It gave me the desired result on the first try. Maybe because the scope was small, or because I had a very clear plan and gave precise instructions.
+
+I will continue improving the project in this direction.
+
+## Performance notes
+
+I also did a small benchmark on my machine.
+
+```js
+DOMO-OG BENCHMARK SUITE
+=========================================
+CPU: Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz
+Cores: 8
+Total RAM: 7.82 GB
+Node Version: v22.19.0
+=========================================
+
+Running: Simple Template (Cold) (200 iterations)...
+Done!
+Total Time: 6.66 seconds
+Avg Time per Image: 33.29 ms
+
+Running: Complex Template (Remote Image) (50 iterations)...
+Done!
+Total Time: 2.37 seconds
+Avg Time per Image: 47.42 ms
+
+Running: Cache Hit Test (Re-run Simple) (200 iterations)...
+Done!
+Total Time: 5.96 seconds
+Avg Time per Image: 29.82 ms
+
+```
+
+I know that OG generation with tools like Puppeteer or Satori is heavier compared to my approach, but I did not properly benchmark them with the same input.
+
+So for now, I am mostly trusting my assumptions here.
+Seeing it in action & why I share it
+
+I also built a small website for this project: hero section, feature list, playground, and docs. The package itself has a proper README.
+
+The site helps me test templates quickly without touching code every time. You can tweak configs, change text or background, and see the result instantly. It also doubles as a reference for me when working on the project.
+
+I’m sharing this because I want to start shipping more and putting projects out there. At some point, maybe this grows into something bigger, possibly even an entrepreneurial project.
+
+I’m proud of it—proud even when it was worse than it is now. Maybe no one will care, but sharing is how I’ll find out.
