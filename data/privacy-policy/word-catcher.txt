@@ -1,22 +1,22 @@
-# Privacy Policy for {{Word Catcher:gold}}
+# Privacy Policy for {{Word Catcher::pink}}
 
 **Last updated:** {{30.03.2026}}
 
-{{Word Catcher:gold}} respects your privacy. This Privacy Policy explains how information is handled when you use the app.
+{{Word Catcher::pink}} respects your privacy. This Privacy Policy explains how information is handled when you use the app.
 
 ## 1. Information Collection
 
-{{Word Catcher:gold}} does **not collect, store, or share any personal information**.
+{{Word Catcher::pink}} does **not collect, store, or share any personal information**.
 
 All data you create in the app (such as saved words, lists, and progress) is stored **locally on your device only** and is not transmitted to any external servers.
 
 ## 2. Use of Features
 
-{{Word Catcher:gold}} may use on-device services (such as translation features) to improve functionality. These features operate without collecting or storing your personal data by the app.
+{{Word Catcher::pink}} may use on-device services (such as translation features) to improve functionality. These features operate without collecting or storing your personal data by the app.
 
 ## 3. Data Sharing
 
-{{Word Catcher:gold}} does **not share any user data** with third parties.
+{{Word Catcher::pink}} does **not share any user data** with third parties.
 
 ## 4. Data Security
 
@@ -24,7 +24,7 @@ Since all data is stored locally on your device, you are in control of your info
 
 ## 5. Children’s Privacy
 
-{{Word Catcher:gold}} does not knowingly collect any personal information from children or any users.
+{{Word Catcher::pink}} does not knowingly collect any personal information from children or any users.
 
 ## 6. Changes to This Policy
 
@@ -37,4 +37,4 @@ If you have any questions about this Privacy Policy, you can contact:
 - **Email:** hello@zyrab.dev
 - **Website:** zyrab.dev
 
-### By using {{Word Catcher:gold}}, you agree to this Privacy Policy.
+### By using {{Word Catcher::pink}}, you agree to this Privacy Policy.
