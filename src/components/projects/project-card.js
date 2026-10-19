@@ -23,7 +23,7 @@ export default function createProjectCard(project) {
         .cls("flex jc-sb")
         .child([
           Domo()
-            .cls("flex g-0.5 py-0.5")
+            .cls("flex g-0.5 py-0.5 mt-auto")
             .child(project.tech.map((tech) => createIcon({ icon: tech }))),
           createButton({
             text: btn ? btn[0] : "",

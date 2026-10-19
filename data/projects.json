@@ -5,15 +5,15 @@
     "description": "Tech Lead & Full-Stack Developer. Bilingual digital library in production. Features catalog management, memberships, borrowing system with database concurrency locking, Row Level Security, idempotent emails (Resend), and HelloAsso payments.",
     "date": "04.2026 - Present (Production)",
     "tech": ["fg", "rct", "next", "spb", "gh"],
-    "btn": ["GéNaissance Library", "dmn", "https://lib.genaissance.fr/"]
+    "btn": ["lib.genaissance.fr", "dmn", "https://lib.genaissance.fr/"]
   },
   {
-    "title": "DOMO-OG - Open Source",
+    "title": "DOMO-OG",
     "img": "dmg.png",
     "description": "Open-source npm library that generates Open Graph images from a JSON config using resvg-wasm without a headless browser (~33 ms per image with incremental caching)",
     "date": "03.2026 - 04.2026",
     "tech": ["fg", "gh", "js", "npm"],
-    "btn": ["DOMO-OG", "dmn", "https://og.zyrab.dev/"]
+    "btn": ["og.zyrab.dev", "dmn", "https://og.zyrab.dev/"]
   },
   {
     "title": "AT QR",
