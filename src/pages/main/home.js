@@ -16,10 +16,7 @@ export default function createHome() {
             .cls("flex g-0.5 py-0.5")
             .child([
               createIcon({ icon: "gmail" }),
-              Domo("a")
-                .cls("md italic hv:txt-psec")
-                .attr({ href: texts.emailLink, target: "_blank", rel: "noopener noreferrer" })
-                .txt(texts.email),
+              Domo("a").cls("md italic hv:txt-psec").attr({ href: texts.emailLink, target: "_blank", rel: "noopener noreferrer" }).txt(texts.email),
             ]),
           Domo("p").cls("lg").txt(texts.ideas),
           Domo("p").cls("xl").txt(texts.gameInvite),
@@ -42,14 +39,14 @@ export default function createHome() {
 }
 
 const texts = {
-  title: "Welcome to my space.",
-  description1: "Here, you'll find my projects, thoughts, and things I'm building.",
-  description2: "If you're here to connect or collaborate, feel free to reach out.",
+  title: "Zurabi Kruashvili — Full-Stack & Mobile Developer (React, Next.js, TypeScript, React Native)",
+  description1:
+    "I build and ship complete web and mobile products from architecture and database design to payment integration and Play Store deployment.",
+  description2: "Based in Strasbourg (Remote or On-site)",
   email: "hello@zyrab.dev",
   emailLink: "mailto:hello@zyrab.dev",
   ideas: "I'm always up for cool ideas.",
-  gameInvite:
-    "Or if you're just passing through, why not play a quick game? I built it with passion—think you can beat my score?",
+  gameInvite: "Or if you're just passing through, why not play a quick game? I built it with passion—think you can beat my score?",
   sourceCodeText: "See the game's source code here",
   sourceCode: "https://github.com/Zyrab/zyrab.github.io/tree/main/src/components/game",
 };

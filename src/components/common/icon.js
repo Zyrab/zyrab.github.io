@@ -42,4 +42,5 @@ const icons = {
   lnkdn: "color/35/linkedin",
   npm: "color/35/npm",
   html5: "color/35/html-5--v1",
+  spb: "color/35/supabase",
 };

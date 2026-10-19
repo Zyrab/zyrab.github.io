@@ -1,9 +1,25 @@
 [
   {
+    "title": "GéNaissance Library",
+    "img": "lib.png",
+    "description": "Tech Lead & Full-Stack Developer. Bilingual digital library in production. Features catalog management, memberships, borrowing system with database concurrency locking, Row Level Security, idempotent emails (Resend), and HelloAsso payments.",
+    "date": "04.2026 - Present (Production)",
+    "tech": ["fg", "rct", "next", "spb", "gh"],
+    "btn": ["GéNaissance Library", "dmn", "https://lib.genaissance.fr/"]
+  },
+  {
+    "title": "DOMO-OG - Open Source",
+    "img": "dmg.png",
+    "description": "Open-source npm library that generates Open Graph images from a JSON config using resvg-wasm without a headless browser (~33 ms per image with incremental caching)",
+    "date": "03.2026 - 04.2026",
+    "tech": ["fg", "gh", "js", "npm"],
+    "btn": ["DOMO-OG", "dmn", "https://og.zyrab.dev/"]
+  },
+  {
     "title": "AT QR",
     "img": "atqr.png",
     "description": "An SaaS Qr code generator. Built in Qr custumization, dynamic QRs, dashboard, analytics. Stripe monthly subscription with webhooks, firebase, vercel nextJS.",
-    "date": "in progress",
+    "date": "01.2026 - 03.2026 Live",
     "tech": ["fg", "rct", "next", "strp", "frb", "gh"]
   },
   {
@@ -14,19 +30,27 @@
     "tech": ["fg", "rn", "exp", "frb", "gh"]
   },
   {
+    "title": "Numbero",
+    "img": "nmbr.png",
+    "description": "A feature-rich mobile logic game built with React Native, Expo, and Firebase (142+ downloads on Play Store). Includes zero-click Google Play Games login and leaderboards via a custom Kotlin native module and Expo config plugin, 1v1 multiplayer with anti-cheat validation in Cloud Functions, in-game shop, and rewarded ads.",
+    "date": "03.2024 - 11.2024",
+    "tech": ["fg", "rn", "exp", "frb", "gh", "admb"],
+    "btn": ["Play Store", "gglplay", "https://play.google.com/store/apps/details?id=com.anonymous.Numbero10&hl=en"]
+  },
+  {
+    "title": "Parsect",
+    "img": "prsct.png",
+    "description": "Converts SVG files into JSON-mapped Canvas Path2D shapes. Provides a toPath2D(map) function to create paths and a drawShapes(paths) to render them. Shapes are raw Canvas objects — fully compatible with native Canvas API methods.",
+    "date": "03.2025 - present",
+    "tech": ["fg", "js", "html5", "npm", "gh"],
+    "btn": ["Parsect", "dmn", "http://parsect.zyrab.dev"]
+  },
+  {
     "title": "Zyrab.dev",
     "img": "zrb.png",
     "description": "Built from scratch with no libraries or frameworks, this website features a SPA routing system, I wrote functions to dynamically create and modify DOM elements, providing an efficient, lightweight experience.",
     "date": "01.2025 - 03.2025",
     "tech": ["fg", "js", "css", "html", "gh"]
-  },
-  {
-    "title": "Numbero",
-    "img": "nmbr.png",
-    "description": "A feature-rich mobile game built with React Native. It modernizes the classic Bulls and Cows logic game with multiple modes, a ranking system, friends list, in-game currency, a shop, an energy system, ads, quests, and achievements.",
-    "date": "03.2024 - 11.2024",
-    "tech": ["fg", "rn", "exp", "frb", "gh", "admb"],
-    "btn": ["Play Store", "gglplay", "https://play.google.com/store/apps/details?id=com.anonymous.Numbero10&hl=en"]
   },
   {
     "title": "High Way",
@@ -47,7 +71,7 @@
   {
     "title": "Capital Rent",
     "img": "cap.png",
-    "description": "Construction tools renting service. the websites goal was to showcase a gallery of avalable tools with prices. including a contacts and FAQ. it uses DOMO ssg got 100% in all areas on lighthouse. hase custum CMS also built with DOMO. ",
+    "description": "Construction equipment rental platform showcasing available tools, pricing, FAQ, and contact workflows. Built with the DOMO Static Site Generator (SSG) and a custom CMS, achieving 100/100 across all Lighthouse performance metrics.",
     "date": "03.2024 - 07.2024",
     "tech": ["fg", "vue", "tlwcss", "gh"],
     "btn": ["Capital Rent", "dmn", "https://caprent.ge/"]
@@ -67,13 +91,5 @@
     "date": "01.2025 - 03.2025",
     "tech": ["js", "npm", "gh"],
     "btn": ["Domo", "gh", "https://github.com/Zyrab/Domo"]
-  },
-  {
-    "title": "Parsect",
-    "img": "prsct.png",
-    "description": "Converts SVG files into JSON-mapped Canvas Path2D shapes. Provides a toPath2D(map) function to create paths and a drawShapes(paths) to render them. Shapes are raw Canvas objects — fully compatible with native Canvas API methods.",
-    "date": "03.2025 - present",
-    "tech": ["fg", "js", "html5", "npm", "gh"],
-    "btn": ["Parsect", "dmn", "http://parsect.zyrab.dev"]
   }
 ]
